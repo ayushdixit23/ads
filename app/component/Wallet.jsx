@@ -3,7 +3,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import newWallet from "../assests/newWallet.svg";
 import Image from "next/image";
 import { AiOutlineSearch } from "react-icons/ai";
-import MobileNav from "./MobileNav";
 import axios from "axios";
 import nodataw from "../assests/nodataw.svg";
 import { API } from "@/Essentials";
@@ -201,10 +200,10 @@ const Wallet = () => {
         </div>
       </div>
 
-      <div className="py-4 px-5 pn:max-sm:sticky pn:max-sm:top-0 pn:max-sm:left-0 bg-maincolor z-10 w-full">
+      {/* <div className="py-4 px-5 pn:max-sm:sticky pn:max-sm:top-0 pn:max-sm:left-0 bg-maincolor z-10 w-full">
         <div className="text-2xl font-semibold">Wallet</div>
 
-      </div>
+      </div> */}
 
       <div className="grid sm:mt-0 grid-cols-1 z-10">
         <div className="grid grid-cols-1 sm:m-5 w-full sm:w-[95%] ">

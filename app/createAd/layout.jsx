@@ -19,6 +19,9 @@ export default function createAdLayout({ children }) {
 	const router = useRouter()
 	const [client, setClient] = useState(false)
 
+	console.log(validateStep1, "step1")
+	console.log(validateStep2, "step2")
+
 	const stepRunner = () => {
 		if (step === 0) {
 			dispatch(setStep(1))
@@ -52,10 +55,10 @@ export default function createAdLayout({ children }) {
 	}, []);
 
 	useEffect(() => {
-		if (step === 1 && !validateStep1) {
+		if (step === 1 && !validateStep2) {
 			router.push("/createAd?step=1")
 		}
-		if (step === 2 && !validateStep2) {
+		if (step === 2 && !validateStep1) {
 			router.push("/createAd?step=1")
 		}
 	}, [step, validateStep1, validateStep2])

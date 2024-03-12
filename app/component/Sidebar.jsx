@@ -14,7 +14,7 @@ const Sidebar = () => {
 
         <a className="flex sm:max-md:hidden items-center px-4 py-2 gap-2 text-2xl" href="#">
 
-          <span className=" font-medium">Adspace</span>
+          <span className="sm:max-md:hidden font-medium">Adspace</span>
         </a>
 
         {/* <div className="relative mt-6">
@@ -39,13 +39,13 @@ const Sidebar = () => {
               <span className="mx-4 sm:max-md:hidden font-medium">Dashboard</span>
             </Link>
 
-            <Link className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" href="/main/community">
+            {/* <Link className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" href="/main/community">
               <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M15 5V7M15 11V13M15 17V19M5 5C3.89543 5 3 5.89543 3 7V10C4.10457 10 5 10.8954 5 12C5 13.1046 4.10457 14 3 14V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V14C19.8954 14 19 13.1046 19 12C19 10.8954 19.8954 10 21 10V7C21 5.89543 20.1046 5 19 5H5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
 
               <span className="mx-4 sm:max-md:hidden font-medium">Community</span>
-            </Link>
+            </Link> */}
 
 
             <Link href="/main/ads" className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" >

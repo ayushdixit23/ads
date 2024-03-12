@@ -26,8 +26,10 @@ const LogoutModal = ({ isOpen, onClose }) => {
   };
 
   const deleteCookies = () => {
-    deleteCookie(`axetkn${sessionId}`);
-    deleteCookie(`rvktkn${sessionId}`);
+    localStorage.removeItem(`axetkn${sessionId}`)
+    localStorage.removeItem(`rvktkn${sessionId}`)
+    // deleteCookie(`axetkn${sessionId}`);
+    // deleteCookie(`rvktkn${sessionId}`);
   }
 
   const f = async () => {

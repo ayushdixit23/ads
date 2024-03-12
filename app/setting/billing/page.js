@@ -3,7 +3,7 @@ import { API } from "@/Essentials";
 import { getItemSessionStorage } from "@/app/utils/TokenDataWrapper";
 import { getData } from "@/app/utils/useful";
 import axios from "axios";
-import { deleteCookie, setCookie } from "cookies-next";
+// import { deleteCookie, setCookie } from "cookies-next";
 import React, { useEffect, useState } from "react";
 import { BiPencil } from "react-icons/bi";
 
@@ -58,13 +58,15 @@ const Page = () => {
   }
 
   const deleteCookies = () => {
-    deleteCookie(`axetkn${sessionId}`);
-    deleteCookie(`rvktkn${sessionId}`);
+    // deleteCookie(`axetkn${sessionId}`);
+    // deleteCookie(`rvktkn${sessionId}`);
+    localStorage.removeItem(`axetkn${sessionId}`)
+    localStorage.removeItem(`rvktkn${sessionId}`)
   }
 
   const setCookieAds = (data) => {
-    setCookie(`axetkn${sessionId}`, data.access_token);
-    setCookie(`rvktkn${sessionId}`, data.refresh_token);
+    localStorage.setItem(`axetkn${sessionId}`, data.access_token)
+    localStorage.setItem(`rvktkn${sessionId}`, data.refresh_token)
   }
 
   return (

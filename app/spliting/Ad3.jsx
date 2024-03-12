@@ -12,6 +12,7 @@ const Ad3 = ({
   pricebyDay,
   totalPrice,
   tax,
+  date,
   communityData,
   addTax,
 }) => {
@@ -19,7 +20,9 @@ const Ad3 = ({
   return (
     <>
       <div>
-        <div className="grid bg-[#f8f8f8] dark:bg-maincolor grid-cols-1 pn:max-md:hidden">
+        <div style={
+          { marginBottom: "10rem" }
+        } className="grid bg-[#f8f8f8] dark:bg-maincolor grid-cols-1 pn:max-md:hidden">
           <div className="flex justify-center gap-4 px-[2%] w-full pn:max-md:hidden">
             <div
               className={`flex bg-[#F0F2F5] dark:bg-[#1b2431] p-4 px-[2%] md:min-w-[800px] lg:min-w-[1024px] my-4 pn:max-md:hidden rounded-2xl flex-col`}
@@ -77,20 +80,19 @@ const Ad3 = ({
                         <div className=" dark:text-white text-[#333333]">Start Date</div>
                         <div className="font-medium">{formatDateToString(three.startDate)}</div>
                       </div>
-                      {/* <div className="flex flex-col space-y-2 my-1">
-                        <div className=" dark:text-white text-[#333333]">End Date</div>
-                        <div className="font-medium">
-                          {date
-                            ? formastEndDate > formastStartDate
-                              ? formastEndDate
-                              : null
-                            : (three.endDate = "Not Selected")}
-                        </div>
-                      </div> */}
                       <div className="flex flex-col space-y-2 my-1">
+                        <div className=" dark:text-white text-[#333333]">End Date</div>
+                        <div className="font-medium"> {date
+                          ? formatDateToString(three.endDate) > formatDateToString(three.startDate)
+                            ? formatDateToString(three.endDate)
+                            : null
+                          : "Not Selected"}</div>
+                      </div>
+
+                      {/* <div className="flex flex-col space-y-2 my-1">
                         <div className=" dark:text-white text-[#333333]">Ad Duration</div>
                         <div className="font-medium">{three.duration}</div>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -147,14 +149,12 @@ const Ad3 = ({
                     <div className="text-xl font-semibold py-2">Type of ad</div>
                   </div>
                   <div className="flex my-2 items-center space-x-3">
-                    {three.type.map((data, i) => (
-                      <div
-                        key={i}
-                        className="bg-[#F3F4F6] dark:bg-border font-semibold p-1 px-3 rounded-full"
-                      >
-                        {data}
-                      </div>
-                    ))}
+
+                    <div
+                      className="bg-[#F3F4F6] dark:bg-maincolor font-semibold p-1 px-3 rounded-full"
+                    >
+                      {three.type}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -166,26 +166,30 @@ const Ad3 = ({
                       <img
                         src={three.pic}
                         alt="ads"
-                        className="w-auto h-auto max-w-[70px] max-h-[70px]"
+                        className="rounded-xl object-cover w-[70px] h-[70px]"
                       />
                     </div>
                     <div>
                       <div className="flex items-center space-x-1">
-                        <span className="font-medium">{three.Headline} </span>
-                        <span>
+                        <span className="font-medium">{three.Headline ?
+                          three.Headline.length > 10 ? `${three.Headline.slice(0, 10)}...` : three.Headline
+                          : "Never have a bad meal"}</span>
+                        {/* <span>
                           <AiTwotoneEdit className="text-blue-600" />
-                        </span>
+                        </span> */}
                       </div>
-                      <div className=" text-sm ">{three.Description}</div>
-                      <div className="flex justify-center text-sm space-x-3 items-center">
+                      <div className=" text-sm "> {three.Description != ""
+                        ? three.Description.length > 20 ? `${three.Description.slice(0, 20)}...` : three.Description
+                        : "healthy and sweet dishes"}</div>
+                      {/* <div className="flex justify-center text-sm space-x-3 items-center">
                         <div></div>
                         <div>Id: 271617804</div>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
-                  <div>
+                  {/* <div>
                     <BsThreeDots className="text-xl" />
-                  </div>
+                  </div> */}
                 </div>
               </div>
               {/* <div className="lg:min-w-[700px] bg-maincolor my-4 rounded-2xl py-5 px-5">
@@ -391,20 +395,20 @@ const Ad3 = ({
                           <div className=" dark:text-white text-[#333333]">Start Date</div>
                           <div className="font-medium">{formatDateToString(three.startDate)}</div>
                         </div>
-                        {/* <div className="flex flex-col space-y-2 my-1">
+                        <div className="flex flex-col space-y-2 my-1">
                           <div className=" dark:text-white text-[#333333]">End Date</div>
                           <div className="font-medium">
                             {date
-                              ? formastEndDate > formastStartDate
-                                ? formastEndDate
+                              ? formatDateToString(three.endDate) > formatDateToString(three.startDate)
+                                ? formatDateToString(three.endDate)
                                 : null
-                              : (three.endDate = "Not Selected")}
+                              : "Not Selected"}
                           </div>
-                        </div> */}
-                        <div className="flex flex-col space-y-2 my-1">
+                        </div>
+                        {/* <div className="flex flex-col space-y-2 my-1">
                           <div className=" dark:text-white text-[#333333]">Ad Duration</div>
                           <div className="font-medium">{three.duration}</div>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>
@@ -466,14 +470,20 @@ const Ad3 = ({
                       </div>
                     </div>
                     <div className="flex my-2 items-center space-x-3">
-                      {three.type.map((data, i) => (
+                      {/* {three.type.map((data, i) => (
                         <div
                           key={i}
                           className="bg-[#F3F4F6] dark:bg-maincolor font-semibold p-1 px-3 rounded-full"
                         >
                           {data}
                         </div>
-                      ))}
+                      ))} */}
+                      <div
+                        className="bg-[#F3F4F6] dark:bg-maincolor font-semibold p-1 px-3 rounded-full"
+                      >
+                        {three.type}
+                      </div>
+
                     </div>
                   </div>
                 </div>
@@ -485,32 +495,34 @@ const Ad3 = ({
                         <img
                           src={three.pic ? three.pic : adss}
                           alt="ads"
-                          className="w-auto h-auto max-w-[70px] max-h-[70px]"
+                          className="object-cover rounded-xl w-[80px] h-[80px]"
                         />
                       </div>
                       <div>
                         <div className="flex items-center space-x-1">
                           <span className="font-medium">
-                            {three.Headline ? three.Headline : "headline"}
+                            {three.Headline ?
+                              three.Headline.length > 5 ? `${three.Headline.slice(0, 5)}...` : three.Headline
+                              : "Never have a bad meal"}
                           </span>
-                          <span>
+                          {/* <span>
                             <AiTwotoneEdit className="text-blue-600" />
-                          </span>
+                          </span> */}
                         </div>
                         <div className=" text-sm max-w-[87%]">
-                          {three.Description
-                            ? three.Description
-                            : "Never have a bad meal"}
+                          {three.Description != ""
+                            ? three.Description.length > 10 ? `${three.Description.slice(0, 10)}...` : three.Description
+                            : "healthy and sweet dishes"}
                         </div>
-                        <div className="flex justify-center  text-sm space-x-3 items-center">
+                        {/* <div className="flex justify-center  text-sm space-x-3 items-center">
                           <div>some line</div>
                           <div>Id: 271617804</div>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
-                    <div>
+                    {/* <div>
                       <BsThreeDots className="text-xl" />
-                    </div>
+                    </div> */}
                   </div>
                 </div>
                 {/* 

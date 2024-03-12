@@ -28,7 +28,6 @@ const Login = () => {
   const [login, setLogin] = useState(false);
   const router = useRouter();
   const [see, setSee] = useState(true);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [number, setNumber] = useState("");
@@ -67,7 +66,6 @@ const Login = () => {
   const isValidEmail = validateEmail(email);
   const handleCreate = async (e) => {
     e.preventDefault();
-
     try {
       setLoading(true);
       if (!email.trim() || !password.trim()) {
@@ -93,6 +91,7 @@ const Login = () => {
                   path: `/main/dashboard`,
                 })
               );
+              router.push("/main/dashboard")
             } else {
               toast.error("Something went wrong!")
             }
@@ -116,8 +115,9 @@ const Login = () => {
   const cookieSetter = async (data) => {
     try {
       storeInSessionStorage(data.sessionId)
-      setCookie(`axetkn${data.sessionId}`, data.access_token, { secure: false })
-      setCookie(`rvktkn${data.sessionId}`, data.refresh_token, { secure: false })
+      localStorage.setItem(`axetkn${data.sessionId}`, data.access_token)
+      localStorage.setItem(`rvktkn${data.sessionId}`, data.refresh_token)
+      return true
     } catch (error) {
       console.log(error)
     }
@@ -162,8 +162,10 @@ const Login = () => {
           phone: number,
         });
         if (res.data.success) {
-          await cookieSetter(res.data)
-          router.push("/main/dashboard");
+          const a = await cookieSetter(res.data)
+          if (a === true) {
+            router.push("/main/dashboard");
+          }
         } else {
           console.log("something went wrong");
         }

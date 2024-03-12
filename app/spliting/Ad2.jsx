@@ -1,23 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from "../CustomScrollbarComponent.module.css";
 import { AiFillCheckCircle, AiOutlinePlus, AiOutlineClose } from 'react-icons/ai';
 import { BiMap } from 'react-icons/bi';
 import Square3 from '../component/Square3';
-import Square4 from '../component/Square4';
 import feed from "../assests/feed.svg";
 import video from "../assests/video.svg";
 import search from "../assests/search.svg";
+import banner from "../assests/banner.png";
+import skip from "../assests/skip.png";
+import nonskip from "../assests/nonskip.png";
 import Image from 'next/image';
 import { formatDateToString } from '../utils/useful';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const Ad2 = ({
-
 	setCLick,
 	setThree,
 	dispatch,
 	setT,
-	toggleType,
 	three,
+	date,
+	setDate,
 	PointsCategory,
 	handleCheckboxClick,
 	handleCategoryChange,
@@ -34,113 +37,18 @@ const Ad2 = ({
 	t,
 
 }) => {
+	const [open, setOpen] = useState(false)
+	console.log(formatDateToString(three.startDate))
+	console.log(formatDateToString(three.endDate))
 	return (
 		<>
 			<div>
-				<div className="grid bg-[#F8F8F8] grid-cols-1 pn:max-md:hidden">
-					<div className="flex bg-[#1b2431] flex-col ">
-						{/* <div className=" sticky top-0 z-50">
-							<div className="flex bg-maincolor w-full justify-between items-center px-5 py-4">
-								<div className="text-[#555555] text-xl font-semibold">
-									Set up a new Ad
-								</div>
-								<div className="flex justify-center items-center gap-3 ">
-									<div
-										onClick={() => setStep(0)}
-										className="border-b cursor-pointer border-black"
-									>
-										Discard
-									</div>
+				<div className="grid  bg-[#F8F8F8] grid-cols-1 pn:max-md:hidden">
+					<div className="flex bg-[#1b2431]  flex-col ">
 
-									{isdatavalid ? (
-										<div
-											className="p-2 px-7 rounded-full cursor-pointer bg-[#2D9AFF] text-white"
-											onClick={() => setStep(2)}
-										>
-											Next
-										</div>
-									) : (
-										<div className="p-2 px-7 rounded-full bg-[#b3bbc3] text-white">
-											Next
-										</div>
-									)}
-								</div>
-							</div>
-						</div> */}
-						{/* <div>
-							<div>
-								<div className="flex justify-center dark:bg-[#273142] shadow-lg bg-[#fafafa] pt-5 py-3 mt-3">
-									<div className=" flex flex-col justify-center items-center">
-										<div
-											className={`h-10 w-10 rounded-full flex items-center justify-center ${step >= 0
-												? "bg-[#27AE60] border-2 text-white"
-												: "text-white"
-												}`}
-										>
-											{step >= 1 ? (
-												<BsCheckLg className="text-lg font-bold" />
-											) : (
-												1
-											)}
-										</div>
-
-										<div
-											className={` flex items-center font-semibold flex-col ${step > 1 ? "text-blue-600 " : "text-[#27AE60]"
-												}`}
-										>
-											Set up Ad
-										</div>
-									</div>
-
-									<div
-										className={`border-[#f9f9f9] border-dashed border-t-2 w-20 mt-5 ${step >= 0 ? "border-black " : "border-black "
-											}`}
-									/>
-
-									<div className="flex flex-col justify-center items-center">
-										<div
-											className={`bg-[#f9f9f9] h-10 w-10 rounded-full flex items-center justify-center ${step >= 1
-												? "bg-blue-600 text-white"
-												: "bg-green-300 text-white"
-												}`}
-										>
-											2
-										</div>
-
-										<div
-											className={` flex items-center flex-col ${step >= 1 ? "text-blue-600 " : "text-green-300"
-												}`}
-										>
-											Select target
-										</div>
-									</div>
-									<div
-										className={`border-[#f9f9f9] border-dashed border-t-2 w-20  mt-5 ${step >= 1 ? "border-black " : "border-black "
-											}`}
-									/>
-									<div className="flex flex-col justify-center items-center">
-										<div
-											className={`bg-[#f9f9f9] h-10 w-10 rounded-full flex items-center justify-center ${step >= 2
-												? "bg-blue-600 text-white"
-												: "border-4 border-black "
-												}`}
-										>
-											3
-										</div>
-
-										<div
-											className={`flex items-center flex-col justify-center ${step === 2 ? "text-blue-600 " : "text-black"
-												}`}
-										>
-											Preview & Launch
-										</div>
-									</div>
-								</div>
-							</div>
-						</div> */}
-						<div className="flex justify-center max-h-[800px] dark:bg-[#273142] bg-[#fafafa] gap-9 px-[2%] pn:max-md:hidden">
+						<div className="flex justify-center h-[550px] dark:bg-[#273142] bg-[#fafafa] gap-9 px-[2%] pn:max-md:hidden">
 							<div
-								className={`${styles.customScrollbar} pn:max-md:hidden md:w-[900px] overflow-y-scroll dark:bg-[#1b2431] bg-[#F0F2F5] border-2 my-4 rounded-2xl py-5 px-5`}
+								className={`${styles.customScrollbar} pn:max-md:hidden md:w-[900px] w-full overflow-y-scroll dark:bg-[#1b2431] bg-[#F0F2F5] border-2 my-4 rounded-2xl py-5 px-5`}
 							>
 								<h1 className="sm:text-3xl text-xl font-semibold py-2">
 									Select Target
@@ -151,7 +59,7 @@ const Ad2 = ({
 									</h2>
 									<div className="flex flex-wrap gap-3 my-4">
 										<div
-											onClick={() => toggleType("infeed")}
+											onClick={() => { dispatch(setThree({ type: "infeed" })); setOpen(false) }}
 											className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type.includes("infeed")
 												? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
 												: ""
@@ -172,7 +80,7 @@ const Ad2 = ({
 											)}
 										</div>
 										<div
-											onClick={() => toggleType("search")}
+											onClick={() => { dispatch(setThree({ type: "search" })); setOpen(false) }}
 											className={` flex flex-col justify-center border relative  p-2 z-0 items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type.includes("search")
 												? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
 												: ""
@@ -193,8 +101,8 @@ const Ad2 = ({
 											)}
 										</div>
 										<div
-											onClick={() => toggleType("videoads")}
-											className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type.includes("videoads")
+											onClick={() => { setOpen(!open); dispatch(setThree({ type: "" })) }}
+											className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${open
 												? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
 												: ""
 												}`}
@@ -213,13 +121,122 @@ const Ad2 = ({
 												</div>
 											)}
 										</div>
+
+										<div
+
+											onClick={() => { dispatch(setThree({ type: "banner" })); setOpen(false) }}
+											className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type.includes("banner")
+												? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
+												: ""
+												}`}
+										>
+											<div>
+												<Image
+													src={banner}
+													className="w-[90px] h-[90px]"
+													alt="video"
+												/>
+											</div>{" "}
+											<div className="font-medium py-2">Banner Ads</div>
+											{three.type.includes("banner") && (
+												<div className={`absolute -top-2 -right-2`}>
+													<AiFillCheckCircle className="text-blue-600 text-xl" />
+												</div>
+											)}
+										</div>
 									</div>
+									{open && <div className='flex gap-7 flex-col justify-normal  '>
+										<div className='flex items-center mt-3 -mb-3'>Select One of these:-</div>
+										<div className='flex gap-3 pb-2 items-center'>
+											<><div
+
+												onClick={() => dispatch(setThree({ type: "skipable" }))}
+												className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type === "skipable"
+													? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
+													: ""
+													}`}
+											>
+												<div>
+													<Image
+														src={skip}
+														className="w-[90px] h-[90px]"
+														alt="video"
+													/>
+												</div>
+												<div className="font-medium py-2 text-sm">Skipable Ads</div>
+												{three.type === "skipable" && (
+													<div className={`absolute -top-2 -right-2`}>
+														<AiFillCheckCircle className="text-blue-600 text-xl" />
+													</div>
+												)}
+											</div>
+												<div
+
+													onClick={() => dispatch(setThree({ type: "non-skipable" }))}
+													className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type === "non-skipable"
+														? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
+														: ""
+														}`}
+												>
+													<div>
+														<Image
+															src={nonskip}
+															className="w-[90px] h-[90px]"
+															alt="video"
+														/>
+													</div>
+													<div className="font-medium py-2 text-sm">Non Skipable Ads</div>
+													{three.type === "non-skipable" && (
+														<div className={`absolute -top-2 -right-2`}>
+															<AiFillCheckCircle className="text-blue-600 text-xl" />
+														</div>
+													)}
+												</div></>
+										</div>
+									</div>}
 								</div>
 
 								<div className="my-[4%] rounded-xl">
 									<div className="py-3 px-[2%] rounded-t-xl bg-maincolor relative">
-										<h1 className="text-lg py-1 font-medium">Category</h1>
-										<div className="w-full flex justify-center items-center rounded-xl border ">
+										<h1 className="text-lg py-1 pb-2 font-medium">Category</h1>
+										<Select
+											defaultValue='Business & Finance'
+											className="dark:text-white dark:bg-[#323b4e] w-full dark:border-none "
+											onValueChange={(selectValue) => {
+												const data = PointsCategory.find((d) => d.category === selectValue)
+												dispatch(setThree({ category: selectValue }))
+
+												handleCategoryChange(
+													data.category,
+													data.price,
+													data.population,
+												)
+											}}
+										>
+											<SelectTrigger className="w-full dark:text-white dark:bg-transparent rounded-xl outline-none dark:border ">
+												<SelectValue
+
+													className="dark:text-white dark:bg-[#323b4e] dark:border-none "
+												/>
+											</SelectTrigger>
+											<SelectContent className="dark:text-white dark:bg-[#323b4e] dark:border-none ">
+												<SelectGroup className="max-h-[200px] gap-1 w-full flex flex-col justify-center items-center">
+													{PointsCategory?.map((d, i) => (
+														<SelectItem
+															value={d.category}
+															key={i}
+															className=""
+														>
+
+															<div className="text-sm">{d.category}</div>
+
+														</SelectItem>
+													))}
+
+												</SelectGroup>
+											</SelectContent>
+										</Select>
+										{/* <div className="w-full flex justify-center items-center rounded-xl border ">
 											<BiMap className="border-r-2 p-2 text-4xl" />
 											<div
 												placeholder="Select a Category"
@@ -227,9 +244,9 @@ const Ad2 = ({
 											>
 												{three.category}
 											</div>
-										</div>
+										</div> */}
 
-										<div className="relative overflow-y-scroll my-3 no-scrollbar w-[360px] h-[230px]">
+										{/* <div className="relative overflow-y-scroll my-3 no-scrollbar w-[360px] h-[230px]">
 											<div>
 												<div className="absolute top-0 left-0 h-auto w-full p-3 border rounded-xl z-10 drop-shadow-md bg-maincolor">
 													<div className="text-sm text-[#6B778C] mb-2 pb-2">
@@ -246,24 +263,23 @@ const Ad2 = ({
 																	name="mycategory"
 																	onChange={() =>
 																		handleCategoryChange(
-																			data.name,
-																			data.points,
-																			data.audienceByCategory,
-																			data.ctr
+																			data.category,
+																			data.price,
+																			data.population,
 																		)
 																	}
-																	checked={data.name === three.category}
+																	checked={data.category === three.category}
 																/>
 
 																<div className="text-lg font-medium">
-																	{data.name}
+																	{data.category}
 																</div>
 															</div>
 														))}
 													</div>
 												</div>
 											</div>
-										</div>
+										</div> */}
 									</div>
 
 									<div className="py-2 px-[2%] bg-maincolor rounded-b-xl relative">
@@ -559,71 +575,72 @@ const Ad2 = ({
 														// })
 														dispatch(setThree({ startDate: e.target.value }))
 													}
-													value={formatDateToString(three.startDate)}
+
+													value={three.startDate}
 													placeholder="Enter Campaign Name"
 													className="w-full border rounded-xl bg-transparent outline-none p-2"
 												/>
 											</div>
-											{/* <div
-                        className={`${
-                          date ? "flex flex-col space-y-1" : "hidden"
-                        }`}
-                      >
-                        <label
-                          htmlFor="edate"
-                          className="text-lg font-semibold py-2"
-                        >
-                          End Date<span className="text-[#FF4444]">*</span>
-                        </label>
-                        <input
-                          name="myForm"
-                          id="edate"
-                          onChange={(e) =>
-                            setThree({
-                              ...three,
-                              endDate: e.target.value,
-                            })
-                          }
-                          value={formastEndDate}
-                          type="date"
-                          placeholder="Enter Campaign Name"
-                          className="w-full border rounded-xl outline-none p-2"
-                        />
-                        {formastEndDate < formastStartDate && (
-                          <div className="text-sm text-red-700">
-                            Please Enter a Valid Enddate
-                          </div>
-                        )}
-                      </div> */}
+											<div
+												className={`${date ? "flex flex-col space-y-1" : "hidden"
+													}`}
+											>
+												<label
+													htmlFor="edate"
+													className="text-lg font-semibold py-2"
+												>
+													End Date<span className="text-[#FF4444]">*</span>
+												</label>
+												<input
+													name="myForm"
+													id="edate"
+													onChange={(e) =>
+														dispatch(setThree({ endDate: e.target.value }))
+														// setThree({
+														// 	...three,
+														// 	endDate: e.target.value,
+														// })
+													}
+													value={three.endDate}
+													type="date"
+													placeholder="Enter Campaign Name"
+													className="w-full border rounded-xl outline-none p-2"
+												/>
+												{formatDateToString(three.endDate) < formatDateToString(three.startDate) && (
+													<div className="text-sm text-red-700">
+														Please Enter a Valid Enddate
+													</div>
+												)}
+											</div>
 
 
-											{/* <div className="flex flex-col relative top-1 w-full gap-2">
-                        <label
-                          htmlFor="dbudget"
-                          className="text-lg font-semibold"
-                        >
-                          Daily Budget
-                        </label>
-                        <div className="flex justify-center rounded-xl items-center border">
-                          <div className="border-r-2 p-2 text-lg">&#x20B9;</div>
-                          <input
-                            id="dbudget"
-                            onChange={(e) =>
-                              setThree({
-                                ...three,
-                                DailyBudget: e.target.value,
-                              })
-                            }
-                            value={three.DailyBudget}
-                            type="number"
-                            placeholder="Enter Daily Budget"
-                            className="w-full px-2 rounded-xl outline-none"
-                          />
-                        </div>
-                      </div> */}
+											{/* <div className="flex flex-col bg-transparent relative top-1 w-full gap-2">
+												<label
+													htmlFor="dbudget"
+													className="text-lg font-semibold"
+												>
+													Daily Budget
+												</label>
+												<div className="flex justify-center rounded-xl items-center border">
+													<div className="border-r-2 p-2 text-lg">&#x20B9;</div>
+													<input
+														id="dbudget"
+														onChange={(e) =>
+															setThree({
+																...three,
+																DailyBudget: e.target.value,
+															})
+														}
+														value={three.DailyBudget}
+														type="number"
+														placeholder="Enter Daily Budget"
+														className="w-full bg-transparent px-2 rounded-xl outline-none"
+													/>
+												</div>
+											</div> */}
 										</div>
 
-										<div className="my-[2%]">
+										{/* <div className="my-[2%]">
 											<h1 className="text-lg py-2 font-semibold">
 												Select Ad Duration
 											</h1>
@@ -631,7 +648,7 @@ const Ad2 = ({
 												<div
 													onClick={() =>
 														dispatch(setThree({ duration: 1 }))
-														// setThree({...three, duration: 1 })}
+													
 													}
 													className={`${three.duration == 1
 														? "bg-[#2D9AFF] text-white"
@@ -660,79 +677,83 @@ const Ad2 = ({
 													30 days
 												</div>
 											</div>
+										</div> */}
+									</div>
+									<div className="flex flex-col gap-1">
+										<div className="flex gap-2 my-2 items-center">
+											<input
+												name="myFormzpp"
+												id="258"
+												type="radio"
+												onChange={() => {
+													setDate(false);
+												}}
+												className="w-4 h-4"
+												checked={!date}
+											/>
+											<div className="flex flex-col">
+												<div className="font-medium">
+													Run this ad Continuously
+												</div>
+												<div>
+													Your ad will run continuously for a daily budget. This
+													option is recommended. Learn more
+												</div>
+											</div>
+										</div>
+										<div className="flex gap-2 my-2 items-center">
+											<input
+												name="myFormzder"
+												id="234"
+												type="radio"
+												onChange={() => { }}
+												onClick={() => {
+													setDate(true);
+													setThree({ ...three, endDate: "" });
+												}}
+												checked={date}
+												className="w-4 h-4"
+											/>
+											<div className="font-medium">
+												Choose When this Ad Will End
+											</div>
 										</div>
 									</div>
-									{/* <div className="flex flex-col gap-1">
-                    <div className="flex gap-2 my-2 items-center">
-                      <input
-                        name="myFormzpp"
-                        id="258"
-                        type="radio"
-                        onChange={() => {
-                          setDate(false);
-                        }}
-                        className="w-4 h-4"
-                        checked={!date}
-                      />
-                      <div className="flex flex-col">
-                        <div className="font-medium">
-                          Run this ad Continuously
-                        </div>
-                        <div>
-                          Your ad will run continuously for a daily budget. This
-                          option is recommended. Learn more
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex gap-2 my-2 items-center">
-                      <input
-                        name="myFormzder"
-                        id="234"
-                        type="radio"
-                        onChange={() => {}}
-                        onClick={() => {
-                          setDate(true);
-                          setThree({ ...three, endDate: "" });
-                        }}
-                        checked={date}
-                        className="w-4 h-4"
-                      />
-                      <div className="font-medium">
-                        Choose When this Ad Will End
-                      </div>
-                    </div>
-                  </div> */}
-									{/* <div>
-                    <h1 className="text-2xl font-semibold">Budget</h1>
-                    <div className="grid grid-cols-2 gap-4 py-3">
-                      <div className="flex flex-col space-y-1">
-                        <label
-                          htmlFor="tbudget"
-                          className="text-lg font-semibold"
-                        >
-                          Total Budget
-                        </label>
-                        <div className="flex justify-center  rounded-xl items-center border">
-                          <div className="border-r-2 p-2 text-lg">&#x20B9;</div>
-                          <input
-                            id="tbudget"
-                            name="myForm"
-                            onChange={(e) =>
-                              setThree({
-                                ...three,
-                                TotalBudget: e.target.value,
-                              })
-                            }
-                            value={three.TotalBudget}
-                            type="text"
-                            placeholder="Enter Total Budget"
-                            className="w-full rounded-xl outline-none p-2"
-                          />
-                        </div>
-                      </div>
-                      
-                    </div>
-                  </div> */}
+									<div>
+										<h1 className="text-2xl font-semibold">Budget</h1>
+										<div className="grid grid-cols-2 gap-4 py-3">
+											<div className="flex flex-col space-y-1">
+												<label
+													htmlFor="tbudget"
+													className="text-lg font-semibold"
+												>
+													Total Budget
+												</label>
+												<div className="flex justify-center  rounded-xl items-center border">
+													<div className="border-r-2 p-2 text-lg">&#x20B9;</div>
+													<input
+														id="tbudget"
+														name="myForm"
+														onChange={(e) =>
+															// setThree({
+															// 	...three,
+															// 	TotalBudget: e.target.value,
+															// })
+															dispatch(setThree({
+																...three,
+																TotalBudget: e.target.value,
+															}))
+														}
+														value={three.TotalBudget}
+														type="text"
+														placeholder="Enter Total Budget"
+														className="w-full bg-transparent rounded-xl outline-none p-2"
+													/>
+												</div>
+											</div>
+
+										</div>
+									</div>
 								</div>
 								{/* <div className="lg:min-w-[700px] bg-maincolor my-4 rounded-2xl py-5 px-5">
                   <div className="flex flex-col gap-4">
@@ -762,7 +783,9 @@ const Ad2 = ({
                 </div> */}
 							</div>
 							<div className="flex flex-col items-center">
-								<Square3 display={ProperAudience ? ProperAudience : 0} />
+								<div>
+									<Square3 display={ProperAudience ? ProperAudience : 0} />
+								</div>
 								{/* <Square4
 									ctr={ctr ? ctr : 0}
 									duration={three.duration ? three.duration : 1}
@@ -778,106 +801,7 @@ const Ad2 = ({
 				{/* mobile */}
 				<div className="md:hidden">
 					<div className="flex bg-maincolor flex-col py-2">
-						{/* <div className="fixed left-0 w-full top-0 z-50">
-							<div className="flex bg-maincolor justify-between px-5 items-center py-4 shadow-md">
-								<div className="text-[#555555] text-xl font-semibold">
-									Ad SetUp
-								</div>
-								<div className="flex justify-center items-center gap-3 ">
-									<div
-										onClick={() => setStep(0)}
-										className="border-b hidden cursor-pointer border-black"
-									>
-										Discard
-									</div>
 
-									{isdatavalid ? (
-										<div
-											onClick={() => setStep(2)}
-											className="p-2 px-7 rounded-full cursor-pointer bg-[#2D9AFF] text-white"
-										>
-											Next
-										</div>
-									) : (
-										<div className="p-2 px-7 rounded-full bg-[#b3bbc3] text-white">
-											Next
-										</div>
-									)}
-								</div>
-							</div>
-						</div> */}
-						{/* <div>
-							<div>
-								<div
-									style={{ marginTop: "4rem" }}
-									className="flex justify-center bg-[#fafafa] dark:bg-[#273142] pt-5 py-3 mt-3 pn:max-sm:text-xs text-center px-3"
-								>
-									<div className=" flex flex-col gap-1 justify-center items-center">
-										<div
-											className={` h-10 w-10 rounded-full mr-2 flex items-center justify-center ${step >= 0 ? "bg-[#27AE60] text-white" : ""
-												}`}
-										>
-											{step > 0 ? (
-												<BsCheckLg className="font-bold text-lg" />
-											) : (
-												1
-											)}
-										</div>
-
-										<div
-											className={` flex items-center font-semibold flex-col ${step >= 0 ? "text-[#27AE60]" : ""
-												}`}
-										>
-											Set up Ad
-										</div>
-									</div>
-
-									<div
-										className={`border-[#f9f9f9] border-dashed border-t-2 pn:max-sm:w-10 sm:w-20 mt-5 ${step >= 0 ? "border-black " : "border-black"
-											}`}
-									/>
-
-									<div className="flex flex-col gap-1 justify-center items-center">
-										<div
-											className={`bg-[#f9f9f9] h-10 w-10 rounded-full flex items-center justify-center ${step >= 1
-												? "bg-blue-600 text-white"
-												: "bg-green-300 text-white"
-												}`}
-										>
-											2
-										</div>
-
-										<div
-											className={` flex items-center flex-col ${step >= 1 ? "text-blue-600 " : "text-green-300"
-												}`}
-										>
-											Select target
-										</div>
-									</div>
-									<div
-										className={`border-[#f9f9f9] border-dashed border-t-2  pn:max-sm:w-10 sm:w-20 mt-5 ${step >= 1 ? "border-blue-600 " : "border-green-300"
-											}`}
-									/>
-									<div className="flex flex-col gap-1 -ml-4 justify-center items-center">
-										<div
-											className={`h-10 w-10 rounded-full flex items-center justify-center ${step >= 2
-												? "bg-blue-600 text-white"
-												: "border-black border-2 "
-												}`}
-										>
-											3
-										</div>
-
-										<div
-											className={` flex items-center flex-col justify-center ${step === 2 ? "text-blue-600 " : "text-black"
-												}`}
-										>
-											Preview & Launch
-										</div>
-									</div>
-								</div>
-							</div>
-						</div> */}
 						<div className="grid grid-cols-1">
 							<div className="flex flex-col">
 								<Square3 display={ProperAudience ? ProperAudience : 0} />
@@ -902,7 +826,8 @@ const Ad2 = ({
 										</h2>
 										<div className="flex flex-wrap gap-3 my-4">
 											<div
-												onClick={() => toggleType("infeed")}
+
+												onClick={() => { dispatch(setThree({ type: "infeed" })); setOpen(false) }}
 												className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type.includes("infeed")
 													? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
 													: ""
@@ -923,7 +848,8 @@ const Ad2 = ({
 												)}
 											</div>
 											<div
-												onClick={() => toggleType("search")}
+												// onClick={() => toggleType("search")}
+												onClick={() => { dispatch(setThree({ type: "search" })); setOpen(false) }}
 												className={` flex flex-col justify-center border relative  p-2 z-0 items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type.includes("search")
 													? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
 													: ""
@@ -944,8 +870,9 @@ const Ad2 = ({
 												)}
 											</div>
 											<div
-												onClick={() => toggleType("videoads")}
-												className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type.includes("videoads")
+												// onClick={() => toggleType("videoads")}
+												onClick={() => { setOpen(!open); dispatch(setThree({ type: "" })) }}
+												className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${open
 													? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
 													: ""
 													}`}
@@ -958,18 +885,209 @@ const Ad2 = ({
 													/>
 												</div>{" "}
 												<div className="font-medium py-2">Video Ads</div>
-												{three.type.includes("videoads") && (
+
+											</div>
+
+											{/* {open && <>
+												<div
+													// onClick={() => toggleType("skipable")}
+													onClick={() => { dispatch(setThree({ type: "skipable" })) }}
+													className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type === "skipable"
+														? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
+														: ""
+														}`}
+												>
+													<div>
+														<Image
+															src={search}
+															className="w-[90px] h-[90px]"
+															alt="video"
+														/>
+													</div>{" "}
+													<div className="font-medium py-2">Skipable</div>
+													{three.type === "skipable" && (
+														<div className={`absolute -top-2 -right-2`}>
+															<AiFillCheckCircle className="text-blue-600 text-xl" />
+														</div>
+													)}
+												</div>
+												<div
+													// onClick={() => toggleType("non-skipable")}
+													onClick={() => dispatch(setThree({ type: "non-skipable" }))}
+													className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type === "non-skipable"
+														? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
+														: ""
+														}`}
+												>
+													<div>
+														<Image
+															src={search}
+															className="w-[90px] h-[90px]"
+															alt="video"
+														/>
+													</div>{" "}
+													<div className="font-medium py-2">Non Skipable</div>
+													{three.type === "non-skipable" && (
+														<div className={`absolute -top-2 -right-2`}>
+															<AiFillCheckCircle className="text-blue-600 text-xl" />
+														</div>
+													)}
+												</div>
+											</>} */}
+											<div
+												// onClick={() => toggleType("banner")}
+												onClick={() => { dispatch(setThree({ type: "banner" })); setOpen(false) }}
+												className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type.includes("banner")
+													? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
+													: ""
+													}`}
+											>
+												<div>
+													<Image
+														src={banner}
+														className="w-[90px] h-[90px]"
+														alt="video"
+													/>
+												</div>{" "}
+												<div className="font-medium py-2">Banner Ads</div>
+												{three.type.includes("banner") && (
 													<div className={`absolute -top-2 -right-2`}>
 														<AiFillCheckCircle className="text-blue-600 text-xl" />
 													</div>
 												)}
 											</div>
 										</div>
+										{open && <div className='flex gap-7 flex-col justify-normal  '>
+											<div className='flex items-center mt-3 -mb-3'>Select One of these:-</div>
+											<div className='flex gap-3 pb-2 items-center'>
+												<><div
+
+													onClick={() => dispatch(setThree({ type: "skipable" }))}
+													className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type === "skipable"
+														? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
+														: ""
+														}`}
+												>
+													<div>
+														<Image
+															src={skip}
+															className="w-[90px] h-[90px]"
+															alt="video"
+														/>
+													</div>
+													<div className="font-medium py-2 text-sm">Skipable Ads</div>
+													{three.type === "skipable" && (
+														<div className={`absolute -top-2 -right-2`}>
+															<AiFillCheckCircle className="text-blue-600 text-xl" />
+														</div>
+													)}
+												</div>
+													<div
+
+														onClick={() => dispatch(setThree({ type: "non-skipable" }))}
+														className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type === "non-skipable"
+															? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
+															: ""
+															}`}
+													>
+														<div>
+															<Image
+																src={nonskip}
+																className="w-[90px] h-[90px]"
+																alt="video"
+															/>
+														</div>
+														<div className="font-medium py-2 text-sm">Non Skipable Ads</div>
+														{three.type === "non-skipable" && (
+															<div className={`absolute -top-2 -right-2`}>
+																<AiFillCheckCircle className="text-blue-600 text-xl" />
+															</div>
+														)}
+													</div></>
+											</div>
+										</div>}
 									</div>
 								</div>
 								<div className="rounded-xl">
 									<div className="my-5 bg-maincolor p-3 rounded-xl">
-										<div className="my-1 relative">
+										<div className="py-3  rounded-t-xl bg-maincolor relative">
+											<h1 className="text-lg py-1 pb-2 font-medium">Category</h1>
+											<Select
+												defaultValue='Business & Finance'
+												className="dark:text-white dark:bg-[#323b4e] w-full dark:border-none "
+												onValueChange={(selectValue) => {
+													dispatch(setThree({ category: selectValue }))
+												}}
+											>
+												<SelectTrigger className="w-full dark:text-white dark:bg-transparent rounded-xl outline-none dark:border ">
+													<SelectValue
+
+														className="dark:text-white dark:bg-[#323b4e] dark:border-none "
+													/>
+												</SelectTrigger>
+												<SelectContent className="dark:text-white dark:bg-[#323b4e] dark:border-none ">
+													<SelectGroup className="max-h-[200px] gap-1 w-full flex flex-col justify-center items-center">
+														{PointsCategory?.map((d, i) => (
+															<SelectItem
+																value={d.category}
+																key={i}
+																className=""
+															>
+
+																<div className="text-sm">{d.category}</div>
+
+															</SelectItem>
+														))}
+
+													</SelectGroup>
+												</SelectContent>
+											</Select>
+											{/* <div className="w-full flex justify-center items-center rounded-xl border ">
+											<BiMap className="border-r-2 p-2 text-4xl" />
+											<div
+												placeholder="Select a Category"
+												className="w-full rounded-xl p-2 outline-none "
+											>
+												{three.category}
+											</div>
+										</div> */}
+
+											{/* <div className="relative overflow-y-scroll my-3 no-scrollbar w-[360px] h-[230px]">
+											<div>
+												<div className="absolute top-0 left-0 h-auto w-full p-3 border rounded-xl z-10 drop-shadow-md bg-maincolor">
+													<div className="text-sm text-[#6B778C] mb-2 pb-2">
+														Categories
+													</div>
+													<div className="flex flex-col gap-2">
+														{PointsCategory?.map((data, i) => (
+															<div
+																key={i}
+																className="flex items-center z-20 gap-2"
+															>
+																<input
+																	type="radio"
+																	name="mycategory"
+																	onChange={() =>
+																		handleCategoryChange(
+																			data.category,
+																			data.price,
+																			data.population,
+																		)
+																	}
+																	checked={data.category === three.category}
+																/>
+
+																<div className="text-lg font-medium">
+																	{data.category}
+																</div>
+															</div>
+														))}
+													</div>
+												</div>
+											</div>
+										</div> */}
+										</div>
+										{/* <div className="my-1 relative">
 											<h1 className="text-lg py-1 font-medium">Category</h1>
 											<div className="w-full flex justify-center items-center rounded-xl border ">
 												<BiMap className="border-r-2 p-2 text-4xl" />
@@ -998,16 +1116,15 @@ const Ad2 = ({
 																		name="categoryss"
 																		onChange={() =>
 																			handleCategoryChange(
-																				data.name,
-																				data.points,
-																				data.audienceByCategory,
-																				data.ctr
+																				data.category,
+																				data.price,
+																				data.population,
 																			)
 																		}
-																		checked={data.name === three.category}
+																		checked={data.category === three.category}
 																	/>
 																	<div className="text-lg font-medium">
-																		{data.name}
+																		{data.category}
 																	</div>
 																</div>
 															))}
@@ -1015,6 +1132,9 @@ const Ad2 = ({
 													</div>
 												</div>
 											</div>
+										</div> */}
+										<div className='my-1'>
+
 										</div>
 										<div className="">
 											<div className="my-2">
@@ -1428,84 +1548,83 @@ const Ad2 = ({
 																startDate: e.target.value,
 															}))
 														}
-														value={formatDateToString(three.startDate)}
+														value={three.startDate}
 														placeholder="Enter Campaign Name"
 														className="w-full border rounded-xl bg-transparent outline-none p-2"
 													/>
 												</div>
-												{/* <div
-                          className={`${
-                            date ? "flex flex-col space-y-1" : "hidden"
-                          }`}
-                        >
-                          <label
-                            htmlFor="edate"
-                            className="text-lg font-semibold py-2"
-                          >
-                            End Date<span className="text-[#FF4444]">*</span>
-                          </label>
-                          <input
-                            name="myForm"
-                            id="edate"
-                            onChange={(e) =>
-                              setThree({
-                                ...three,
-                                endDate: e.target.value,
-                              })
-                            }
-                            value={formastEndDate}
-                            type="date"
-                            placeholder="Enter Campaign Name"
-                            className="w-full border rounded-xl outline-none p-2"
-                          />
-                          {formastEndDate < formastStartDate && (
-                            <div className="text-sm text-red-700">
-                              Please Enter a Valid Enddate
-                            </div>
-                          )}
-                        </div> */}
+												<div
+													className={`${date ? "flex flex-col space-y-1" : "hidden"
+														}`}
+												>
+													<label
+														htmlFor="edate"
+														className="text-lg font-semibold py-2"
+													>
+														End Date<span className="text-[#FF4444]">*</span>
+													</label>
+													<input
+														name="myForm"
+														id="edate"
+														onChange={(e) =>
+															setThree({
+																...three,
+																endDate: e.target.value,
+															})
+														}
+														value={three.endDate}
+														type="date"
+														placeholder="Enter Campaign Name"
+														className="w-full border rounded-xl outline-none p-2"
+													/>
+													{formatDateToString(three.endDate) < formatDateToString(three.startDate) && (
+														<div className="text-sm text-red-700">
+															Please Enter a Valid Enddate
+														</div>
+													)}
+												</div>
 											</div>
 										</div>
-										{/* <div className="flex flex-col gap-1">
-                      <div className="flex gap-2 my-2 items-center">
-                        <input
-                          name="mpypFormzpp"
-                          id="2529346758"
-                          type="radio"
-                          onChange={() => {
-                            setDate(false);
-                          }}
-                          className="w-4 h-4"
-                          checked={!date}
-                        />
-                        <div className="flex flex-col">
-                          <div className="font-medium">
-                            Run this ad Continuously
-                          </div>
-                          <div>
-                            Your ad will run continuously for a daily budget.
-                            This option is recommended. Learn more
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex gap-2 my-2 items-center">
-                        <input
-                          name="myFormerloi"
-                          id="234123565"
-                          type="radio"
-                          onChange={() => {}}
-                          onClick={() => {
-                            setDate(true);
-                            setThree({ ...three, endDate: "" });
-                          }}
-                          checked={date}
-                          className="w-4 h-4"
-                        />
-                        <div className="font-medium">
-                          Choose When this Ad Will End
-                        </div>
-                      </div>
-                    </div> */}
+										<div className="flex flex-col gap-1">
+											<div className="flex gap-2 my-2 items-center">
+												<input
+													name="mpypFormzpp"
+													id="2529346758"
+													type="radio"
+													onChange={() => {
+														setDate(false);
+													}}
+													className="w-4 h-4"
+													checked={!date}
+												/>
+												<div className="flex flex-col">
+													<div className="font-medium">
+														Run this ad Continuously
+													</div>
+													<div>
+														Your ad will run continuously for a daily budget.
+														This option is recommended. Learn more
+													</div>
+												</div>
+											</div>
+											<div className="flex gap-2 my-2 items-center">
+												<input
+													name="myFormerloi"
+													id="234123565"
+													type="radio"
+													onChange={() => { }}
+													onClick={() => {
+														setDate(true);
+														setThree({ ...three, endDate: "" });
+													}}
+													checked={date}
+													className="w-4 h-4"
+												/>
+												<div className="font-medium">
+													Choose When this Ad Will End
+												</div>
+											</div>
+										</div>
 										{/* <div className="flex flex-col my-1 gap-1">
                       <label
                         htmlFor="dbudget"
@@ -1530,7 +1649,7 @@ const Ad2 = ({
                         />
                       </div>
                     </div> */}
-										<div className="my-3">
+										{/* <div className="my-3">
 											<h1 className="text-lg py-2 font-semibold">
 												Select Ad Duration
 											</h1>
@@ -1575,7 +1694,7 @@ const Ad2 = ({
 													30 days
 												</div>
 											</div>
-										</div>
+										</div> */}
 										{/* <div>
                       <h1 className="text-2xl font-semibold">Budget</h1>
                       <div className="grid sm:grid-cols-2 gap-4 py-3">
@@ -1672,7 +1791,7 @@ const Ad2 = ({
 							</div>
 						</div>
 					</div>
-				</div>
+				</div >
 			</div >
 		</>
 	)

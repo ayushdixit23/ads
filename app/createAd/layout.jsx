@@ -1,7 +1,7 @@
 "use client"
 import { BsCheckLg } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { setStep, setThree } from "../redux/slice/dataSlice";
+import { setStep } from "../redux/slice/dataSlice";
 import { getData } from "../utils/useful";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -25,7 +25,6 @@ export default function createAdLayout({ children }) {
 		} else if (step === 1) {
 			dispatch(setStep(2))
 		} else {
-			console.log("first")
 		}
 	}
 
@@ -34,8 +33,6 @@ export default function createAdLayout({ children }) {
 			dispatch(setStep(1))
 		} else if (step === 1) {
 			dispatch(setStep(0))
-		} else {
-			console.log("first")
 		}
 	}
 
@@ -86,15 +83,15 @@ export default function createAdLayout({ children }) {
 			formDataToSend.append("contenttype", "image");
 			formDataToSend.append("tags", three.tags);
 			// formDataToSend.append("dailybudget", totalPrice);
-			// formDataToSend.append("totalbudget", pricebyDay);
+			formDataToSend.append("totalbudget", three.TotalBudget);
 			formDataToSend.append("agerange", three.selectedAgeRange);
 			formDataToSend.append("comid", three.comid)
 			formDataToSend.append("minage", three.minage);
-			formDataToSend.append("preferedsection", three.type);
+			formDataToSend.append("type", three.type);
 			formDataToSend.append("maxage", three.maxage);
 			formDataToSend.append("startdate", three.startDate);
 			formDataToSend.append("adid", three.random_id);
-			formDataToSend.append("enddate", three.duration);
+			formDataToSend.append("enddate", three.endDate);
 			formDataToSend.append("goal", three.goal);
 			formDataToSend.append("advertiserid", advid);
 
@@ -106,7 +103,6 @@ export default function createAdLayout({ children }) {
 				console.log("irst")
 				res = await axios.post(`${API}/newad/${advid}/${userid}`, formDataToSend);
 			}
-			console.log(res.data)
 			if (res?.data?.success) {
 				router.refresh()
 				router.push("/main/dashboard");
@@ -115,7 +111,6 @@ export default function createAdLayout({ children }) {
 			console.log(err);
 		}
 	};
-
 	if (!client) {
 		return null
 	}
@@ -148,9 +143,9 @@ export default function createAdLayout({ children }) {
 
 	return (
 		<>
-			<div className="w-screen h-screen no-scrollbar overflow-auto">
-				<div className="w-full sticky top-0 left-0 z-50  bg-maincolor">
-					<div className="flex border w-full bg-maincolor justify-between items-center px-5 py-3 pb-4">
+			<div className=" h-screen fixed dark:bg-[#273142] bg-white">
+				<div className="w-full h-[20%] md:h-[15%] z-10 dark:bg-[#273142]">
+					<div className="flex border w-full dark:bg-[#273142] bg-white justify-between items-center px-5 py-3 pb-4">
 						<div className="text-[#555555] dark:text-white pn:max-sm:hidden text-xl font-semibold">
 							Set up a new Ad
 						</div>
@@ -177,10 +172,8 @@ export default function createAdLayout({ children }) {
 								</Link>
 							}
 							{step === 0 && (
-								validateStep1 ?
-									// <div onClick={stepRunner} className="p-2 px-7 rounded-full bg-blue-800 cursor-pointer  text-white">
-									// 	< div > Next</div>
-									// </div> 
+								validateStep2 ?
+
 									<Link href="/createAd?step=2" onClick={stepRunner} className="p-2 px-7 rounded-full bg-blue-800 cursor-pointer  text-white">
 										< div > Next</div>
 									</Link>
@@ -191,10 +184,8 @@ export default function createAdLayout({ children }) {
 							)
 							}
 							{step === 1 && (
-								validateStep2 ?
-									// <div onClick={stepRunner} className="p-2 px-7 rounded-full bg-blue-800 cursor-pointer  text-white">
-									// 	< div > Next</div>
-									// </div> 
+								validateStep1 ?
+
 									<Link href="/createAd?step=3" onClick={stepRunner} className="p-2 px-7 rounded-full bg-blue-800 cursor-pointer  text-white">
 										< div > Next</div>
 									</Link>
@@ -211,7 +202,7 @@ export default function createAdLayout({ children }) {
 							}
 						</div>
 					</div>
-					<div className="flex justify-center mt-5 bg-maincolor items-center">
+					<div className="flex justify-center mt-5 dark:bg-[#273142] bg-white items-center">
 						<div className="after:mt-4 mb-7 after:block after:h-1 min-w-[83%] sm:min-w-[600px] after:w-full after:rounded-lg after:bg-gray-200">
 							<ol className="grid grid-cols-3 text-sm font-medium text-gray-500">
 								<li className="relative flex justify-start text-green-600">
@@ -220,7 +211,7 @@ export default function createAdLayout({ children }) {
 										{step >= 1 ? <BsCheckLg className="w-7 h-7 p-[5px]" /> : <div className="w-7 h-7 rounded-full bg-blue-600 text-sm flex justify-center items-center">1</div>
 										}
 									</span>
-									<span class={`${step >= 1 ? "text-green-600" : "text-blue-600"} text-xs pp:text-base`}>Set up Ad</span>
+									<span class={`${step >= 1 ? "text-green-600" : "text-blue-600"} text-xs pp:text-base`}>Select target</span>
 								</li>
 
 								<li className="relative flex justify-center text-green-600">
@@ -230,24 +221,21 @@ export default function createAdLayout({ children }) {
 										{step >= 2 ? <BsCheckLg className="w-7 h-7 p-[5px]" /> : <div className="w-7 h-7 rounded-full bg-blue-600 text-sm flex justify-center items-center">2</div>}
 									</span>
 
-									<span className={`${step >= 2 ? "text-green-600" : "text-blue-600"} text-xs pp:text-base`}>Select target</span>
+									<span className={`${step >= 2 ? "text-green-600" : "text-blue-600"} text-xs pp:text-base`}>Set up Ad</span>
 
 								</li>
 
 								<li className="relative flex justify-end">
 									<span className="absolute -bottom-[1.90rem] -end-1 rounded-full bg-gray-600 text-white">
-										{/* {a ? <BsCheckLg className="w-7 h-7 p-[5px]" />
-											: */}
 										<div className="w-7 h-7 rounded-full bg-blue-600 text-sm flex justify-center items-center">3</div>
-										{/* } */}
 									</span>
 									<span className={`text-blue-600 text-xs pp:text-base`}>Preview & Launch</span>
 								</li>
 							</ol>
 						</div>
 					</div>
-				</div >
-				<div>
+				</div>
+				<div className="h-[76%] sm:mt-[4%] z-40 pn:max-sm:overflow-y-scroll pn:max-sm:no-scrollbar bg-maincolor ">
 					{children}
 				</div>
 			</div >

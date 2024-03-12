@@ -1,3 +1,4 @@
+import { formatDateToString } from "@/app/utils/useful"
 import { createSlice } from "@reduxjs/toolkit"
 
 export const dataSlice = createSlice({
@@ -27,15 +28,16 @@ export const dataSlice = createSlice({
 			selectedAgeRange: "",
 			gender: "",
 			age: "",
-			type: [],
+			type: "",
 			TotalBudget: "",
 			DailyBudget: "",
-			category: "",
-			startDate: Date.now(),
+			category: "Business & Finance",
+			startDate: formatDateToString(new Date()),
 			comid: "",
-			// endDate: Date.now(),
+			endDate: "",
 			duration: "1",
 			random_id: Date.now().toString(),
+			audience: ""
 		}
 	},
 	reducers: {
@@ -50,9 +52,12 @@ export const dataSlice = createSlice({
 		},
 		setThree: (state, action) => {
 			state.three = { ...state.three, ...action.payload };
+		},
+		setAudience: (state, action) => {
+			state.three.audience = action.payload
 		}
 	}
 })
 
-export const { setStep, setValidateStep1, setValidateStep2, setThree } = dataSlice.actions
+export const { setStep, setValidateStep1, setValidateStep2, setAudience, setThree } = dataSlice.actions
 export default dataSlice.reducer

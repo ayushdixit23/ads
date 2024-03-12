@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { BiWallet } from "react-icons/bi";
 import { FiSettings } from "react-icons/fi";
 import { AiOutlineBarChart } from "react-icons/ai";
+import { RiAdvertisementLine } from "react-icons/ri";
 import { useRouter } from "next/navigation";
 
 const MobileNav = () => {
@@ -34,6 +35,9 @@ const MobileNav = () => {
       case 2:
         router.push("/setting");
         break;
+      case 3:
+        router.push("/main/ads");
+        break;
       default:
         break;
     }
@@ -56,7 +60,7 @@ const MobileNav = () => {
                       }`}
                   />
                 </div>
-                <div className={`${colors === 0 ? "text-blue-600 " : null}`}>
+                <div className={`text-sm ${colors === 0 ? "text-blue-600 " : null}`}>
                   Overview
                 </div>
               </div>
@@ -74,8 +78,28 @@ const MobileNav = () => {
                 <div>
                   <BiWallet className={` text-[26px]`} />
                 </div>
-                <div className={`${colors === 1 ? "text-blue-600 " : null}`}>
+                <div className={`text-sm ${colors === 1 ? "text-blue-600 " : null}`}>
                   Wallet
+                </div>
+              </div>
+            </li>
+            <li
+              onClick={() => {
+                handleColor(3);
+              }}
+            >
+              <div
+                className="flex flex-col justify-center gap-2 hover:text-blue-500 items-center"
+                href="/main/ads"
+              >
+                <div>
+                  <RiAdvertisementLine
+                    className={`text-[26px] ${colors === 3 ? "text-blue-600 " : null
+                      }`}
+                  />
+                </div>
+                <div className={`text-sm ${colors === 3 ? "text-blue-600 " : null}`}>
+                  Ads
                 </div>
               </div>
             </li>
@@ -94,7 +118,7 @@ const MobileNav = () => {
                       }`}
                   />
                 </div>
-                <div className={`${colors === 2 ? "text-blue-600 " : null}`}>
+                <div className={`text-sm ${colors === 2 ? "text-blue-600 " : null}`}>
                   Settings
                 </div>
               </div>

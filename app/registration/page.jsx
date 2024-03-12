@@ -13,6 +13,7 @@ import Individual from "../spliting/Individual";
 import Organisation from "../spliting/Organisation";
 import { useDispatch, useSelector } from "react-redux";
 import { setChange } from "../redux/slice/registerSlice";
+import { storeInSessionStorage } from "../utils/TokenDataWrapper";
 
 const Register = () => {
   const [radio, setRadio] = useState(1);
@@ -192,7 +193,10 @@ const Register = () => {
 
       const res = await axios.post(`${API}/createadvacc`, formDataToSend);
       if (res?.data?.success) {
-        router.push("/login");
+        storeInSessionStorage(res.data.sessionId)
+        localStorage.setItem(`axetkn${res.data.sessionId}`, res.data.access_token)
+        localStorage.setItem(`rvktkn${res.data.sessionId}`, res.data.refresh_token)
+        router.push("/main/dashboard");
       }
     } catch (err) {
       console.log(err);

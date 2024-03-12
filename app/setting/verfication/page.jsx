@@ -2,16 +2,22 @@
 import { API } from "@/Essentials";
 import { getData } from "@/app/utils/useful";
 import axios from "axios";
-import React, { useState } from "react";
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
 import { AiOutlineUpload } from "react-icons/ai";
 
 const page = () => {
   const [pop, setPop] = useState(false);
   const [user, setUser] = useState({ name: "", pic: "" });
-  const { userid } = getData()
+  const { userid, firstname, lastname } = getData()
+
+  useEffect(() => {
+    setUser({
+      ...user, name: firstname + " " + lastname
+    })
+  }, [firstname, lastname])
 
   const handleSave = async () => {
-
     if (user?.name && user?.pic) {
       try {
         const form = new FormData();
@@ -56,7 +62,7 @@ const page = () => {
             <div className="p-[2%]">
               <div className="p-4 rounded-2xl">
                 <h1 className="text-3xl font-bold py-1">Verification</h1>
-                <p>
+                <p className="my-2">
                   Fill in the registration data. It will take a couple of
                   minutes.{" "}
                 </p>
@@ -80,40 +86,45 @@ const page = () => {
                   </label>
                 </div>
                 <p className="-mt-7">
-                  Confirm phone number with code from sms message
+                  Enter your full name as per your Aadhaar card or PAN card
                 </p>
-                <div className="mt-2">
-                  <h1 className="font-medium py-2">
-                    Upload your Pan Or Aadhaar
-                  </h1>
-                  <div className="w-full flex justify-center flex-col dark:border-border rounded-2xl items-center p-2 h-[160px] border-2 border-black border-dashed">
-                    <label htmlFor="image">
-                      <AiOutlineUpload className="text-3xl" />
-                    </label>
-                    <div className="text-center text-sm py-2">
-                      Drop your images here, or{" "}
-                      <label htmlFor="image" className="text-[#007AFF]">
-                        click to browse
-                      </label>
-                      <br />
-                      Recommended, up to 5 MB
-                    </div>
-                    <div className="my-3">
-
-                      <input
-                        id="image"
-                        onChange={(e) =>
-                          setUser({
-                            ...user,
-                            pic: e.target.files[0],
-                          })
-                        }
-                        className="w-full hidden"
-                        type="file"
-                      />
-                    </div>
+                {user.pic ?
+                  <div className="flex justify-center items-center w-full mt-3 overflow-hidden rounded-2xl"  >
+                    <Image src={URL.createObjectURL(user.pic)} width={400} height={400} className="w-full pt-2 max-w-[180px] rounded-2xl max-h-[180px] h-full object-cover" />
                   </div>
-                </div>
+
+                  : < div className="mt-2">
+                    <h1 className="font-medium py-2">
+                      Upload your Pan Or Aadhaar
+                    </h1>
+                    <label htmlFor="image" className="w-full flex justify-center flex-col dark:border-border rounded-2xl items-center p-2 h-[160px] border-2 border-black border-dashed">
+                      <label htmlFor="image">
+                        <AiOutlineUpload className="text-3xl" />
+                      </label>
+                      <div className="text-center text-sm py-2">
+                        Drop your images here, or{" "}
+                        <label htmlFor="image" className="text-[#007AFF]">
+                          click to browse
+                        </label>
+                        <br />
+                        Recommended, up to 5 MB
+                      </div>
+                      <div className="my-3">
+
+                        <input
+                          id="image"
+                          onChange={(e) =>
+                            setUser({
+                              ...user,
+                              pic: e.target.files[0],
+                            })
+                          }
+                          className="w-full hidden"
+                          type="file"
+                        />
+                      </div>
+                    </label>
+                  </div>}
               </div>
               <div className="mt-5 flex sm:flex-row flex-col gap-3 justify-center items-center">
                 <button
@@ -139,7 +150,7 @@ const page = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div >
       <div className="h-full w-full sm:p-[2%] p-3 md:p-[4%]">
         <h1 className="text-xl font-semibold p-2 border-b-2">
           Advertiser Verification

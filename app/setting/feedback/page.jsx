@@ -1,6 +1,22 @@
-import React from "react";
+"use client"
+import { API } from "@/Essentials";
+import { getData } from "@/app/utils/useful";
+import axios from "axios";
+import React, { useState } from "react";
 
 const page = () => {
+  const [msg, setMsg] = useState("")
+  const { advid } = getData()
+
+  const sendMsg = async () => {
+    try {
+      const res = await axios.post(`${API}/feedback/${advid}`, { msg })
+      console.log(res.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <>
       <div className="h-full w-full p-[3%]">
@@ -14,6 +30,8 @@ const page = () => {
             Label
           </label>
           <textarea
+            value={msg}
+            onChange={(e) => setMsg(e.target.value)}
             className="border-2 shadow-md bg-input rounded-2xl max-h-[80px] min-h-[70px] outline-none p-3"
             name="text"
             id="text"
@@ -25,7 +43,7 @@ const page = () => {
           <div className="bg-[#F1F2F3] mx-2 rounded-lg text-[#6B7280] p-2 px-4 font-medium">
             Cancel
           </div>
-          <div className="bg-[#0284FE] rounded-lg text-white p-2 px-4 font-medium">
+          <div onClick={sendMsg} className="bg-[#0284FE] rounded-lg text-white p-2 px-4 font-medium">
             Save changes
           </div>
         </div>

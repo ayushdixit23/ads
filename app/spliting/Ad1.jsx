@@ -38,7 +38,7 @@ const Ad1 = ({
 
   return (
     <>
-      <div className={`bg-[#F8F8F8]  select-none grid grid-cols-1 w-full`}>
+      <div className={`bg-[#F8F8F8] sm:mb-[140px] select-none grid grid-cols-1 w-full`}>
         <div className="flex flex-col bg-maincolor ">
 
 
@@ -86,7 +86,7 @@ const Ad1 = ({
                               className=""
                             >
 
-
+                              {/* {console.log(d.dps)} */}
                               <div className="flex justify-center gap-2 items-center w-full">
                                 <div>
                                   <img
@@ -439,7 +439,6 @@ const Ad1 = ({
                       <input
                         name="myForm"
                         id="link"
-
                         onChange={(e) => dispatch(setThree({ link: e.target.value }))}
                         value={three.link}
                         type="text"
@@ -458,7 +457,7 @@ const Ad1 = ({
                 </div> */}
                   <div className="bg-[#F3F6F8] dark:bg-[#273142] dark:border dark:border-border  flex sm:flex-row flex-col justify-around py-3 rounded-2xl items-center w-full">
                     <div className="pn:max-sm:text-center pn:max-sm:w-[80%] pn:max-sm:py-2">
-                      Image must be JPG, PNG, or GIF, up to 5 mb
+                      {three.type === "skipable" || three.type === "non-skipable" ? "Videos must be MP4, AVI, or MOV, up to 5 mb" : "Image must be JPG, PNG , JPEG , or SVG, up to 5 mb"}
                     </div>
                     <div className="text-[#5585FF] border pn:max-sm:w-[80%] pn:max-sm:text-center hover:border-[#5585FF] p-2 rounded-2xl">
                       <label htmlFor="files">Select and Upload</label>
@@ -467,6 +466,7 @@ const Ad1 = ({
                         name="myForm"
                         onChange={handleFileChanges}
                         type="file"
+                        accept="video/*,image/*"
                         id="files"
                         className="hidden"
                       />
@@ -536,7 +536,7 @@ const Ad1 = ({
 
             <div className="md:col-span-3 pn:max-md:order-2 w-full sm:overflow-y-auto sm:no-scrollbar rounded-xl max-h-[780px]">
               <div className="bg-[#FAFAFA] dark:bg-[#1b2431] rounded-xl w-full flex justify-center items-center">
-                <div className="bg-maincolor rounded-xl flex flex-col w-[85%] sm:w-[500px] md:w-[370px]  my-10 px-2">
+                <div className="bg-maincolor rounded-xl flex flex-col w-[85%] sm:w-[500px] text-wrap md:w-[370px]  my-10 px-2">
                   <div className="flex justify-between items-center w-full">
                     <div className="flex items-center gap-2 pt-2 w-full">
                       <div>
@@ -580,7 +580,7 @@ const Ad1 = ({
                       <BsThreeDotsVertical />
                     </div>
                   </div>
-                  <div className="mt-2  h-full w-full">
+                  <div className="mt-2 flex flex-col h-full w-full">
 
                     {three.pic === "" && (
                       <Image
@@ -588,7 +588,7 @@ const Ad1 = ({
                         alt={three.picname}
                         width={350}
                         height={200}
-                        className="w-auto h-auto min-w-full  rounded-lg object-cover"
+                        className="w-full h-[300px] min-w-full  rounded-lg object-cover"
                       />
                     )}
                     {three.pic ? (
@@ -597,7 +597,7 @@ const Ad1 = ({
                         alt={three.picname}
                         width={350}
                         height={200}
-                        className="w-auto min-w-full h-auto rounded-lg object-cover"
+                        className="w-full h-[300px] max-w-[300px] max-h-[300px] min-w-[250px] min-h-[250px] rounded-lg object-cover"
                       />
                     ) : null}
 
@@ -606,7 +606,7 @@ const Ad1 = ({
                         three.picname.split(".").pop().toLowerCase()
                       ) ? (
                       <video
-                        className="w-auto h-auto rounded-2xl object-cover"
+                        className="w-full h-[300px]  rounded-2xl object-cover"
                         width="350"
                         height="200"
                         controls
@@ -621,14 +621,13 @@ const Ad1 = ({
                   </div>
 
                   <div className="py-1 mt-2 font-semibold">
-                    {three.Headline != ""
-                      ? three.Headline
+                    {three.Headline ?
+                      three.Headline.length > 20 ? `${three.Headline.slice(0, 20)}...` : three.Headline
                       : "Never have a bad meal"}
                   </div>
                   <div className="py-1">
-                    {" "}
                     {three.Description != ""
-                      ? three.Description
+                      ? three.Description.length > 50 ? `${three.Description.slice(0, 50)}...` : three.Description
                       : "healthy and sweet dishes"}
                   </div>
 

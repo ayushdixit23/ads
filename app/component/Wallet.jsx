@@ -2,38 +2,40 @@
 import React, { useCallback, useEffect, useState } from "react";
 import newWallet from "../assests/newWallet.svg";
 import Image from "next/image";
-import { AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineLoading3Quarters, AiOutlineSearch } from "react-icons/ai";
 import axios from "axios";
 import nodataw from "../assests/nodataw.svg";
 import { API } from "@/Essentials";
 import { RxCross2 } from "react-icons/rx";
 import useRazorpay from "react-razorpay";
-import moment from "moment";
 import { getData } from "../utils/useful";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
 import { useTheme } from "next-themes";
+import FetchWallet from "./FetchWallet";
+import Pagination from "./Pagination";
 
 const Wallet = () => {
   const [wallet, setWallet] = useState(0);
   const [money, setMoney] = useState("");
-  const [load, setLoad] = useState(false);
+  const [load, setLoad] = useState(true);
   const [payhistory, setPayhistory] = useState([]);
   const [check, setCheck] = useState(false);
   const [inp, setInp] = useState("");
   const [Razorpay] = useRazorpay();
   const { theme } = useTheme()
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postPerPage, setPostPerPage] = useState(7);
+  const lastindex = currentPage * postPerPage;
+  const firstIndex = lastindex - postPerPage;
+  const postperData = payhistory?.slice(firstIndex, lastindex);
   // const [os, setOs] = useState("");
 
   const { advid, firstname, lastname } = getData()
+
+  console.log(advid, "advid")
   const fetchdata = useCallback(async () => {
     try {
+      setLoad(true)
       const response = await axios.get(`${API}/gettransactions/${advid}`);
       if (response.data.success) {
         setMoney(response.data.amount);
@@ -43,17 +45,20 @@ const Wallet = () => {
       } else {
         setCheck(false);
       }
+      setLoad(false)
     } catch (error) {
       console.log(error);
       setCheck(false);
+    } finally {
+      setLoad(false)
     }
-  }, []);
+  }, [advid]);
 
   useEffect(() => {
     if (advid) {
       fetchdata();
     }
-  }, [advid]);
+  }, [advid, fetchdata]);
 
   const handlePayment = useCallback(
     async (e) => {
@@ -70,7 +75,7 @@ const Wallet = () => {
             const order_id = response.data.order_id;
             const tid = response.data.tid
             var options = {
-              "key": "rzp_test_jXDMq8a2wN26Ss", // Enter the Key ID generated from the Dashboard
+              "key": "rzp_live_Ms5I8V8VffSpYq", // Enter the Key ID generated from the Dashboard
               "amount": `${inp * 100}`, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
               "currency": "INR",
               "name": "Grovyo", //your business name
@@ -82,7 +87,7 @@ const Wallet = () => {
               "handler": async (response) => {
                 try {
                   setWallet(0)
-                  const res = await axios.post(`http://192.168.29.225:7190/api/updatetransactionstatus/${advid}`, {
+                  const res = await axios.post(`${API}/updatetransactionstatus/${advid}`, {
                     tid,
                     amount: inp,
                     success: true,
@@ -90,7 +95,7 @@ const Wallet = () => {
                     order_id: response.razorpay_order_id,
                     razorpay_signature: response.razorpay_signature,
                   })
-                  console.log(res.data)
+                  window.location.reload()
                 } catch (error) {
                   console.log(error)
                 }
@@ -127,6 +132,16 @@ const Wallet = () => {
     },
     [Razorpay, inp]
   );
+
+  if (load) {
+    return <div className="flex justify-center
+    items-center h-screen dark:bg-[#273142]  bg-white fixed inset-0">
+      <div className="animate-spin">
+        <AiOutlineLoading3Quarters className="text-xl dark:text-white text-black" />
+      </div>
+
+    </div>
+  }
 
   return (
     <>
@@ -275,159 +290,19 @@ const Wallet = () => {
             </div>
           )}
 
-          <div
-            className={`p-3 ${payhistory.length != 0 ? null : "pn:max-md:hidden"
-              }`}
-          >
-            <div className="flex justify-between bg-maincolor items-center w-full border rounded-t-2xl py-5 px-3 sm:px-[4%]">
-              <div className="sm:text-2xl text-lg font-semibold">
-                All Transaction Details
-              </div>
-              <div className="flex pn:max-sm:hidden justify-center items-center space-x-2 md:w-[30%]">
-                <div className="w-full border px-3 rounded-full ">
-                  <input
-                    type="text"
-                    className="w-full p-2 outline-none bg-transparent rounded-full"
-                    placeholder='Search " Transaction id "'
-                  />
-                </div>
-                <div className="bg-[#1A73E8] p-2 rounded-full">
-                  <AiOutlineSearch className="text-2xl text-white" />
-                </div>
-              </div>
-            </div>
-
-            <div className="h-[400px] bg-maincolor border no-scrollbar overflow-x-auto overflow-y-scroll">
-              <Table>
-
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="text-center">Transactions ID</TableHead>
-                    <TableHead className="text-center">Name</TableHead>
-                    <TableHead className="text-center">Date</TableHead>
-                    <TableHead className="text-center">Status</TableHead>
-                    <TableHead className="text-center">Amount</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {payhistory.length > 0 ? (
-                    <>
-                      {payhistory?.map((p, i) => (
-                        <TableRow key={i}>
-                          <TableCell className=" text-center px-4 py-2">
-                            {p?.transactionid ? p?.transactionid : "-"}
-                          </TableCell>
-                          <TableCell className=" text-center px-4 py-2">
-                            {p?.type ? p?.type : "-"}
-                          </TableCell>
-                          <TableCell className=" text-center px-4 py-2">
-                            {p?.createdAt
-                              ? moment(p?.createdAt).format("DD/MM/yy")
-                              : "-"}
-                          </TableCell>
-                          <TableCell
-                            className={`text-center font-medium px-4 py-2 ${p?.status === "Pending" ? "text-[#F9943B]" : null
-                              }
-                          ${p?.status === "Success" ? "text-[#03A65A]" : null}
-                          ${p?.status === "Failed" ? "text-[#FC2E20]" : null}`}
-                          >
-                            {p?.status ? p?.status : "-"}
-                          </TableCell>
-                          <TableCell className=" text-center px-4 py-2">
-                            ₹{p?.amount ? p?.amount : "-"}
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </>
-                  ) : (
-                    <>
-                      <TableRow>
-                        <TableCell colSpan="7">
-                          <div className="flex flex-col w-full justify-center bg-maincolor p-2 mb-3 py-5 pn:max-md:hidden items-center">
-                            <div>
-                              <div className="flex justify-center items-center">
-                                <Image src={nodataw} alt="nodataw" />
-                              </div>
-                              <div className="text-xl font-semibold text-center py-2">
-                                No transactions
-                              </div>
-                              <div className="py-2 text-sm text-[#8B8D97]">
-                                You have no transactions during this period.
-                              </div>
-                            </div>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    </>
-                  )}
-                </TableBody>
-              </Table>
-              {/* <table className="w-full min-w-[700px] border-none">
-                <thead className="bg-[#F8FAFC] dark:bg-[#273142] dark:border-border dark:border">
-                  <tr>
-                    <th className="text-center px-4 py-2">Transactions ID</th>
-                    <th className="text-center px-4 py-2">Name</th>
-                    <th className="text-center px-4 py-2">Date</th>
-                    <th className="text-center px-4 py-2">Status</th>
-                    <th className="text-center px-4 py-2">Amount</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {payhistory.length > 0 ? (
-                    <>
-                      {payhistory?.map((p, i) => (
-                        <tr key={i}>
-                          <td className=" text-center px-4 py-2">
-                            {p?.transactionid ? p?.transactionid : "-"}
-                          </td>
-                          <td className=" text-center px-4 py-2">
-                            {p?.type ? p?.type : "-"}
-                          </td>
-                          <td className=" text-center px-4 py-2">
-                            {p?.createdAt
-                              ? moment(p?.createdAt).format("DD/MM/yy")
-                              : "-"}
-                          </td>
-                          <td
-                            className={`text-center font-medium px-4 py-2 ${p?.status === "Pending" ? "text-[#F9943B]" : null
-                              }
-                          ${p?.status === "Success" ? "text-[#03A65A]" : null}
-                          ${p?.status === "Failed" ? "text-[#FC2E20]" : null}`}
-                          >
-                            {p?.status ? p?.status : "-"}
-                          </td>
-                          <td className=" text-center px-4 py-2">
-                            ₹{p?.amount ? p?.amount : "-"}
-                          </td>
-                        </tr>
-                      ))}
-                    </>
-                  ) : (
-                    <>
-                      <tr>
-                        <td colSpan="7">
-                          <div className="flex flex-col w-full justify-center bg-maincolor p-2 mb-3 py-5 pn:max-md:hidden items-center">
-                            <div>
-                              <div className="flex justify-center items-center">
-                                <Image src={nodataw} alt="nodataw" />
-                              </div>
-                              <div className="text-xl font-semibold text-center py-2">
-                                No transactions
-                              </div>
-                              <div className="py-2 text-sm text-[#8B8D97]">
-                                You have no transactions during this period.
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    </>
-                  )}
-                </tbody>
-              </table> */}
-            </div>
+          <FetchWallet data={postperData} length={payhistory.length} />
+          <div className="px-4">
+            {payhistory.length > postPerPage && <Pagination
+              postPerPage={postPerPage}
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              firstIndex={firstIndex}
+              lastindex={lastindex}
+              length={payhistory.length}
+            />
+            }
           </div>
+
         </div>
       </div>
     </>

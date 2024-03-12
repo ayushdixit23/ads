@@ -10,8 +10,11 @@ const useAdsFetching = () => {
 				const ad = res?.data?.ads;
 				const content = res?.data?.content;
 				const merge = ad?.map((a, i) => ({
-					a,
-					c: content[i],
+					a: a?.h,
+					analytics: a?.analytics,
+					conversion: a?.conversion,
+					popularity: a?.popularity,
+					c: content[i]
 				}));
 				return merge
 			}

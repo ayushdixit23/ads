@@ -6,17 +6,22 @@ import { changeloading, sendData } from "../redux/slice/userData";
 import { useGetRefreshTokenMutation } from "../redux/slice/apiSlice";
 import { checkToken } from "./useful";
 import { getItemSessionStorage } from "./TokenDataWrapper";
-import { setCookie, getCookie, deleteCookie } from "cookies-next"
+// import { setCookie, getCookie, deleteCookie } from "cookies-next"
 
 const useTokenAndData = () => {
   const [isValid, setIsValid] = useState(false);
   const sessionId = getItemSessionStorage()
-  const token = getCookie(`axetkn${sessionId}`);
+  const [token, setToken] = useState("")
   const path = useSelector((state) => state.userData.path);
   const router = useRouter();
   const [data, setData] = useState(null);
   const dispatch = useDispatch();
   const [refreshedtokenAgain] = useGetRefreshTokenMutation()
+
+  useEffect(() => {
+    const token = localStorage.getItem(`axetkn${sessionId}`)
+    setToken(token)
+  }, [sessionId])
 
   const refreshAccessToken = useCallback(async (refreshToken) => {
     try {
@@ -36,7 +41,7 @@ const useTokenAndData = () => {
 
   const checkRefreshTokenValidity = useCallback(() => {
     try {
-      const refreshToken = getCookie(`rvktkn${sessionId}`);
+      const refreshToken = localStorage.getItem(`rvktkn${sessionId}`)
       if (!refreshToken) {
         console.error("No refresh token found");
         return false;
@@ -54,7 +59,8 @@ const useTokenAndData = () => {
   }, []);
 
   const refresh = useCallback(async () => {
-    const refreshToken = getCookie(`rvktkn${sessionId}`);
+    const refreshToken = localStorage.getItem(`rvktkn${sessionId}`)
+
     if (!refreshToken) {
       console.error("No refresh token found");
       return Promise.reject("No refresh token found");
@@ -62,7 +68,7 @@ const useTokenAndData = () => {
     try {
       const newToken = await refreshAccessToken(refreshToken);
       if (newToken) {
-        setCookie(`axetkn${sessionId}`, newToken.access_token);
+        localStorage.setItem(`axetkn${sessionId}`, newToken.access_token)
       }
     } catch (error) {
       console.error("Error during token refresh:", error);
@@ -87,14 +93,18 @@ const useTokenAndData = () => {
             await refresh()
           } else {
             setIsValid(false);
-            deleteCookie(`axetkn${sessionId}`);
-            deleteCookie(`rvktkn${sessionId}`);
+            // deleteCookie(`axetkn${sessionId}`);
+            // deleteCookie(`rvktkn${sessionId}`);
+            localStorage.removeItem(`axetkn${sessionId}`)
+            localStorage.removeItem(`rvktkn${sessionId}`)
           }
         }
       } catch (e) {
         console.error(e);
         setIsValid(false);
-        deleteCookie(`rvktkn${sessionId}`);
+        localStorage.removeItem(`axetkn${sessionId}`)
+        localStorage.removeItem(`rvktkn${sessionId}`)
+        // deleteCookie(`rvktkn${sessionId}`);
       }
     },
     [token]

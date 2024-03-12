@@ -6,8 +6,8 @@ export const formatDateToString = (dateString) => {
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Month is zero-based, so add 1
     const day = date.getDate().toString().padStart(2, "0");
-    const formattedDate = `${day}-${month}-${year}`;
-    // const formattedDate = `${year}-${month}-${day}`;
+    const formattedDate = `${day}/${month}/${year}`;
+    // conormattedDate = `${year}-${month}-${day}`;st f
     return formattedDate;
 }
 

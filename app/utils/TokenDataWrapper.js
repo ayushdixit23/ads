@@ -4,7 +4,7 @@ import useTokenAndData from "./token";
 import { changeloading, sendData } from "../redux/slice/userData";
 import { redirect, usePathname } from "next/navigation";
 import { ThemeProvider } from "@/components/theme-provider";
-import { getCookie } from 'cookies-next';
+// import { getCookie } from 'cookies-next';
 
 export const storeInSessionStorage = (sessionId) => {
   try {
@@ -32,7 +32,6 @@ const TokenDataWrapper = ({ children }) => {
   const { isValid, data } = useTokenAndData();
   const dispatch = useDispatch();
   const sessionId = getItemSessionStorage()
-  const token = getCookie(`axetkn${sessionId}`)
   const path = usePathname()
 
   useEffect(() => {
@@ -40,13 +39,14 @@ const TokenDataWrapper = ({ children }) => {
       dispatch(changeloading({ loading: false }));
       dispatch(sendData(data));
     }
+    const token = localStorage.getItem(`axetkn${sessionId}`)
     if (!token && path != "/login") {
       redirect("/login")
     }
     if (token && path === "/login") {
       redirect("/main/dashboard")
     }
-  }, [isValid, data, dispatch]);
+  }, [isValid, data, dispatch, sessionId]);
   return <>
     <ThemeProvider
       attribute="class"

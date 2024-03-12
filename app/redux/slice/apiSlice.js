@@ -5,7 +5,8 @@ export const api = createApi({
 	baseQuery: fetchBaseQuery({
 		baseUrl: "https://work.grovyo.xyz/api"
 		// baseUrl: "http://192.168.29.225:7190/api"
-		// baseUrl: "http://192.168.1.3:7190/api"
+		// baseUrl: "http://192.168.29.227:7190/api"
+		// baseUrl: "http://192.168.1.11:7190/api"
 	}),
 	endpoints: (builder) => ({
 		getCommunity: builder.query({

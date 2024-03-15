@@ -19,9 +19,6 @@ export default function createAdLayout({ children }) {
 	const router = useRouter()
 	const [client, setClient] = useState(false)
 
-	console.log(validateStep1, "step1")
-	console.log(validateStep2, "step2")
-
 	const stepRunner = () => {
 		if (step === 0) {
 			dispatch(setStep(1))

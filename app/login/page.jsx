@@ -25,6 +25,7 @@ import { storeInSessionStorage } from "../utils/TokenDataWrapper";
 const Login = () => {
   const [phone, setPhone] = useState(1);
   const [pop, setPop] = useState(0);
+  const [popup, setPopup] = useState(false)
   const [login, setLogin] = useState(false);
   const router = useRouter();
   const [see, setSee] = useState(true);
@@ -35,7 +36,13 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [showOTP, setShowOTP] = useState(false);
   const [load, setLoad] = useState(false);
+  const [change, setChange] = useState(false)
   const dispatch = useDispatch()
+  const [grovyo, setGrovyo] = useState({
+    email: "",
+    phone: "",
+    otp: ""
+  })
   function onCaptchaVerify() {
     if (typeof window !== "undefined" && !window.recaptchaVerifier) {
       window.recaptchaVerifier = new RecaptchaVerifier(
@@ -178,41 +185,82 @@ const Login = () => {
 
   const Oneclicklogin = async (e) => {
     e.preventDefault();
-    setLoad(true);
-    const width = 520;
-    const height = 570;
-    const left = window.innerWidth / 2 - width / 2;
-    const top = window.innerHeight / 2 - height / 2;
-    const newtab = window.open(
-      "http://192.168.29.205:3000/redirecting/?key=123",
-      "_blank",
-      `width=${width}, height=${height}, left=${left}, top=${top}`
-    );
-
-    window.addEventListener("ayush", async (e) => {
-      console.log(e.data);
-      if (newtab) {
-        try {
-          const res = await axios.get(`${API}/getdetails/${e.data}`);
-          if (res.data.success) {
-            await cookieSetter(res.data)
-            router.push("/main/dashboard");
-          } else {
-            console.log("something went wrong");
-          }
-        } catch (error) {
-          console.error(error, "error");
-        }
-      } else {
-        console.log("error no id");
-      }
-    });
-    setLoad(false);
+    setPopup(true)
   };
+
+  const loginwithGrovyo = async () => {
+    try {
+      const res = await axios.post(`${API}/loginwithgrovyo`, {
+        email: grovyo.email,
+        phone: grovyo.phone
+      })
+
+      if (res.data.success) {
+        setChange(true)
+      }
+    } catch (error) {
+    }
+  }
+
+  const verifyGrovyo = async () => {
+
+  }
 
   return (
     <>
+
+
       <Toaster position="bottom-right" />
+      {
+        popup &&
+        <div className="fixed inset-0 w-screen z-50 bg-black/60 h-screen flex justify-center items-center backdrop-blur-md">
+          <div className="flex flex-col w-[500px] dark:bg-[#273142] rounded-xl bg-white p-3 ">
+
+            {change ? <>
+              <div className="flex flex-wrap w-full mb-2">
+                <div className="relative w-full z-0 mb-5 group appearance-none label-floating">
+                  <input onChange={(e) => setGrovyo({ ...grovyo, otp: e.target.value })} value={grovyo.otp} type="number" className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                  <label htmlFor="tel" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Your Otp</label>
+                  <div>
+                    <button onClick={verifyGrovyo}>Send Otp</button>
+                  </div>
+                </div>
+              </div>
+            </> : <div className="flex flex-col mt-6 w-full">
+              <div className="text-3xl dark:text-white font-bold text-center">Log In with Grovyo</div>
+              <div className="flex gap-3 mt-5 p-3 flex-col w-full">
+
+                <div className="flex flex-wrap w-full mb-2">
+                  <div className="relative w-full z-0 mb-5 group appearance-none label-floating">
+                    <input onChange={(e) => setGrovyo({ ...grovyo, email: e.target.value })} value={grovyo.email} type="email" className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                    <label htmlFor="tel" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Your Email</label>
+                  </div>
+                </div>
+                <div className="flex items-center justify-center w-full">
+                  <hr className="flex-grow border-t-2 border-gray-200 dark:border-gray-700" />
+                  <span className="px-3 font-medium text-lg dark:bg-transparent dark:text-white bg-white">
+                    or
+                  </span>
+                  <hr className="flex-grow border-t-2 border-gray-200 dark:border-gray-700" />
+                </div>
+                <div>
+                  <div className="flex flex-wrap w-full mb-2">
+                    <div className="relative w-full z-0 mb-5 group appearance-none label-floating">
+                      <input maxLength={10} onChange={(e) => setGrovyo({ ...grovyo, phone: e.target.value })} value={grovyo.phone} type="tel" className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                      <label htmlFor="tel" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Your Phone Number</label>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div className="flex justify-center gap-3 py-1 p-3  items-center w">
+                <div onClick={() => setPopup(false)} className="p-2 px-4 rounded-xl flex justify-center items-center text-white border border-[#3d4654] w-full">Cancel</div>
+                <div onClick={loginwithGrovyo} className="p-2 px-4 rounded-xl flex justify-center items-center bg-black text-white w-full">Continue</div>
+              </div>
+            </div>}
+          </div>
+        </div>
+      }
       <div className="flex justify-center items-center">
         <div
           className={` my-2 text-xl bg-yellow-600 text-white text-center p-2 sm:w-[300px] duration-700 absolute  border-2 font-medium ${login ? "top-[150px]" : "top-[-100px]"
@@ -535,6 +583,17 @@ const Login = () => {
         <div className="pn:max-md:hidden flex justify-center items-center">
           <Lotties />
         </div>
+      </div>
+      <div className="flex fixed bottom-7 right-4 flex-wrap justify-end items-center w-full dark:text-white text-[#414141] gap-4 text-[12px] select-none">
+        <Link href={"../terms"}>T&C</Link>
+        <Link href={"../privacy"}>Privacy</Link>
+        <Link href={"../contact"}>Contact Us</Link>
+        <Link href={"/about"}>About</Link>
+        <Link href={"/requestdata"}>Request Data</Link>
+        <Link href={"/deleterequest"}>Delete Request</Link>
+        <Link href={"../shipping"}>Shipping</Link>
+        <Link href={"../cancellation"}>Cancellation</Link>
+        <Link href={"../return"}>Return Policy</Link>
       </div>
     </>
   );

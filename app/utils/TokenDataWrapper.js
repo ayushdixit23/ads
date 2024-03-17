@@ -33,6 +33,7 @@ const TokenDataWrapper = ({ children }) => {
   const dispatch = useDispatch();
   const sessionId = getItemSessionStorage()
   const path = usePathname()
+  const exactpath = ["/login", "/contact", "/cancellation", "/deleterequest", "/privacy", "/requestdata", "/return", "/shipping", "/terms"]
 
   useEffect(() => {
     if (isValid) {
@@ -40,8 +41,8 @@ const TokenDataWrapper = ({ children }) => {
       dispatch(sendData(data));
     }
     const token = localStorage.getItem(`axetkn${sessionId}`)
-    if (!token && path != "/login") {
-      redirect("/login")
+    if (!token && !exactpath.includes(path)) {
+      redirect("/login");
     }
     if (token && path === "/login") {
       redirect("/main/dashboard")

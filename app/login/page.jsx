@@ -584,7 +584,7 @@ const Login = () => {
           <Lotties />
         </div>
       </div>
-      <div className="flex fixed bottom-7 right-4 flex-wrap justify-end items-center w-full dark:text-white text-[#414141] gap-4 text-[12px] select-none">
+      <div className="flex fixed bottom-7 left-5 md:left-20 flex-wrap items-center w-full dark:text-white text-[#414141] gap-4 text-[12px] select-none">
         <Link href={"../terms"}>T&C</Link>
         <Link href={"../privacy"}>Privacy</Link>
         <Link href={"../contact"}>Contact Us</Link>

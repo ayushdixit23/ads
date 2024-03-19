@@ -29,6 +29,8 @@ const Ad1 = ({
     dispatch(setThree({ comid: data?.communitywithDps[0]?._id }))
   }, [data])
 
+  console.log(data)
+
   const categories = [
     "Movies & Entertainment", "News", "Pet & Animals", "Gaming", "Career & Education", "Anime & Manga",
     "Humor & Memes", "Family & Relationships", "Sports",

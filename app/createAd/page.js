@@ -256,38 +256,54 @@ function page() {
 
   dispatch(setValidateStep2(validateData()))
 
+  // const validateDatas = () => {
+  //   if (three.comid) {
+  //     if (
+  //       three.Action === "" ||
+  //       three.Description === "" ||
+  //       three.Headline === "" ||
+  //       three.link === "" ||
+  //       three.adName === "" ||
+  //       three.goal === "" ||
+  //       three.pic === ""
+  //     ) {
+  //       return false;
+  //     }
+  //   } else
+  //     if (
+  //       three.Action === "" ||
+  //       three.Description === "" ||
+  //       three.Headline === "" ||
+  //       three.link === "" ||
+  //       three.adName === "" ||
+  //       three.goal === "" ||
+  //       three.pic === "" ||
+  //       communityName === "" ||
+  //       communityDesc === "" ||
+  //       communityCategory === "" ||
+  //       communityImage === ""
+  //     ) {
+  //       return false;
+  //     }
+  //     else {
+  //       return true;
+  //     }
+  // };
+
   const validateDatas = () => {
-    if (three.comid) {
-      if (
-        three.Action === "" ||
-        three.Description === "" ||
-        three.Headline === "" ||
-        three.link === "" ||
-        three.adName === "" ||
-        three.goal === "" ||
-        three.pic === ""
-      ) {
-        return false;
-      }
-    } else
-      if (
-        three.Action === "" ||
-        three.Description === "" ||
-        three.Headline === "" ||
-        three.link === "" ||
-        three.adName === "" ||
-        three.goal === "" ||
-        three.pic === "" ||
-        communityName === "" ||
-        communityDesc === "" ||
-        communityCategory === "" ||
-        communityImage === ""
-      ) {
-        return false;
-      }
-      else {
-        return true;
-      }
+    if (
+      three.Action === "" ||
+      three.Description === "" ||
+      three.Headline === "" ||
+      three.link === "" ||
+      three.adName === "" ||
+      three.goal === "" ||
+      three.pic === ""
+    ) {
+      return false;
+    } else {
+      return true
+    }
   };
 
   dispatch(setValidateStep1(validateDatas()))

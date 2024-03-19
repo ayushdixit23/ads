@@ -196,6 +196,8 @@ const Login = () => {
       })
 
       if (res.data.success) {
+        sessionStorage.setItem("type", res.data.logwithidentity)
+        sessionStorage.setItem("value", res.data.value)
         setChange(true)
       }
     } catch (error) {
@@ -203,13 +205,27 @@ const Login = () => {
   }
 
   const verifyGrovyo = async () => {
-
+    try {
+      const type = sessionStorage.getItem("type")
+      const value = sessionStorage.getItem("value")
+      const res = await axios.post(`${API}/verifyotp`, {
+        otp: grovyo.otp,
+        type, value
+      })
+      if (res.data.success) {
+        const a = await cookieSetter(res.data)
+        if (a === true) {
+          router.push("/main/dashboard");
+        }
+      }
+      console.log(res.data)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
     <>
-
-
       <Toaster position="bottom-right" />
       {
         popup &&

@@ -40,25 +40,25 @@ export default function createAdLayout({ children }) {
 		setClient(true)
 	}, [])
 
-	useEffect(() => {
-		const isPageReloaded = window.performance.navigation.type === 1;
+	// useEffect(() => {
+	// 	const isPageReloaded = window.performance.navigation.type === 1;
 
-		if (isPageReloaded) {
-			console.log('Page is reloaded');
-			router.push("/createAd?step=1")
-		} else {
-			console.log('Page is not reloaded');
-		}
-	}, []);
+	// 	if (isPageReloaded) {
+	// 		console.log('Page is reloaded');
+	// 		router.push("/createAd?step=1")
+	// 	} else {
+	// 		console.log('Page is not reloaded');
+	// 	}
+	// }, []);
 
-	useEffect(() => {
-		if (step === 1 && !validateStep2) {
-			router.push("/createAd?step=1")
-		}
-		if (step === 2 && !validateStep1) {
-			router.push("/createAd?step=1")
-		}
-	}, [step, validateStep1, validateStep2])
+	// useEffect(() => {
+	// 	if (step === 1 && !validateStep2) {
+	// 		router.push("/createAd?step=1")
+	// 	}
+	// 	if (step === 2 && !validateStep1) {
+	// 		router.push("/createAd?step=1")
+	// 	}
+	// }, [step, validateStep1, validateStep2])
 
 	const sendData = async (e) => {
 		console.log("runde")

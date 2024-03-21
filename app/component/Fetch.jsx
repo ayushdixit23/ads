@@ -13,17 +13,6 @@ import { FaAngleDown } from 'react-icons/fa';
 import { AiOutlinePlus } from 'react-icons/ai';
 
 const Fetch = ({ data, length, router }) => {
-
-	function formatDate(inputDate) {
-		const date = new Date(inputDate);
-		const day = date.getDate();
-		const month = date.getMonth() + 1;
-		const year = date.getFullYear();
-		const formattedDay = day < 10 ? `0${day}` : day;
-		const formattedMonth = month < 10 ? `0${month}` : month;
-		const formattedDate = `${formattedDay} ${formattedMonth} ${year}`;
-		return formattedDate;
-	}
 	return (
 		<>
 			<div className=''>
@@ -47,7 +36,7 @@ const Fetch = ({ data, length, router }) => {
 								<TableHead className="text-center">CONVERSION</TableHead>
 								<TableHead className="text-center">CPC</TableHead>
 								<TableHead className="text-center">START DATE</TableHead>
-								<TableHead className="text-center">DURATION (in days)</TableHead>
+								<TableHead className="text-center">END Date</TableHead>
 							</TableRow>
 						</TableHeader>
 						<TableBody>
@@ -80,7 +69,7 @@ const Fetch = ({ data, length, router }) => {
 													: "___"} */}
 											</TableCell>
 											<TableCell className="font-medium text-center">
-												{d?.a?.enddate} {d?.a?.enddate == "1" ? "day" : "days"}
+												{d?.a?.enddate}
 											</TableCell>
 										</TableRow>
 

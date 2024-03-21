@@ -32,7 +32,7 @@ export const dataSlice = createSlice({
 			TotalBudget: "",
 			DailyBudget: "",
 			category: "Business & Finance",
-			startDate: formatDateToString(new Date()),
+			startDate: new Date(),
 			comid: "",
 			endDate: "",
 			duration: "1",

@@ -81,3 +81,12 @@ export const getData = () => {
 
     return memoizedData;
 }
+
+export const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Month is zero-based, so add 1
+    const day = date.getDate().toString().padStart(2, "0");
+    const formattedDate = `${year}-${month}-${day}`; // Change the format to YYYY-MM-DD
+    return formattedDate;
+}

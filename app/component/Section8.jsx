@@ -19,6 +19,7 @@ import { formatDateToString, getData } from "../utils/useful";
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import useAdsFetching from "../useFetch/useAdFetching";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import Loader from "./Loader";
 
 const Section8 = () => {
   const [data, setData] = useState();
@@ -57,8 +58,6 @@ const Section8 = () => {
       console.log(e);
     }
   };
-
-
 
   const f = async () => {
     try {
@@ -101,15 +100,9 @@ const Section8 = () => {
       setLoading(true)
     }
   }, [advid])
-
+  
   if (loading) {
-    return <div className="flex justify-center
-     items-center h-screen dark:bg-[#273142]  bg-white fixed inset-0">
-      <div className="animate-spin">
-        <AiOutlineLoading3Quarters className="text-xl dark:text-white text-black" />
-      </div>
-
-    </div>
+    return <Loader />
   }
 
 

@@ -10,7 +10,7 @@ import banner from "../assests/banner.png";
 import skip from "../assests/skip.png";
 import nonskip from "../assests/nonskip.png";
 import Image from 'next/image';
-import { formatDateToString } from '../utils/useful';
+import { formatDate, formatDateToString } from '../utils/useful';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const Ad2 = ({
@@ -44,13 +44,13 @@ const Ad2 = ({
 		<>
 			<div>
 				<div className="grid  bg-[#F8F8F8] grid-cols-1 pn:max-md:hidden">
-					<div className="flex bg-[#1b2431]  flex-col ">
+					<div className="flex bg-[#1b2431] flex-col ">
 
-						<div className="flex justify-center h-[550px] dark:bg-[#273142] bg-[#fafafa] gap-9 px-[2%] pn:max-md:hidden">
+						<div className="flex justify-center h-[550px] dark:bg-[#181a20] bg-[#fafafa] gap-9 px-[2%] pn:max-md:hidden">
 							<div
-								className={`${styles.customScrollbar} pn:max-md:hidden md:w-[900px] w-full overflow-y-scroll dark:bg-[#1b2431] bg-[#F0F2F5] border-2 my-4 rounded-2xl py-5 px-5`}
+								className={`${styles.customScrollbar} pn:max-md:hidden md:w-[900px] w-full overflow-y-scroll dark:bg-[#1e2129] bg-[#F0F2F5]  my-4 rounded-2xl py-5 px-2`}
 							>
-								<h1 className="sm:text-3xl text-xl font-semibold py-2">
+								<h1 className="sm:text-3xl text-xl font-semibold py-2 px-3">
 									Select Target
 								</h1>
 								<div className="bg-maincolor my-3 px-[2%] select-none py-2 rounded-xl ">
@@ -61,7 +61,7 @@ const Ad2 = ({
 										<div
 											onClick={() => { dispatch(setThree({ type: "infeed" })); setOpen(false) }}
 											className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type.includes("infeed")
-												? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
+												? "border-[#4C9AFF]  bg-[#3e84e4]/10"
 												: ""
 												}`}
 										>
@@ -82,7 +82,7 @@ const Ad2 = ({
 										<div
 											onClick={() => { dispatch(setThree({ type: "search" })); setOpen(false) }}
 											className={` flex flex-col justify-center border relative  p-2 z-0 items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type.includes("search")
-												? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
+												? "border-[#4C9AFF]  bg-[#3e84e4]/10"
 												: ""
 												}`}
 										>
@@ -103,7 +103,7 @@ const Ad2 = ({
 										<div
 											onClick={() => { setOpen(!open); dispatch(setThree({ type: "" })) }}
 											className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${open
-												? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
+												? "border-[#4C9AFF]  bg-[#3e84e4]/10"
 												: ""
 												}`}
 										>
@@ -126,7 +126,7 @@ const Ad2 = ({
 
 											onClick={() => { dispatch(setThree({ type: "banner" })); setOpen(false) }}
 											className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type.includes("banner")
-												? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
+												? "border-[#4C9AFF]  bg-[#3e84e4]/10"
 												: ""
 												}`}
 										>
@@ -152,7 +152,7 @@ const Ad2 = ({
 
 												onClick={() => dispatch(setThree({ type: "skipable" }))}
 												className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type === "skipable"
-													? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
+													? "border-[#4C9AFF]  bg-[#3e84e4]/10"
 													: ""
 													}`}
 											>
@@ -174,7 +174,7 @@ const Ad2 = ({
 
 													onClick={() => dispatch(setThree({ type: "non-skipable" }))}
 													className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type === "non-skipable"
-														? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
+														? "border-[#4C9AFF]  bg-[#3e84e4]/10"
 														: ""
 														}`}
 												>
@@ -196,7 +196,7 @@ const Ad2 = ({
 									</div>}
 								</div>
 
-								<div className="my-[4%] rounded-xl">
+								<div className="my-[1%] rounded-xl">
 									<div className="py-3 px-[2%] rounded-t-xl bg-maincolor relative">
 										<h1 className="text-lg py-1 pb-2 font-medium">Category</h1>
 										<Select
@@ -223,6 +223,7 @@ const Ad2 = ({
 												<SelectGroup className="max-h-[200px] gap-1 w-full flex flex-col justify-center items-center">
 													{PointsCategory?.map((d, i) => (
 														<SelectItem
+
 															value={d.category}
 															key={i}
 															className=""
@@ -236,50 +237,7 @@ const Ad2 = ({
 												</SelectGroup>
 											</SelectContent>
 										</Select>
-										{/* <div className="w-full flex justify-center items-center rounded-xl border ">
-											<BiMap className="border-r-2 p-2 text-4xl" />
-											<div
-												placeholder="Select a Category"
-												className="w-full rounded-xl p-2 outline-none "
-											>
-												{three.category}
-											</div>
-										</div> */}
 
-										{/* <div className="relative overflow-y-scroll my-3 no-scrollbar w-[360px] h-[230px]">
-											<div>
-												<div className="absolute top-0 left-0 h-auto w-full p-3 border rounded-xl z-10 drop-shadow-md bg-maincolor">
-													<div className="text-sm text-[#6B778C] mb-2 pb-2">
-														Categories
-													</div>
-													<div className="flex flex-col gap-2">
-														{PointsCategory?.map((data, i) => (
-															<div
-																key={i}
-																className="flex items-center z-20 gap-2"
-															>
-																<input
-																	type="radio"
-																	name="mycategory"
-																	onChange={() =>
-																		handleCategoryChange(
-																			data.category,
-																			data.price,
-																			data.population,
-																		)
-																	}
-																	checked={data.category === three.category}
-																/>
-
-																<div className="text-lg font-medium">
-																	{data.category}
-																</div>
-															</div>
-														))}
-													</div>
-												</div>
-											</div>
-										</div> */}
 									</div>
 
 									<div className="py-2 px-[2%] bg-maincolor rounded-b-xl relative">
@@ -348,9 +306,10 @@ const Ad2 = ({
 											Note: Enter tags that your audience interested in..
 										</div>
 									</div>
+
 								</div>
 
-								<div className="my-[4%] rounded-xl py-2 px-[2%] bg-maincolor">
+								<div className="my-[1%] rounded-xl py-2 px-[2%] bg-maincolor">
 									<h1 className="text-2xl font-semibold py-2">
 										Target Audience
 									</h1>
@@ -414,8 +373,8 @@ const Ad2 = ({
 											))}
 										</div>
 
-										<div className="relative overflow-y-scroll no-scrollbar w-[360px] h-[230px]">
-											<div>
+										<div className="relative overflow-y-scroll no-scrollbar h-[230px] w-[360px] ">
+											<div className=''>
 												<div className="absolute top-0 left-0 h-auto w-full p-3 border rounded-xl z-10 drop-shadow-md bg-maincolor">
 													<div className="text-sm text-[#6B778C] mb-2 pb-2">
 														Trending tags related to Tech{" "}
@@ -551,7 +510,7 @@ const Ad2 = ({
 										</div>
 									</div>
 								</div>
-								<div className="my-[4%] rounded-xl py-3 px-[2%] bg-maincolor">
+								<div className="my-[1%] rounded-xl py-3 px-[2%] bg-maincolor">
 									<div>
 										<h1 className="text-2xl font-semibold">
 											Schedule and duration
@@ -567,6 +526,7 @@ const Ad2 = ({
 												<input
 													name="myForm"
 													id="sdate"
+													// defaultValue={formatDate(three.startDate)}
 													type="date"
 													onChange={(e) =>
 														// setThree({
@@ -580,9 +540,15 @@ const Ad2 = ({
 													placeholder="Enter Campaign Name"
 													className="w-full border rounded-xl bg-transparent outline-none p-2"
 												/>
+												{formatDate(three.startDate) < formatDate(new Date()) && (
+													<div className="text-sm text-red-700">
+														Please Enter a Valid Startdate
+													</div>
+												)}
+
 											</div>
 											<div
-												className={`${date ? "flex flex-col space-y-1" : "hidden"
+												className={`${date ? "flex flex-col" : "hidden"
 													}`}
 											>
 												<label
@@ -604,9 +570,9 @@ const Ad2 = ({
 													value={three.endDate}
 													type="date"
 													placeholder="Enter Campaign Name"
-													className="w-full border rounded-xl outline-none p-2"
+													className="w-full border rounded-xl bg-transparent outline-none p-2"
 												/>
-												{formatDateToString(three.endDate) < formatDateToString(three.startDate) && (
+												{formatDate(three.endDate) < formatDate(three.startDate) && (
 													<div className="text-sm text-red-700">
 														Please Enter a Valid Enddate
 													</div>
@@ -814,7 +780,7 @@ const Ad2 = ({
 								/> */}
 							</div>
 
-							<div className="w-full md:hidden bg-[#F0F2F5] dark:bg-[#1b2431] my-4 rounded-2xl py-5 px-2">
+							<div className="w-full md:hidden bg-[#F0F2F5] dark:bg-[#181a20] my-4 rounded-2xl py-5 px-2">
 								<h1 className="text-2xl font-semibold py-2 px-2">
 									Select Target
 								</h1>
@@ -829,7 +795,7 @@ const Ad2 = ({
 
 												onClick={() => { dispatch(setThree({ type: "infeed" })); setOpen(false) }}
 												className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type.includes("infeed")
-													? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
+													? "border-[#4C9AFF]  bg-[#3e84e4]/10"
 													: ""
 													}`}
 											>
@@ -851,7 +817,7 @@ const Ad2 = ({
 												// onClick={() => toggleType("search")}
 												onClick={() => { dispatch(setThree({ type: "search" })); setOpen(false) }}
 												className={` flex flex-col justify-center border relative  p-2 z-0 items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type.includes("search")
-													? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
+													? "border-[#4C9AFF]  bg-[#3e84e4]/10"
 													: ""
 													}`}
 											>
@@ -873,7 +839,7 @@ const Ad2 = ({
 												// onClick={() => toggleType("videoads")}
 												onClick={() => { setOpen(!open); dispatch(setThree({ type: "" })) }}
 												className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${open
-													? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
+													? "border-[#4C9AFF]  bg-[#3e84e4]/10"
 													: ""
 													}`}
 											>
@@ -893,7 +859,7 @@ const Ad2 = ({
 													// onClick={() => toggleType("skipable")}
 													onClick={() => { dispatch(setThree({ type: "skipable" })) }}
 													className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type === "skipable"
-														? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
+														? "border-[#4C9AFF]  bg-[#3e84e4]/10"
 														: ""
 														}`}
 												>
@@ -915,7 +881,7 @@ const Ad2 = ({
 													// onClick={() => toggleType("non-skipable")}
 													onClick={() => dispatch(setThree({ type: "non-skipable" }))}
 													className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type === "non-skipable"
-														? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
+														? "border-[#4C9AFF]  bg-[#3e84e4]/10"
 														: ""
 														}`}
 												>
@@ -938,7 +904,7 @@ const Ad2 = ({
 												// onClick={() => toggleType("banner")}
 												onClick={() => { dispatch(setThree({ type: "banner" })); setOpen(false) }}
 												className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type.includes("banner")
-													? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
+													? "border-[#4C9AFF]  bg-[#3e84e4]/10"
 													: ""
 													}`}
 											>
@@ -964,7 +930,7 @@ const Ad2 = ({
 
 													onClick={() => dispatch(setThree({ type: "skipable" }))}
 													className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type === "skipable"
-														? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
+														? "border-[#4C9AFF]  bg-[#3e84e4]/10"
 														: ""
 														}`}
 												>
@@ -986,7 +952,7 @@ const Ad2 = ({
 
 														onClick={() => dispatch(setThree({ type: "non-skipable" }))}
 														className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type === "non-skipable"
-															? "border-[#4C9AFF]  bg-[#4C9AFF]/10"
+															? "border-[#4C9AFF]  bg-[#3e84e4]/10"
 															: ""
 															}`}
 													>
@@ -1552,6 +1518,11 @@ const Ad2 = ({
 														placeholder="Enter Campaign Name"
 														className="w-full border rounded-xl bg-transparent outline-none p-2"
 													/>
+													{formatDateToString(three.startDate) < formatDateToString(new Date()) && (
+														<div className="text-sm text-red-700">
+															Please Enter a Valid Startdate
+														</div>
+													)}
 												</div>
 												<div
 													className={`${date ? "flex flex-col space-y-1" : "hidden"

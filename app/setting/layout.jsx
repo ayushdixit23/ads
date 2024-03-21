@@ -163,10 +163,10 @@ export default function SettingLayout({ children }) {
           <div className="py-4 w-full px-5 h-[12%] shadow-md bg-maincolor">
             <div className="text-2xl py-2 font-semibold">Settings</div>
           </div>
-          <div className="bg-[#f8f8f8] max-h-screen dark:bg-[#1b2431] grid grid-cols-1 w-full h-[88%] overflow-y-scroll no-scrollbar p-[2%]">
+          <div className="bg-[#f8f8f8] max-h-screen dark:bg-[#181a20] grid grid-cols-1 w-full h-[88%] overflow-y-scroll no-scrollbar p-[2%]">
             <div className="grid md:grid-cols-3 sm:grid-cols-5 grid-cols-1 sm:gap-4 md:gap-8">
               <div
-                className={`md:col-span-1 sm:col-span-2 h-[90%] rounded-2xl bg-maincolor max-h-screen sm:max-md:p-[2%] p-[3%] ${isChildrenHidden
+                className={`md:col-span-1  sm:col-span-2 h-[90%] rounded-2xl bg-maincolor max-h-screen sm:max-md:p-[2%] p-[3%] ${isChildrenHidden
                   ? "pn:max-sm:hidden"
                   : " pn:max-sm:w-full"
                   }`}

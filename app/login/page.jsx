@@ -45,20 +45,14 @@ const Login = () => {
   })
   function onCaptchaVerify() {
     if (typeof window !== "undefined" && !window.recaptchaVerifier) {
-      window.recaptchaVerifier = new RecaptchaVerifier(
-        auth,
-        "recaptcha-container",
-        {
-          size: "invisible",
-          callback: (response) => {
-            onSignup();
-          },
-          "expired-callback": (e) => {
-            // Response expired. Ask the user to solve reCAPTCHA again.
-            // ...
-          },
+      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+        'size': 'normal',
+        'callback': (response) => {
+          onSignup();
+        },
+        'expired-callback': () => {
         }
-      );
+      });
     }
   }
 
@@ -130,6 +124,34 @@ const Login = () => {
     }
   }
   //signup
+  // function onSignup(e) {
+  //   e.preventDefault();
+  //   setLoading(true);
+  //   if (!number.trim()) {
+  //     console.log("no number");
+  //     setLoading(false);
+  //     setPop(5);
+  //   } else if (number.length < 10) {
+  //     setLoading(false);
+  //     setPop(6);
+  //   } else {
+  //     setPop(0);
+  //     const appVerifier = window.recaptchaVerifier;
+  //     onCaptchaVerify();
+  //     const formatPh = "+91" + number;
+  //     signInWithPhoneNumber(auth, formatPh, appVerifier)
+  //       .then((confirmationResult) => {
+  //         window.confirmationResult = confirmationResult;
+  //         setLoading(false);
+  //         setShowOTP(true);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //         setLoading(false);
+  //       });
+  //   }
+  // }
+
   function onSignup(e) {
     e.preventDefault();
     setLoading(true);
@@ -141,20 +163,23 @@ const Login = () => {
       setLoading(false);
       setPop(6);
     } else {
-      setPop(0);
       const appVerifier = window.recaptchaVerifier;
-      onCaptchaVerify();
+      if (!appVerifier) {
+        onCaptchaVerify();
+        setLoading(false); // Move setLoading inside onCaptchaVerify
+        return; // Return early as onCaptchaVerify will set loading state accordingly
+      }
       const formatPh = "+91" + number;
       signInWithPhoneNumber(auth, formatPh, appVerifier)
         .then((confirmationResult) => {
           window.confirmationResult = confirmationResult;
-          setLoading(false);
-          setShowOTP(true);
+          setShowOTP(true); // Move setShowOTP here
         })
         .catch((error) => {
           console.log(error);
           setLoading(false);
-        });
+        })
+        .finally(() => setLoading(false)); // Ensure setLoading is always called
     }
   }
 
@@ -189,7 +214,12 @@ const Login = () => {
   };
 
   const loginwithGrovyo = async () => {
+    if (!grovyo.email && !grovyo.phone) {
+      toast.error("Please enter atleast one field!")
+      return
+    }
     try {
+      setLoad(true)
       const res = await axios.post(`${API}/loginwithgrovyo`, {
         email: grovyo.email,
         phone: grovyo.phone
@@ -200,12 +230,16 @@ const Login = () => {
         sessionStorage.setItem("value", res.data.value)
         setChange(true)
       }
+      setLoad(false)
     } catch (error) {
+    } finally {
+      setLoad(false)
     }
   }
 
   const verifyGrovyo = async () => {
     try {
+      setLoad(true)
       const type = sessionStorage.getItem("type")
       const value = sessionStorage.getItem("value")
       const res = await axios.post(`${API}/verifyotp`, {
@@ -216,12 +250,28 @@ const Login = () => {
         const a = await cookieSetter(res.data)
         if (a === true) {
           router.push("/main/dashboard");
+          sessionStorage.removeItem("type")
+          sessionStorage.removeItem("value")
         }
       }
-      console.log(res.data)
+      setLoad(false)
     } catch (error) {
       console.log(error)
+    } finally {
+      setLoad(false)
     }
+  }
+
+  if (load) {
+    return (
+      <>
+        <div className="fixed inset-0 w-screen z-50 transition duration-500 bg-black/60 backdrop-blur-md h-screen flex justify-center items-center ">
+          <div className="animate-spin">
+            <AiOutlineLoading3Quarters className="text-2xl text-white" />
+          </div>
+        </div>
+      </>
+    );
   }
 
   return (
@@ -234,11 +284,30 @@ const Login = () => {
 
             {change ? <>
               <div className="flex flex-wrap w-full mb-2">
-                <div className="relative w-full z-0 mb-5 group appearance-none label-floating">
-                  <input onChange={(e) => setGrovyo({ ...grovyo, otp: e.target.value })} value={grovyo.otp} type="number" className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                  <label htmlFor="tel" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Your Otp</label>
+                <div className="relative w-full flex justify-center gap-4 items-center flex-col z-0 mb-5 group appearance-none label-floating">
+                  <div className="text-2xl font-bold mt-5 mb-4 text-center">
+                    Enter the OTP received in the Grovyo app.
+                  </div>
+                  <OTPInput
+                    value={grovyo.otp}
+                    onChange={(otp) => setGrovyo({ ...grovyo, otp: otp })}
+                    numInputs={6}
+                    renderSeparator={<span></span>}
+                    renderInput={(props) => <input {...props} />}
+                    inputStyle={{
+                      padding: 2,
+                      height: "50px",
+                      width: "50px",
+                      margin: 6,
+                      borderRadius: 7,
+                      color: "black",
+
+                      backgroundColor: "#F2F2F2",
+                    }}
+                  />
+
                   <div>
-                    <button onClick={verifyGrovyo}>Send Otp</button>
+                    <button className="flex justify-center items-center bg-[#3451f7] text-white p-2 px-5 rounded-lg" onClick={verifyGrovyo}>Send Otp</button>
                   </div>
                 </div>
               </div>

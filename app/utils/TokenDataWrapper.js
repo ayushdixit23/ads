@@ -33,7 +33,7 @@ const TokenDataWrapper = ({ children }) => {
   const dispatch = useDispatch();
   const sessionId = getItemSessionStorage()
   const path = usePathname()
-  const exactpath = ["/login", "/contact", "/cancellation", "/deleterequest", "/privacy", "/requestdata", "/return", "/shipping", "/terms"]
+  const exactpath = ["/login", "/registration", "/contact", "/cancellation", "/deleterequest", "/privacy", "/requestdata", "/return", "/shipping", "/terms"]
 
   useEffect(() => {
     if (isValid) {

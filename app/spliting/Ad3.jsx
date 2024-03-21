@@ -1,7 +1,7 @@
 import React from 'react'
 import { AiOutlineEdit, AiTwotoneEdit } from 'react-icons/ai'
 import { BsCheckLg, BsThreeDots } from 'react-icons/bs'
-import adss from "../assests/adss.svg";
+import adss from "../assests/defaultads.jpg";
 import { formatDateToString } from '../utils/useful';
 import Link from 'next/link';
 const Ad3 = ({
@@ -22,10 +22,10 @@ const Ad3 = ({
       <div>
         <div style={
           { marginBottom: "10rem" }
-        } className="grid bg-[#f8f8f8] dark:bg-maincolor grid-cols-1 pn:max-md:hidden">
+        } className="grid bg-[#f8f8f8] dark:bg-[#181a20] grid-cols-1 pn:max-md:hidden">
           <div className="flex justify-center gap-4 px-[2%] w-full pn:max-md:hidden">
             <div
-              className={`flex bg-[#F0F2F5] dark:bg-[#1b2431] p-4 px-[2%] md:min-w-[800px] lg:min-w-[1024px] my-4 pn:max-md:hidden rounded-2xl flex-col`}
+              className={`flex bg-[#F0F2F5] dark:bg-[#181a20] p-4 px-[2%] md:min-w-[800px] lg:min-w-[1024px] my-4 pn:max-md:hidden rounded-2xl flex-col`}
             >
               <div className="md:min-w-[800px]  lg:min-w-[1024px] bg-maincolor  rounded-2xl py-5 px-5">
                 <div className="flex justify-between items-center">
@@ -52,7 +52,7 @@ const Ad3 = ({
                   </div>
                 </div>
 
-                <div className="w-full my-3 h-[1px] bg-[#D4D5D7]"></div>
+                <div className="w-full my-3 h-[1px] dark:bg-[#e7ecf2] bg-[#D4D5D7]"></div>
 
                 <div className="grid grid-cols-2 px-2">
                   {/* <div className="my-3">
@@ -97,7 +97,7 @@ const Ad3 = ({
                   </div>
                 </div>
 
-                <div className="w-full my-3 h-[1px] bg-[#D4D5D7]"></div>
+                <div className="w-full my-3 h-[1px] dark:bg-[#e7ecf2] bg-[#D4D5D7]"></div>
 
                 <div className="my-3">
                   <h1 className="text-xl font-semibold py-2">Target People</h1>
@@ -125,7 +125,7 @@ const Ad3 = ({
                   </div>
                 </div>
 
-                <div className="w-full my-3 h-[1px] bg-[#D4D5D7]"></div>
+                <div className="w-full my-3 h-[1px] dark:bg-[#e7ecf2] bg-[#D4D5D7]"></div>
 
                 <div className="my-3">
                   <div className="flex justify-between items-center">
@@ -159,7 +159,7 @@ const Ad3 = ({
                 </div>
               </div>
 
-              <div className=" lg:min-w-[700px] bg-maincolor  my-4 rounded-2xl py-5 px-5">
+              {/* <div className=" lg:min-w-[700px] bg-maincolor  my-4 rounded-2xl py-5 px-5">
                 <div className="bg-[#FAFAFA] dark:bg-maincolor flex justify-between py-5 my-3 px-1 items-center">
                   <div className="flex justify-center space-x-2 sm:space-x-4 items-center">
                     <div>
@@ -173,25 +173,19 @@ const Ad3 = ({
                       <div className="flex items-center space-x-1">
                         <span className="font-medium">{three.Headline ?
                           three.Headline.length > 10 ? `${three.Headline.slice(0, 10)}...` : three.Headline
-                          : "Never have a bad meal"}</span>
-                        {/* <span>
-                          <AiTwotoneEdit className="text-blue-600" />
-                        </span> */}
+                          : "Neve a bad meal"}</span>
+               
+                    
                       </div>
                       <div className=" text-sm "> {three.Description != ""
                         ? three.Description.length > 20 ? `${three.Description.slice(0, 20)}...` : three.Description
                         : "healthy and sweet dishes"}</div>
-                      {/* <div className="flex justify-center text-sm space-x-3 items-center">
-                        <div></div>
-                        <div>Id: 271617804</div>
-                      </div> */}
+                      
                     </div>
                   </div>
-                  {/* <div>
-                    <BsThreeDots className="text-xl" />
-                  </div> */}
+                 
                 </div>
-              </div>
+              </div> */}
               {/* <div className="lg:min-w-[700px] bg-maincolor my-4 rounded-2xl py-5 px-5">
                 <div className="flex flex-col gap-4">
                   <div className="flex flex-col gap-1">
@@ -233,7 +227,7 @@ const Ad3 = ({
 
         {/* mobile step-2 */}
         <div className="md:hidden">
-          <div className="flex bg-maincolor flex-col">
+          <div className="flex dark:bg-[#181a20] bg-white flex-col">
             {/* <div className="fixed w-full top-0 z-50 bg-maincolor">
               <div className="flex shadow-lg justify-between px-5 items-center py-2">
                 <div className="text-[#555555] text-xl py-2 font-semibold">
@@ -334,7 +328,7 @@ const Ad3 = ({
                 </div>
               </div>
             </div> */}
-            <div className="grid bg-[#F0F2F5] dark:bg-[#1b2431] grid-cols-1">
+            <div className="grid bg-[#F0F2F5] dark:bg-[#181a20] grid-cols-1">
               {/* <div className="flex flex-col">
                 {" "}
                 <Square3 />
@@ -365,7 +359,7 @@ const Ad3 = ({
                     </div>
                   </div>
 
-                  <div className="w-full my-3 h-[1px] bg-[#D4D5D7]"></div>
+                  <div className="w-full my-3 h-[1px] dark:bg-[#e7ecf2] bg-[#D4D5D7]"></div>
 
                   <div className="grid sm:grid-cols-2 px-2">
                     {/* <div className="my-3">
@@ -413,7 +407,7 @@ const Ad3 = ({
                     </div>
                   </div>
 
-                  <div className="w-full my-3 h-[1px] bg-[#D4D5D7]"></div>
+                  <div className="w-full my-3 h-[1px] dark:bg-[#e7ecf2] bg-[#D4D5D7]"></div>
 
                   <div className="my-3">
                     <h1 className="text-xl font-semibold py-2">
@@ -444,7 +438,7 @@ const Ad3 = ({
                     </div>
                   </div>
 
-                  <div className="w-full my-3 h-[1px] bg-[#D4D5D7]"></div>
+                  <div className="w-full my-3 h-[1px] dark:bg-[#e7ecf2] bg-[#D4D5D7]"></div>
 
                   <div className="my-3">
                     <div className="flex justify-between items-center">
@@ -488,7 +482,7 @@ const Ad3 = ({
                   </div>
                 </div>
 
-                <div className="w-full bg-maincolor my-4 rounded-2xl py-5 px-5">
+                {/* <div className="w-full bg-maincolor my-4 rounded-2xl py-5 px-5">
                   <div className="bg-[#FAFAFA] dark:bg-maincolor flex justify-between py-5 my-3 px-1 items-center">
                     <div className="flex justify-center space-x-2 sm:space-x-4 items-center">
                       <div>
@@ -505,26 +499,19 @@ const Ad3 = ({
                               three.Headline.length > 5 ? `${three.Headline.slice(0, 5)}...` : three.Headline
                               : "Never have a bad meal"}
                           </span>
-                          {/* <span>
-                            <AiTwotoneEdit className="text-blue-600" />
-                          </span> */}
+                          
                         </div>
                         <div className=" text-sm max-w-[87%]">
                           {three.Description != ""
                             ? three.Description.length > 10 ? `${three.Description.slice(0, 10)}...` : three.Description
                             : "healthy and sweet dishes"}
                         </div>
-                        {/* <div className="flex justify-center  text-sm space-x-3 items-center">
-                          <div>some line</div>
-                          <div>Id: 271617804</div>
-                        </div> */}
+                       
                       </div>
                     </div>
-                    {/* <div>
-                      <BsThreeDots className="text-xl" />
-                    </div> */}
+         
                   </div>
-                </div>
+                </div> */}
                 {/* 
                 <div
 

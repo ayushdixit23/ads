@@ -7,11 +7,12 @@ import axios from "axios";
 import nodataw from "../assests/nodataw.svg";
 import { API } from "@/Essentials";
 import { RxCross2 } from "react-icons/rx";
-import useRazorpay from "react-razorpay";
 import { getData } from "../utils/useful";
 import { useTheme } from "next-themes";
 import FetchWallet from "./FetchWallet";
 import Pagination from "./Pagination";
+import { useRouter } from "next/navigation";
+import Loader from "./Loader";
 
 const Wallet = () => {
   const [wallet, setWallet] = useState(0);
@@ -20,13 +21,13 @@ const Wallet = () => {
   const [payhistory, setPayhistory] = useState([]);
   const [check, setCheck] = useState(false);
   const [inp, setInp] = useState("");
-  const [Razorpay] = useRazorpay();
-  const { theme } = useTheme()
+  const router = useRouter()
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postPerPage, setPostPerPage] = useState(7);
   const lastindex = currentPage * postPerPage;
   const firstIndex = lastindex - postPerPage;
+
   const postperData = payhistory?.slice(firstIndex, lastindex);
   // const [os, setOs] = useState("");
 
@@ -70,58 +71,9 @@ const Wallet = () => {
           const response = await axios.post(`${API}/addmoneytowallet/${advid}`, {
             amount: inp * 100,
           });
-
-          if (response.data.success === true) {
-            const order_id = response.data.order_id;
-            const tid = response.data.tid
-            var options = {
-              "key": "rzp_live_Ms5I8V8VffSpYq", // Enter the Key ID generated from the Dashboard
-              "amount": `${inp * 100}`, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-              "currency": "INR",
-              "name": "Grovyo", //your business name
-              "description": "Adding Money To Wallet - Adspace",
-              "image": "https://example.com/your_logo",
-              "order_id": `${order_id}`, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-              "callback_url": "http://localhost:3000/status",
-
-              "handler": async (response) => {
-                try {
-                  setWallet(0)
-                  const res = await axios.post(`${API}/updatetransactionstatus/${advid}`, {
-                    tid,
-                    amount: inp,
-                    success: true,
-                    payment_id: response.razorpay_payment_id,
-                    order_id: response.razorpay_order_id,
-                    razorpay_signature: response.razorpay_signature,
-                  })
-                  window.location.reload()
-                } catch (error) {
-                  console.log(error)
-                }
-              },
-
-              "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
-                "name": name, //your customer's name
-                // "email": "gaurav.kumar@example.com",
-                // "contact": "9000090000" 
-                //Provide the customer's phone number for better conversion rates 
-              },
-              "notes": {
-                "address": "Razorpay Corporate Office"
-              },
-              "theme": theme === "dark" ? "#000" : "#fff"
-
-            };
-            const rzpay = new Razorpay(options);
-            rzpay.open();
-            rzpay.on('payment.failed', async function (response) {
-              console.log(response)
-
-            });
-            setLoad(true);
-          } else {
-            console.log("Add money request failed.");
+          console.log(response.data)
+          if (response.data.success) {
+            router.push(response.data.url)
           }
         } catch (error) {
           console.log(error);
@@ -130,17 +82,11 @@ const Wallet = () => {
         console.log("Something went wrong...");
       }
     },
-    [Razorpay, inp]
+    [inp]
   );
 
   if (load) {
-    return <div className="flex justify-center
-    items-center h-screen dark:bg-[#273142]  bg-white fixed inset-0">
-      <div className="animate-spin">
-        <AiOutlineLoading3Quarters className="text-xl dark:text-white text-black" />
-      </div>
-
-    </div>
+    return <Loader />
   }
 
   return (

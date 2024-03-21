@@ -5,15 +5,17 @@ import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation';
 import Fetch from '@/app/component/Fetch';
 import Pagination from '@/app/component/Pagination';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import Loader from '@/app/component/Loader';
 
 const page = () => {
 	const [campdata, setCampdata] = useState([]);
 	const router = useRouter()
 	const { advid } = getData()
 	const { CampaignFetch } = useAdFetching()
-
+	const [loading, setLoading] = useState(true)
 	const [currentPage, setCurrentPage] = useState(1);
-	const [postPerPage, setPostPerPage] = useState(7);
+	const [postPerPage, setPostPerPage] = useState(5);
 	const lastindex = currentPage * postPerPage;
 	const firstIndex = lastindex - postPerPage;
 	const postperData = campdata?.slice(firstIndex, lastindex);
@@ -21,15 +23,20 @@ const page = () => {
 	const fetchData = async () => {
 		const data = await CampaignFetch(advid)
 		setCampdata(data)
+		setLoading(false)
 	}
 
 	useEffect(() => {
 		if (advid) {
+			setLoading(true)
 			fetchData()
 		}
 	}, [advid])
 
-	console.log(campdata)
+	if (loading) {
+		return <Loader />
+	}
+
 	return (
 		<>
 			<Fetch data={postperData} length={campdata.length} router={router} />

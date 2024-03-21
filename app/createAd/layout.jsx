@@ -2,7 +2,7 @@
 import { BsCheckLg } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { setStep } from "../redux/slice/dataSlice";
-import { getData } from "../utils/useful";
+import { formatDateToString, getData } from "../utils/useful";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { API } from "@/Essentials";
@@ -40,25 +40,25 @@ export default function createAdLayout({ children }) {
 		setClient(true)
 	}, [])
 
-	// useEffect(() => {
-	// 	const isPageReloaded = window.performance.navigation.type === 1;
+	useEffect(() => {
+		const isPageReloaded = window.performance.navigation.type === 1;
 
-	// 	if (isPageReloaded) {
-	// 		console.log('Page is reloaded');
-	// 		router.push("/createAd?step=1")
-	// 	} else {
-	// 		console.log('Page is not reloaded');
-	// 	}
-	// }, []);
+		if (isPageReloaded) {
+			console.log('Page is reloaded');
+			router.push("/createAd?step=1")
+		} else {
+			console.log('Page is not reloaded');
+		}
+	}, []);
 
-	// useEffect(() => {
-	// 	if (step === 1 && !validateStep2) {
-	// 		router.push("/createAd?step=1")
-	// 	}
-	// 	if (step === 2 && !validateStep1) {
-	// 		router.push("/createAd?step=1")
-	// 	}
-	// }, [step, validateStep1, validateStep2])
+	useEffect(() => {
+		if (step === 1 && !validateStep2) {
+			router.push("/createAd?step=1")
+		}
+		if (step === 2 && !validateStep1) {
+			router.push("/createAd?step=1")
+		}
+	}, [step, validateStep1, validateStep2])
 
 	const sendData = async (e) => {
 		console.log("runde")
@@ -89,9 +89,9 @@ export default function createAdLayout({ children }) {
 			formDataToSend.append("minage", three.minage);
 			formDataToSend.append("type", three.type);
 			formDataToSend.append("maxage", three.maxage);
-			formDataToSend.append("startdate", three.startDate);
+			formDataToSend.append("startdate", formatDateToString(three.startDate));
 			formDataToSend.append("adid", three.random_id);
-			formDataToSend.append("enddate", three.endDate);
+			formDataToSend.append("enddate", three.endDate ? three.endDate : "Not Selected");
 			formDataToSend.append("goal", three.goal);
 			formDataToSend.append("advertiserid", advid);
 
@@ -143,9 +143,9 @@ export default function createAdLayout({ children }) {
 
 	return (
 		<>
-			<div className=" h-screen fixed dark:bg-[#273142] bg-white">
-				<div className="w-full h-[20%] md:h-[15%] z-10 dark:bg-[#273142]">
-					<div className="flex border w-full dark:bg-[#273142] bg-white justify-between items-center px-5 py-3 pb-4">
+			<div className=" h-screen fixed dark:bg-[#181a20] bg-white">
+				<div className="w-full h-[20%] md:h-[15%] z-10 dark:bg-[#181a20] ">
+					<div className="flex border-b w-full dark:bg-[#181a20] bg-white justify-between items-center px-5 py-3 pb-4">
 						<div className="text-[#555555] dark:text-white pn:max-sm:hidden text-xl font-semibold">
 							Set up a new Ad
 						</div>
@@ -202,7 +202,7 @@ export default function createAdLayout({ children }) {
 							}
 						</div>
 					</div>
-					<div className="flex justify-center mt-5 dark:bg-[#273142] bg-white items-center">
+					<div className="flex justify-center sm:mt-5 dark:bg-[#181a20] bg-white items-center">
 						<div className="after:mt-4 mb-7 after:block after:h-1 min-w-[83%] sm:min-w-[600px] after:w-full after:rounded-lg after:bg-gray-200">
 							<ol className="grid grid-cols-3 text-sm font-medium text-gray-500">
 								<li className="relative flex justify-start text-green-600">
@@ -211,7 +211,7 @@ export default function createAdLayout({ children }) {
 										{step >= 1 ? <BsCheckLg className="w-7 h-7 p-[5px]" /> : <div className="w-7 h-7 rounded-full bg-blue-600 text-sm flex justify-center items-center">1</div>
 										}
 									</span>
-									<span class={`${step >= 1 ? "text-green-600" : "text-blue-600"} text-xs pp:text-base`}>Select target</span>
+									<span class={`${step >= 1 ? "text-green-600" : "text-[#3e84e4]"} text-xs pp:text-base`}>Select target</span>
 								</li>
 
 								<li className="relative flex justify-center text-green-600">
@@ -221,7 +221,7 @@ export default function createAdLayout({ children }) {
 										{step >= 2 ? <BsCheckLg className="w-7 h-7 p-[5px]" /> : <div className="w-7 h-7 rounded-full bg-blue-600 text-sm flex justify-center items-center">2</div>}
 									</span>
 
-									<span className={`${step >= 2 ? "text-green-600" : "text-blue-600"} text-xs pp:text-base`}>Set up Ad</span>
+									<span className={`${step >= 2 ? "text-green-600" : "text-[#3e84e4]"} text-xs pp:text-base`}>Set up Ad</span>
 
 								</li>
 
@@ -229,13 +229,13 @@ export default function createAdLayout({ children }) {
 									<span className="absolute -bottom-[1.90rem] -end-1 rounded-full bg-gray-600 text-white">
 										<div className="w-7 h-7 rounded-full bg-blue-600 text-sm flex justify-center items-center">3</div>
 									</span>
-									<span className={`text-blue-600 text-xs pp:text-base`}>Preview & Launch</span>
+									<span className={`text-[#3e84e4] text-xs pp:text-base`}>Preview & Launch</span>
 								</li>
 							</ol>
 						</div>
 					</div>
 				</div>
-				<div className="h-[76%] sm:mt-[4%] z-40 pn:max-sm:overflow-y-scroll pn:max-sm:no-scrollbar bg-maincolor ">
+				<div className="h-[76%] sm:mt-[4%] z-40 pn:max-sm:overflow-y-scroll pn:max-sm:no-scrollbar bg-white dark:bg-[#181a20]">
 					{children}
 				</div>
 			</div >

@@ -256,55 +256,57 @@ function page() {
 
   dispatch(setValidateStep2(validateData()))
 
-  // const validateDatas = () => {
-  //   if (three.comid) {
-  //     if (
-  //       three.Action === "" ||
-  //       three.Description === "" ||
-  //       three.Headline === "" ||
-  //       three.link === "" ||
-  //       three.adName === "" ||
-  //       three.goal === "" ||
-  //       three.pic === ""
-  //     ) {
-  //       return false;
-  //     }
-  //   } else
-  //     if (
-  //       three.Action === "" ||
-  //       three.Description === "" ||
-  //       three.Headline === "" ||
-  //       three.link === "" ||
-  //       three.adName === "" ||
-  //       three.goal === "" ||
-  //       three.pic === "" ||
-  //       communityName === "" ||
-  //       communityDesc === "" ||
-  //       communityCategory === "" ||
-  //       communityImage === ""
-  //     ) {
-  //       return false;
-  //     }
-  //     else {
-  //       return true;
-  //     }
-  // };
-
   const validateDatas = () => {
-    if (
-      three.Action === "" ||
-      three.Description === "" ||
-      three.Headline === "" ||
-      three.link === "" ||
-      three.adName === "" ||
-      three.goal === "" ||
-      three.pic === ""
-    ) {
-      return false;
+    if (three.comid) {
+      if (
+        three.Action === "" ||
+        three.Description === "" ||
+        three.Headline === "" ||
+        three.link === "" ||
+        three.adName === "" ||
+        three.goal === "" ||
+        three.pic === ""
+      ) {
+        return false;
+      } else {
+        return true
+      }
     } else {
-      return true
+      if (three.Action === "" ||
+        three.Description === "" ||
+        three.Headline === "" ||
+        three.link === "" ||
+        three.adName === "" ||
+        three.goal === "" ||
+        three.pic === "" ||
+        three.communityName === "" ||
+        three.communityDesc === "" ||
+        three.communityCategory === "" ||
+        three.communityImage === "") {
+        return false
+      } else {
+        return true
+      }
+
     }
+
   };
+
+  // const validateDatas = () => {
+  //   if (
+  //     three.Action === "" ||
+  //     three.Description === "" ||
+  //     three.Headline === "" ||
+  //     three.link === "" ||
+  //     three.adName === "" ||
+  //     three.goal === "" ||
+  //     three.pic === ""
+  //   ) {
+  //     return false;
+  //   } else {
+  //     return true
+  //   }
+  // };
 
   dispatch(setValidateStep1(validateDatas()))
 
@@ -415,7 +417,7 @@ function page() {
 
   return (
     <>
-      <div className="no-scrollbar select-none w-screen h-screen overflow-x-hidden">
+      <div className="no-scrollbar select-none w-screen dark:bg-[#181a20] h-screen overflow-x-hidden">
 
         {(urlSteps === 0) && (<Ad2
           // setStep={setStep}

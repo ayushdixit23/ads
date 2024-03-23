@@ -14,11 +14,15 @@ import Organisation from "../spliting/Organisation";
 import { useDispatch, useSelector } from "react-redux";
 import { setChange } from "../redux/slice/registerSlice";
 import { storeInSessionStorage } from "../utils/TokenDataWrapper";
+import { getCookie } from "cookies-next";
+import { decryptaes } from "../utils/security";
 
 const Register = () => {
   const [radio, setRadio] = useState(1);
   const dispatch = useDispatch()
   const change = useSelector((state) => state.register.change)
+  const [data, setData] = useState("")
+  const cookie = getCookie("rigdta")
   // const [change, setChange] = useState(3);
   const [details, setDetails] = useState({
     firstName: "",
@@ -38,6 +42,15 @@ const Register = () => {
     password: "",
     confirmPass: "",
   });
+
+
+  useEffect(() => {
+    if (cookie) {
+      const data = JSON.parse(decryptaes(cookie))
+      console.log(data, "data")
+      setData(data)
+    }
+  }, [cookie])
 
   const otpElementRef = useRef(null);
 
@@ -82,6 +95,25 @@ const Register = () => {
       }
     }
   }, [otp]);
+
+  useEffect(() => {
+    if (data) {
+      const { firstname, lastname, email, dp, phone, address, city, state, pincode, landmark } = data
+      setDetails({
+        ...details,
+        myImage: dp,
+        firstName: firstname || "",
+        phoneNumber: phone || "",
+        lastName: lastname || "",
+        email: email || "",
+        address: address || "",
+        city: city || "",
+        state: state || "",
+        postalCode: pincode || "",
+        LandMark: landmark || ""
+      })
+    }
+  }, [data])
 
   useEffect(() => {
     let interval;
@@ -194,8 +226,8 @@ const Register = () => {
       const res = await axios.post(`${API}/createadvacc`, formDataToSend);
       if (res?.data?.success) {
         storeInSessionStorage(res.data.sessionId)
-        localStorage.setItem(`axetkn${res.data.sessionId}`, res.data.access_token)
-        localStorage.setItem(`rvktkn${res.data.sessionId}`, res.data.refresh_token)
+        localStorage.setItem(`axetkn`, res.data.access_token)
+        localStorage.setItem(`rvktkn`, res.data.refresh_token)
         router.push("/main/dashboard");
       }
     } catch (err) {

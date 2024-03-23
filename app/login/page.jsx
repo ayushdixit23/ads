@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { auth } from "@/firebase.config";
 import OTPInput from "react-otp-input";
@@ -19,8 +19,9 @@ import Lotties from "../component/Lotties";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { changeloading } from "@/app/redux/slice/userData";
-import { setCookie } from "cookies-next";
 import { storeInSessionStorage } from "../utils/TokenDataWrapper";
+import { setCookie } from "cookies-next";
+import { encryptaes } from "../utils/security";
 
 const Login = () => {
   const [phone, setPhone] = useState(1);
@@ -56,13 +57,10 @@ const Login = () => {
     }
   }
 
-  //validate email
   const validateEmail = (email) => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(email);
   };
-
-  // console.log(loading);
 
   const isValidEmail = validateEmail(email);
   const handleCreate = async (e) => {
@@ -116,8 +114,8 @@ const Login = () => {
   const cookieSetter = async (data) => {
     try {
       storeInSessionStorage(data.sessionId)
-      localStorage.setItem(`axetkn${data.sessionId}`, data.access_token)
-      localStorage.setItem(`rvktkn${data.sessionId}`, data.refresh_token)
+      localStorage.setItem(`axetkn`, data.access_token)
+      localStorage.setItem(`rvktkn`, data.refresh_token)
       return true
     } catch (error) {
       console.log(error)
@@ -246,12 +244,18 @@ const Login = () => {
         otp: grovyo.otp,
         type, value
       })
+      console.log(res.data)
       if (res.data.success) {
-        const a = await cookieSetter(res.data)
-        if (a === true) {
-          router.push("/main/dashboard");
-          sessionStorage.removeItem("type")
-          sessionStorage.removeItem("value")
+        if (res.data.accountexist) {
+          const a = await cookieSetter(res.data)
+          if (a === true) {
+            router.push("/main/dashboard");
+            sessionStorage.removeItem("type")
+            sessionStorage.removeItem("value")
+          }
+        } else {
+          router.push("/registration")
+          setCookie("rigdta", encryptaes(JSON.stringify(res.data.data)))
         }
       }
       setLoad(false)
@@ -280,7 +284,7 @@ const Login = () => {
       {
         popup &&
         <div className="fixed inset-0 w-screen z-50 bg-black/60 h-screen flex justify-center items-center backdrop-blur-md">
-          <div className="flex flex-col w-[500px] dark:bg-[#273142] rounded-xl bg-white p-3 ">
+          <div className="flex flex-col w-[500px] dark:bg-[#1c1d21] rounded-xl bg-white p-3 ">
 
             {change ? <>
               <div className="flex flex-wrap w-full mb-2">
@@ -358,7 +362,7 @@ const Login = () => {
         </div>
       </div>
 
-      <div className="grid bg-maincolor md:grid-cols-2 px-[3%]">
+      <div className="grid bg-white dark:bg-[#1c1d21] md:grid-cols-2 px-[3%]">
         <div className="flex flex-col justify-center items-center h-[100vh]">
           <div className="lg:w-[60%] md:w-[70%] w-[93%] sm:w-[75%]">
             {showOTP ? (
@@ -428,13 +432,13 @@ const Login = () => {
                         Use Email
                       </div>
                     </div>
-                    <div className="flex justify-center border-b-2 bg-input px-2 border-2 rounded-xl items-center w-full">
-                      <div className="border-r-2 pr-2 border-border py-2">+91</div>
+                    <div className="flex justify-center border-b-2 border-[#222]/50 border-2 dark:border-[#fff]/40 px-2 rounded-xl items-center w-full">
+                      <div className="border-r-2 border-[#222]/50 pr-2 dark:border-[#fff]/40 py-2">+91</div>
                       <input
                         maxLength={10}
                         onChange={(e) => setNumber(e.target.value)}
                         value={number}
-                        className="p-2 w-full outline-none  bg-input  "
+                        className="p-2 w-full outline-none bg-transparent "
                         type="tel"
                       />
                     </div>
@@ -486,7 +490,7 @@ const Login = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="abc@example.com"
-                    className="p-3 outline-none bg-input border-2 px-4 rounded-xl"
+                    className="p-3 outline-none bg-transparent border-[#222]/50 border-2 dark:border-[#fff]/40 px-4 rounded-xl"
                     type="Email"
                   />
                 </div>
@@ -520,12 +524,12 @@ const Login = () => {
                     <div className="text-[#3451f7]">Forgot password</div>
                   </div>
                   {see ? (
-                    <div className="flex justify-center border-2 bg-input rounded-xl items-center w-full">
+                    <div className="flex justify-center border-2 border-[#222]/50  dark:border-[#fff]/40  rounded-xl items-center w-full">
                       <input
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Enter Your Password"
-                        className="p-3 outline-none bg-input border-r-2  w-full
+                        className="p-3 outline-none bg-transparent border-[#222]/50  dark:border-[#fff]/40 border-r-2  w-full
                            px-4 rounded-xl rounded-r-none"
                         type="password"
                       />
@@ -535,12 +539,12 @@ const Login = () => {
                       />
                     </div>
                   ) : (
-                    <div className="flex justify-center bg-input border-2 rounded-xl items-center w-full">
+                    <div className="flex justify-center border-2 border-[#222]/50  dark:border-[#fff]/40  rounded-xl items-center w-full">
                       <input
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Enter Your Password"
-                        className="p-3 outline-none bg-input border-r-2  w-full
+                        className="p-3 outline-none bg-transparent border-[#222]/50  dark:border-[#fff]/40 border-r-2  w-full
                         px-4 rounded-xl rounded-r-none"
                         type="text"
                       />

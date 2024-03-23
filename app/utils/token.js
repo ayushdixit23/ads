@@ -19,7 +19,7 @@ const useTokenAndData = () => {
   const [refreshedtokenAgain] = useGetRefreshTokenMutation()
 
   useEffect(() => {
-    const token = localStorage.getItem(`axetkn${sessionId}`)
+    const token = localStorage.getItem(`axetkn`)
     setToken(token)
   }, [sessionId])
 
@@ -41,7 +41,7 @@ const useTokenAndData = () => {
 
   const checkRefreshTokenValidity = useCallback(() => {
     try {
-      const refreshToken = localStorage.getItem(`rvktkn${sessionId}`)
+      const refreshToken = localStorage.getItem(`rvktkn`)
       if (!refreshToken) {
         console.error("No refresh token found");
         return false;
@@ -59,7 +59,7 @@ const useTokenAndData = () => {
   }, []);
 
   const refresh = useCallback(async () => {
-    const refreshToken = localStorage.getItem(`rvktkn${sessionId}`)
+    const refreshToken = localStorage.getItem(`rvktkn`)
 
     if (!refreshToken) {
       console.error("No refresh token found");
@@ -68,7 +68,7 @@ const useTokenAndData = () => {
     try {
       const newToken = await refreshAccessToken(refreshToken);
       if (newToken) {
-        localStorage.setItem(`axetkn${sessionId}`, newToken.access_token)
+        localStorage.setItem(`axetkn`, newToken.access_token)
       }
     } catch (error) {
       console.error("Error during token refresh:", error);
@@ -95,15 +95,15 @@ const useTokenAndData = () => {
             setIsValid(false);
             // deleteCookie(`axetkn${sessionId}`);
             // deleteCookie(`rvktkn${sessionId}`);
-            localStorage.removeItem(`axetkn${sessionId}`)
-            localStorage.removeItem(`rvktkn${sessionId}`)
+            localStorage.removeItem(`axetkn`)
+            localStorage.removeItem(`rvktkn`)
           }
         }
       } catch (e) {
         console.error(e);
         setIsValid(false);
-        localStorage.removeItem(`axetkn${sessionId}`)
-        localStorage.removeItem(`rvktkn${sessionId}`)
+        localStorage.removeItem(`axetkn`)
+        localStorage.removeItem(`rvktkn`)
         // deleteCookie(`rvktkn${sessionId}`);
       }
     },

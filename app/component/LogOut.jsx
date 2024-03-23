@@ -26,8 +26,8 @@ const LogoutModal = ({ isOpen, onClose }) => {
   };
 
   const deleteCookies = () => {
-    localStorage.removeItem(`axetkn${sessionId}`)
-    localStorage.removeItem(`rvktkn${sessionId}`)
+    localStorage.removeItem(`axetkn`)
+    localStorage.removeItem(`rvktkn`)
     // deleteCookie(`axetkn${sessionId}`);
     // deleteCookie(`rvktkn${sessionId}`);
   }

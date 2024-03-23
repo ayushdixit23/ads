@@ -40,7 +40,7 @@ const TokenDataWrapper = ({ children }) => {
       dispatch(changeloading({ loading: false }));
       dispatch(sendData(data));
     }
-    const token = localStorage.getItem(`axetkn${sessionId}`)
+    const token = localStorage.getItem(`axetkn`)
     if (!token && !exactpath.includes(path)) {
       redirect("/login");
     }

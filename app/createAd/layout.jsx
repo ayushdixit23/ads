@@ -41,25 +41,25 @@ export default function createAdLayout({ children }) {
 		setClient(true)
 	}, [])
 
-	useEffect(() => {
-		const isPageReloaded = window.performance.navigation.type === 1;
+	// useEffect(() => {
+	// 	const isPageReloaded = window.performance.navigation.type === 1;
 
-		if (isPageReloaded) {
-			console.log('Page is reloaded');
-			router.push("/createAd?step=1")
-		} else {
-			console.log('Page is not reloaded');
-		}
-	}, []);
+	// 	if (isPageReloaded) {
+	// 		console.log('Page is reloaded');
+	// 		router.push("/createAd?step=1")
+	// 	} else {
+	// 		console.log('Page is not reloaded');
+	// 	}
+	// }, []);
 
-	useEffect(() => {
-		if (step === 1 && !validateStep2) {
-			router.push("/createAd?step=1")
-		}
-		if (step === 2 && !validateStep1) {
-			router.push("/createAd?step=1")
-		}
-	}, [step, validateStep1, validateStep2])
+	// useEffect(() => {
+	// 	if (step === 1 && !validateStep1) {
+	// 		router.push("/createAd?step=1")
+	// 	}
+	// 	if (step === 2 && !validateStep2) {
+	// 		router.push("/createAd?step=1")
+	// 	}
+	// }, [step, validateStep1, validateStep2])
 
 	const sendData = async (e) => {
 		console.log("runde")
@@ -144,16 +144,16 @@ export default function createAdLayout({ children }) {
 
 	return (
 		<>
-			<div className=" h-screen fixed dark:bg-[#181a20] bg-white">
-				<div className="w-full h-[20%] md:h-[15%] z-10 dark:bg-[#181a20] ">
-					<div className="flex border-b w-full dark:bg-[#181a20] bg-white justify-between items-center px-5 py-3 pb-4">
+			<div className=" h-screen w-screen fixed dark:bg-[#181a20] bg-white">
+				<div className="w-full z-10">
+					<div className="flex border-b w-full dark:bg-[#1e2129] bg-white justify-between items-center px-5 h-[70px]">
 						<div className="text-[#555555] dark:text-white pn:max-sm:hidden text-xl font-semibold">
 							Set up a new Ad
 						</div>
-						<div className="text-[#555555] sm:hidden text-xl font-semibold">
+						<div className="text-[#555555] dark:text-white sm:hidden text-xl font-semibold">
 							Ad SetUp
 						</div>
-						<div className="flex justify-center pt-2 items-center gap-3">
+						<div className="flex justify-center sm:pt-2 items-center sm:gap-3">
 							{step === 0 && (
 								<Link href="/main/dashboard" onClick={stepBacker} className="border-b cursor-pointer pn:max-sm:hidden border-black">
 									Discard
@@ -173,7 +173,7 @@ export default function createAdLayout({ children }) {
 								</Link>
 							}
 							{step === 0 && (
-								validateStep2 ?
+								validateStep1 ?
 
 									<Link href="/createAd?step=2" onClick={stepRunner} className="p-2 px-7 rounded-full bg-blue-800 cursor-pointer  text-white">
 										< div > Next</div>
@@ -185,7 +185,7 @@ export default function createAdLayout({ children }) {
 							)
 							}
 							{step === 1 && (
-								validateStep1 ?
+								validateStep2 ?
 
 									<Link href="/createAd?step=3" onClick={stepRunner} className="p-2 px-7 rounded-full bg-blue-800 cursor-pointer  text-white">
 										< div > Next</div>
@@ -203,7 +203,7 @@ export default function createAdLayout({ children }) {
 							}
 						</div>
 					</div>
-					<div className="flex justify-center sm:mt-5 dark:bg-[#181a20] bg-white items-center">
+					<div className="flex border-b justify-center dark:bg-[#1e2129] h-[50px] bg-white items-center">
 						{/* <div className="after:mt-4 mb-7 after:block after:h-1 min-w-[83%] sm:min-w-[600px] after:w-full after:rounded-lg after:bg-gray-200">
 							<ol className="grid grid-cols-3 text-sm font-medium text-gray-500">
 								<li className="relative flex justify-start text-green-600">
@@ -235,23 +235,24 @@ export default function createAdLayout({ children }) {
 							</ol>
 						</div> */}
 
-						<ol class="flex items-center justify-center px-3 mt-5 sm:mt-0 w-full max-w-[800px] text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base">
-							<li class={`flex md:w-full items-center   sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700 ${step >= 1 ? "text-green-900" : "dark:text-blue-500 text-blue-600"} `}>
-								<span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
+						<ol class="flex items-center justify-center px-3 sm:mt-0 w-full max-w-[800px] text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base">
+
+							<li class={`flex md:w-full ${step >= 1 ? "text-green-900 dark:text-green-600" : "dark:text-blue-500 text-blue-600"} items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700`}>
+								<span class="flex items-center after:content-['/'] min-w-[117px] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
 									{step >= 1 ? <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
 										<path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
 									</svg> : <div className="w-5 h-5 rounded-full bg-blue-600 text-white mr-1 text-xs flex justify-center items-center">1</div>}
 
-									Select <span class="hidden sm:inline-flex sm:ms-2">Target</span>
+									Set up Ads
 								</span>
 							</li>
-							<li class={`flex md:w-full ${step >= 2 ? "text-green-900" : "dark:text-blue-500 text-blue-600"} items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700`}>
-								<span class="flex items-center after:content-['/'] min-w-[110px] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
+							<li class={`flex md:w-full items-center   sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700 ${step >= 2 ? "text-green-900" : "dark:text-blue-500 text-blue-600"} `}>
+								<span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
 									{step >= 2 ? <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
 										<path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
 									</svg> : <div className="w-5 h-5 rounded-full bg-blue-600 text-white mr-1 text-xs flex justify-center items-center">2</div>}
 
-									Set up Ads
+									Select <span class="hidden sm:inline-flex sm:ms-2">Target</span>
 								</span>
 							</li>
 							<li class="flex items-center text-blue-500 min-w-[200px]">
@@ -265,8 +266,11 @@ export default function createAdLayout({ children }) {
 
 					</div>
 				</div>
-				<div className="h-[76%] sm:mt-[4%] z-40 pn:max-sm:overflow-y-scroll pn:max-sm:no-scrollbar bg-white dark:bg-[#181a20]">
+				<div className="h-[100%] z-40 bg-white  dark:bg-red-600">
+
 					{children}
+
+
 				</div>
 			</div >
 		</>

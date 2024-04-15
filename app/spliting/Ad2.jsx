@@ -45,11 +45,7 @@ const Ad2 = ({
 	return (
 		<>
 			<Toaster position="bottom-right" />
-			<div>
-				<div className="grid bg-[#F8F8F8] grid-cols-1 pn:max-md:hidden">
-					<div className="flex bg-[#1b2431] flex-col ">
-
-						<div className="flex justify-center  h-[550px] gap-9 px-[2%] pn:max-md:hidden">
+						<div className="flex justify-center dark:bg-[#181a20] bg-[#f1f1f1] w-full sm:fixed h-[87%] gap-9 px-[2%] pn:max-md:hidden">
 							<div
 								className={`${styles.customScrollbar} pn:max-md:hidden md:w-[900px] w-full overflow-y-scroll dark:bg-[#1e2129] bg-[#F0F2F5]  my-4 rounded-2xl py-5 px-2`}
 							>
@@ -62,7 +58,11 @@ const Ad2 = ({
 									</h2>
 									<div className="flex flex-wrap gap-3 my-4">
 										<div
-											onClick={() => { dispatch(setThree({ type: "infeed" })); setOpen(false) }}
+											onClick={() => {
+
+												dispatch(setThree({ type: "infeed" }));
+												setOpen(false)
+											}}
 											className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type.includes("infeed")
 												? "border-[#4C9AFF]  bg-[#3e84e4]/10"
 												: ""
@@ -82,7 +82,7 @@ const Ad2 = ({
 												</div>
 											)}
 										</div>
-										<div
+										{/* <div
 											onClick={() => { dispatch(setThree({ type: "search" })); setOpen(false) }}
 											className={` flex flex-col justify-center border relative  p-2 z-0 items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type.includes("search")
 												? "border-[#4C9AFF]  bg-[#3e84e4]/10"
@@ -102,7 +102,7 @@ const Ad2 = ({
 													<AiFillCheckCircle className="text-blue-600 text-xl" />
 												</div>
 											)}
-										</div>
+										</div> */}
 										<div
 											onClick={() => { setOpen(!open); dispatch(setThree({ type: "" })) }}
 											className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${open
@@ -127,7 +127,13 @@ const Ad2 = ({
 
 										<div
 
-											onClick={() => { dispatch(setThree({ type: "banner" })); setOpen(false) }}
+											onClick={() => {
+												if (three.isImage) {
+													dispatch(setThree({ type: "banner" })); setOpen(false)
+												} else {
+													toast.error("Banner Ads should contain image!")
+												}
+											}}
 											className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type.includes("banner")
 												? "border-[#4C9AFF]  bg-[#3e84e4]/10"
 												: ""
@@ -153,7 +159,15 @@ const Ad2 = ({
 										<div className='flex gap-3 pb-2 items-center'>
 											<><div
 
-												onClick={() => dispatch(setThree({ type: "skipable" }))}
+												onClick={() => {
+													if (three.isImage) {
+														toast.error("Videos Ads should contain video!")
+													} else {
+														dispatch(setThree({ type: "skipable" }))
+													}
+												}
+
+												}
 												className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type === "skipable"
 													? "border-[#4C9AFF]  bg-[#3e84e4]/10"
 													: ""
@@ -174,8 +188,15 @@ const Ad2 = ({
 												)}
 											</div>
 												<div
+													onClick={() => {
+														if (three.isImage) {
+															toast.error("Videos Ads should contain video!")
+														} else {
+															dispatch(setThree({ type: "non-skipable" }))
+														}
+													}
+													}
 
-													onClick={() => dispatch(setThree({ type: "non-skipable" }))}
 													className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type === "non-skipable"
 														? "border-[#4C9AFF]  bg-[#3e84e4]/10"
 														: ""
@@ -197,6 +218,13 @@ const Ad2 = ({
 												</div></>
 										</div>
 									</div>}
+
+									<div className='text-sm text-black dark:text-white font-semibold'>
+										{three.type === "infeed" && "Note: you found this at in the middle of the feed."}
+										{three.type === "banner" && "Note: you found this at in the top of the feed."}
+										{three.type === "skipable" && "Note: The video ads which can be skipable"}
+										{three.type === "non-skipable" && "Note: The video ads which cannot be skipable"}
+									</div>
 								</div>
 
 								<div className="my-[1%] rounded-xl">
@@ -223,19 +251,21 @@ const Ad2 = ({
 												/>
 											</SelectTrigger>
 											<SelectContent className="dark:text-white dark:bg-[#323b4e] dark:border-none ">
-												<SelectGroup className="max-h-[200px] gap-1 w-full flex flex-col justify-center items-center">
-													{PointsCategory?.map((d, i) => (
-														<SelectItem
+												<SelectGroup className=" gap-1 w-full flex flex-col justify-center items-center">
+													<div className='max-h-[200px] w-full overflow-y-scroll no-scrollbar'>
+														{PointsCategory?.map((d, i) => (
+															<SelectItem
 
-															value={d.category}
-															key={i}
-															className=""
-														>
+																value={d.category}
+																key={i}
+																className=""
+															>
 
-															<div className="text-sm">{d.category}</div>
+																<div className="text-sm">{d.category}</div>
 
-														</SelectItem>
-													))}
+															</SelectItem>
+														))}
+													</div>
 
 												</SelectGroup>
 											</SelectContent>
@@ -754,14 +784,9 @@ const Ad2 = ({
 									display={ProperAudience ? ProperAudience : 0}
 								/> */}
 							</div>
-						</div>
-					</div>
-				</div>
-
+		 				</div>
 				{/* mobile */}
-				<div className="md:hidden">
-					<div className="flex bg-maincolor flex-col py-2">
-
+					<div className="flex bg-maincolor flex-col md:hidden pb-[20%] py-2">
 						<div className="grid grid-cols-1">
 							<div className="flex flex-col">
 								<Square3 display={ProperAudience ? ProperAudience : 0} />
@@ -807,28 +832,7 @@ const Ad2 = ({
 													</div>
 												)}
 											</div>
-											<div
-												// onClick={() => toggleType("search")}
-												onClick={() => { dispatch(setThree({ type: "search" })); setOpen(false) }}
-												className={` flex flex-col justify-center border relative  p-2 z-0 items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type.includes("search")
-													? "border-[#4C9AFF]  bg-[#3e84e4]/10"
-													: ""
-													}`}
-											>
-												<div>
-													<Image
-														src={video}
-														className="w-[90px] h-[90px]"
-														alt="search"
-													/>
-												</div>
-												<div className="font-medium py-2">Search</div>
-												{three.type.includes("search") && (
-													<div className={`absolute -top-2 -right-2`}>
-														<AiFillCheckCircle className="text-blue-600 text-xl" />
-													</div>
-												)}
-											</div>
+
 											<div
 												// onClick={() => toggleType("videoads")}
 												onClick={() => { setOpen(!open); dispatch(setThree({ type: "" })) }}
@@ -896,7 +900,13 @@ const Ad2 = ({
 											</>} */}
 											<div
 												// onClick={() => toggleType("banner")}
-												onClick={() => { dispatch(setThree({ type: "banner" })); setOpen(false) }}
+												onClick={() => {
+													if (three.isImage) {
+														dispatch(setThree({ type: "banner" })); setOpen(false)
+													} else {
+														toast.error("Banner Ads should contain image!")
+													}
+												}}
 												className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type.includes("banner")
 													? "border-[#4C9AFF]  bg-[#3e84e4]/10"
 													: ""
@@ -922,7 +932,15 @@ const Ad2 = ({
 											<div className='flex gap-3 pb-2 items-center'>
 												<><div
 
-													onClick={() => dispatch(setThree({ type: "skipable" }))}
+													onClick={() => {
+														if (three.isImage) {
+															toast.error("Videos Ads should contain video!")
+														} else {
+															dispatch(setThree({ type: "skipable" }))
+														}
+													}
+
+													}
 													className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type === "skipable"
 														? "border-[#4C9AFF]  bg-[#3e84e4]/10"
 														: ""
@@ -944,7 +962,14 @@ const Ad2 = ({
 												</div>
 													<div
 
-														onClick={() => dispatch(setThree({ type: "non-skipable" }))}
+														onClick={() => {
+															if (three.isImage) {
+																toast.error("Videos Ads should contain video!")
+															} else {
+																dispatch(setThree({ type: "non-skipable" }))
+															}
+														}
+														}
 														className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type === "non-skipable"
 															? "border-[#4C9AFF]  bg-[#3e84e4]/10"
 															: ""
@@ -1002,97 +1027,9 @@ const Ad2 = ({
 													</SelectGroup>
 												</SelectContent>
 											</Select>
-											{/* <div className="w-full flex justify-center items-center rounded-xl border ">
-											<BiMap className="border-r-2 p-2 text-4xl" />
-											<div
-												placeholder="Select a Category"
-												className="w-full rounded-xl p-2 outline-none "
-											>
-												{three.category}
-											</div>
-										</div> */}
 
-											{/* <div className="relative overflow-y-scroll my-3 no-scrollbar w-[360px] h-[230px]">
-											<div>
-												<div className="absolute top-0 left-0 h-auto w-full p-3 border rounded-xl z-10 drop-shadow-md bg-maincolor">
-													<div className="text-sm text-[#6B778C] mb-2 pb-2">
-														Categories
-													</div>
-													<div className="flex flex-col gap-2">
-														{PointsCategory?.map((data, i) => (
-															<div
-																key={i}
-																className="flex items-center z-20 gap-2"
-															>
-																<input
-																	type="radio"
-																	name="mycategory"
-																	onChange={() =>
-																		handleCategoryChange(
-																			data.category,
-																			data.price,
-																			data.population,
-																		)
-																	}
-																	checked={data.category === three.category}
-																/>
-
-																<div className="text-lg font-medium">
-																	{data.category}
-																</div>
-															</div>
-														))}
-													</div>
-												</div>
-											</div>
-										</div> */}
 										</div>
-										{/* <div className="my-1 relative">
-											<h1 className="text-lg py-1 font-medium">Category</h1>
-											<div className="w-full flex justify-center items-center rounded-xl border ">
-												<BiMap className="border-r-2 p-2 text-4xl" />
-												<div
-													placeholder="Select a Category"
-													className="w-full rounded-xl p-2 outline-none "
-												>
-													{three.category}
-												</div>
-											</div>
 
-											<div className="relative overflow-y-scroll my-5 no-scrollbar w-[360px] h-[230px]">
-												<div>
-													<div className="absolute top-0 left-0 h-auto w-full p-3 border rounded-xl z-10 drop-shadow-md bg-maincolor">
-														<div className="text-sm text-[#6B778C] mb-2 pb-2">
-															Trending Categories
-														</div>
-														<div className="flex flex-col gap-2">
-															{PointsCategory?.map((data, i) => (
-																<div
-																	key={i}
-																	className="flex items-center z-20 gap-2"
-																>
-																	<input
-																		type="radio"
-																		name="categoryss"
-																		onChange={() =>
-																			handleCategoryChange(
-																				data.category,
-																				data.price,
-																				data.population,
-																			)
-																		}
-																		checked={data.category === three.category}
-																	/>
-																	<div className="text-lg font-medium">
-																		{data.category}
-																	</div>
-																</div>
-															))}
-														</div>
-													</div>
-												</div>
-											</div>
-										</div> */}
 										<div className='my-1'>
 
 										</div>
@@ -1163,47 +1100,6 @@ const Ad2 = ({
 												))}
 											</div>
 
-											{/* <div className="relative overflow-y-scroll no-scrollbar w-[330px] h-[230px]">
-                        <div>
-                          <div className="absolute top-0 left-0 h-auto w-full p-3 border rounded-xl z-10 drop-shadow-md bg-maincolor">
-                            <div className="text-sm text-[#6B778C] mb-2 pb-2">
-                              Trending tags related to Tech{" "}
-                            </div>
-                            <div className="flex flex-col gap-2">
-                              <div className="flex items-center gap-1">
-                                <input name="myForm" type="checkbox" />
-                                <div className="font-medium">
-                                  Artificial Intelligence - AI
-                                </div>
-                              </div>
-                              <div className="flex items-center gap-1">
-                                <input name="myForm" type="checkbox" />
-                                <div className="font-medium">
-                                  Vertual Reality - VR{" "}
-                                </div>
-                              </div>
-                              <div className="flex items-center gap-1">
-                                <input name="myForm" type="checkbox" />
-                                <div className="font-medium">
-                                  Robotics & Autonomous Systems{" "}
-                                </div>
-                              </div>
-                              <div className="flex items-center gap-1">
-                                <input name="myForm" type="checkbox" />
-                                <div className="font-medium">
-                                  Data Privacy & Protection
-                                </div>
-                              </div>
-                              <div className="flex items-center gap-1">
-                                <input name="myForm" type="checkbox" />
-                                <div className="font-medium">
-                                  Internet of Things - IOT
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div> */}
 
 											<div className="text-[#5585FF] text-[13px] my-2">
 												Note: Enter tags that your audience interested in..
@@ -1743,8 +1639,6 @@ const Ad2 = ({
 							</div>
 						</div>
 					</div>
-				</div >
-			</div >
 		</>
 	)
 }

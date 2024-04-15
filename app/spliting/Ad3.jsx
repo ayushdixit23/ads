@@ -19,10 +19,6 @@ const Ad3 = ({
 
   return (
     <>
-      <div>
-        <div style={
-          { marginBottom: "10rem" }
-        } className="grid bg-[#f8f8f8] dark:bg-[#181a20] grid-cols-1 pn:max-md:hidden">
           <div className="flex justify-center gap-4 px-[2%] w-full pn:max-md:hidden">
             <div
               className={`flex bg-[#F0F2F5] dark:bg-[#181a20] p-4 px-[2%] md:min-w-[800px] lg:min-w-[1024px] my-4 pn:max-md:hidden rounded-2xl flex-col`}
@@ -223,7 +219,6 @@ const Ad3 = ({
               <Square4 />
             </div> */}
           </div>
-        </div>
 
         {/* mobile step-2 */}
         <div className="md:hidden">
@@ -557,7 +552,6 @@ const Ad3 = ({
             </div>
           </div>
         </div>
-      </div>
     </>
   )
 }

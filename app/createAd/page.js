@@ -30,6 +30,7 @@ function page() {
   const [point, setPoint] = useState(null);
 
   const [PointsCategory, setPointsCategory] = useState([
+    { category: "All", population: 100, price: 100 },
     { category: "Movies & Entertainment", population: 70, price: 17 },
     { category: "News", population: 65, price: 14 },
     { category: "Pet & Animals", population: 60, price: 11 },
@@ -50,7 +51,8 @@ function page() {
     { category: "Travel & Gadgets", population: 59, price: 13 },
     { category: "Pop Culture", population: 58, price: 13 },
     { category: "Cars", population: 77, price: 13 },
-    { category: "Motivation & Self-Help", population: 76, price: 13 }
+    { category: "Motivation & Self-Help", population: 76, price: 13 },
+    { category: "Other", population: 89, price: 73 },
   ]);
   const [myLocation, setMyLocation] = useState([])
   const [aud, setAud] = useState([]);
@@ -388,19 +390,40 @@ function page() {
   const handleFileChanges = (e) => {
     const file = e.target.files[0];
 
+    // if (file) {
+    //   const fileExtension = file.name.split(".").pop().toLowerCase();
+
+    //   console.log(file.type)
+
+    //   console.log(fileExtension)
+
+    //   if (file.type.startsWith("image") && (three.type !== "non-skipable" && three.type !== "skipable")) {
+    //     dispatch(setThree({
+    //       media: file,
+    //       isImage: true
+    //     }));
+    //   } else if (file.type.startsWith("video") && three.type !== "banner") {
+    //     dispatch(setThree({
+    //       media: file,
+    //       isImage: false
+    //     }));
+    //   } else {
+    //     alert("Unsupported file type. Please select the appropriate file type.");
+    //     e.target.value = "";
+    //   }
+    // } else {
+    //   dispatch(setThree({
+    //     media: "",
+    //   }));
+    // }
+
     if (file) {
-      const fileExtension = file.name.split(".").pop().toLowerCase();
-
-      console.log(file.type)
-
-      console.log(fileExtension)
-
-      if (file.type.startsWith("image") && (three.type !== "non-skipable" && three.type !== "skipable")) {
+      if (file.type.startsWith("image")) {
         dispatch(setThree({
           media: file,
           isImage: true
         }));
-      } else if (file.type.startsWith("video") && three.type !== "banner") {
+      } else if (file.type.startsWith("video")) {
         dispatch(setThree({
           media: file,
           isImage: false
@@ -414,42 +437,14 @@ function page() {
         media: "",
       }));
     }
+
   };
 
   return (
     <>
       <div className="no-scrollbar select-none w-screen dark:bg-[#181a20] h-screen overflow-x-hidden">
 
-        {(urlSteps === 0) && (<Ad2
-          // setStep={setStep}
-          // toggleType={toggleType}
-          setThree={setThree}
-          date={date}
-          setDate={setDate}
-          dispatch={dispatch}
-          handleCheckboxClick={handleCheckboxClick}
-          setT={setT}
-          setCLick={setCLick}
-          three={three}
-          PointsCategory={PointsCategory}
-          handleCategoryChange={handleCategoryChange}
-          inputValue={inputValue}
-          setInputValue={setInputValue}
-          myAgeHandle={myAgeHandle}
-          click={click}
-          handleAgeRangeChange={handleAgeRangeChange}
-          //isdatavalid={isdatavalid}
-          // ProperAudience={ProperAudience}
-          ctr={ctr}
-          // pricebyDay={pricebyDay}
-          // totalPrice={totalPrice}
-          myLocation={myLocation}
-          t={t}
-          step={urlSteps}
-        />)
-        }
-
-        {(urlSteps === 1) && (
+        {(urlSteps === 0) && (
           <Ad1
             // setStep={setStep}
             dispatch={dispatch}
@@ -461,6 +456,38 @@ function page() {
             setDown={setDown}
             handleFileChanges={handleFileChanges}
             user={user}
+          />
+        )
+        }
+
+        {(urlSteps === 1) && (
+
+          <Ad2
+            // setStep={setStep}
+            // toggleType={toggleType}
+            setThree={setThree}
+            date={date}
+            setDate={setDate}
+            dispatch={dispatch}
+            handleCheckboxClick={handleCheckboxClick}
+            setT={setT}
+            setCLick={setCLick}
+            three={three}
+            PointsCategory={PointsCategory}
+            handleCategoryChange={handleCategoryChange}
+            inputValue={inputValue}
+            setInputValue={setInputValue}
+            myAgeHandle={myAgeHandle}
+            click={click}
+            handleAgeRangeChange={handleAgeRangeChange}
+            //isdatavalid={isdatavalid}
+            // ProperAudience={ProperAudience}
+            ctr={ctr}
+            // pricebyDay={pricebyDay}
+            // totalPrice={totalPrice}
+            myLocation={myLocation}
+            t={t}
+            step={urlSteps}
           />
         )}
 

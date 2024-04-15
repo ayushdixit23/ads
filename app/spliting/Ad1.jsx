@@ -37,7 +37,7 @@ const Ad1 = ({
       setComimage(parsedData?.dp)
       setSelect(parsedData?.communityName)
 
-      dispatch(setThree({ postid, comid: parsedData?.communityId, Headline: parsedData.title, Description: parsedData.desc, media: url + parsedData.media[0].content, isImage: parsedData.media[0].type.startsWith("image") ? true : false }))
+      dispatch(setThree({ postid, comid: parsedData?.communityId, isDisabled: true, Headline: parsedData.title, Description: parsedData.desc, media: url + parsedData.media[0].content, isImage: parsedData.media[0].type.startsWith("image") ? true : false }))
       console.log("parsedData", parsedData.media)
     } else {
       setComimage(data?.communitywithDps[0]?.dps)
@@ -56,14 +56,10 @@ const Ad1 = ({
 
   return (
     <>
-      <div className={`bg-[#F8F8F8] sm:mb-[140px] select-none grid grid-cols-1 w-full`}>
-        <div className="flex flex-col dark:bg-[#181a20] ">
-
-
           {/* scroll this */}
-          <div className="grid grid-cols-7 my-4 md:h-screen px-3 sm:px-[2%] md:overflow-auto gap-4 md:scrollbar-hidden pn:max-md:grid-cols-1 w-full">
+          <div className="grid grid-cols-7 sm:px-3 sm:h-[87%] py-2 pn:max-sm:pb-[30%] bg-[#f1f1f1] dark:bg-[#181a20] sm:fixed md:overflow-auto gap-4 md:scrollbar-hidden pn:max-md:grid-cols-1 w-full">
             <div
-              className={` ${styles.customScrollbar} sm:px-4 px-2 bg-[#F0F2F5] bg-maincolor w-full md:col-span-4 rounded-xl sm:overflow-y-scroll py-2 pn:max-md:order-1`}
+              className={` ${styles.customScrollbar} sm:px-4 h-[100%] px-2 bg-[#96b6e6] bg-maincolor w-full md:col-span-4 rounded-xl sm:overflow-y-scroll py-2 pn:max-md:order-1`}
             >
 
               {
@@ -72,7 +68,7 @@ const Ad1 = ({
                   <div className="px-[2%] my-2 rounded-xl bg-maincolor pn:max-sm:px-2 pb-4">
                     <div className="text-2xl font-semibold py-2 pn:max-sm:px-2 my-2">Community</div>
                     <Select
-                      className="dark:text-white dark:bg-[#323b4e] w-full dark:border-none "
+                      className="dark:text-white bg-green-300 w-full dark:border-none "
                       onValueChange={(selectValue) => {
                         console.log(selectValue)
                         const selectedData = data?.communitywithDps?.find(
@@ -349,6 +345,7 @@ const Ad1 = ({
                   </div>
                   <input
                     name="myForm"
+                    disabled={three.isDisabled}
                     id="headline"
                     onChange={(e) =>
                       dispatch(setThree({ Headline: e.target.value }))
@@ -369,7 +366,7 @@ const Ad1 = ({
                   <input
                     name="myForm"
                     id="des"
-
+                    disabled={three.isDisabled}
                     onChange={(e) =>
                       dispatch(setThree({ Description: e.target.value }))
                     }
@@ -445,7 +442,6 @@ const Ad1 = ({
                       >
                         Paste Link To Call To Action
                       </label>
-
                     </div>
                     <div className="flex justify-center  rounded-xl items-center border">
                       <BsLink className="border-r-2 p-2 text-4xl " />
@@ -462,7 +458,7 @@ const Ad1 = ({
                   </div>
                 </div>
 
-                <div className="my-3 mb-4 flex py-2 px-[2%] flex-col space-y-2">
+                {three.isDisabled === false && <div className="my-3 mb-4 flex py-2 px-[2%] flex-col space-y-2">
                   <h1 className="text-lg font-semibold">Ad images</h1>
                   {/* <div>
                   Create up to 5 ads by Selecting multiple images from the
@@ -486,7 +482,7 @@ const Ad1 = ({
                       />
                     </div>
                   </div>
-                </div>
+                </div>}
                 {/* <div className="py-2 px-[2%]">
                   <div className="bg-[#F3F6F8] dark:bg-[#1e2129] dark:border dark:border-border py-2 px-[2%]  flex justify-between rounded-2xl items-center w-full">
                     <div className="flex justify-center overflow-hidden space-x-4 items-center">
@@ -535,7 +531,8 @@ const Ad1 = ({
               </div>
             </div>
 
-            <div className="md:col-span-3 pn:max-md:order-2 w-full min-h-full sm:overflow-y-auto sm:no-scrollbar rounded-xl max-h-[780px]">
+            <div
+            className="md:col-span-3 pn:max-md:order-2 w-full min-h-full sm:overflow-y-auto sm:no-scrollbar rounded-xl max-h-[780px]">
               <div className="bg-[#FAFAFA] dark:bg-[#181a20] rounded-xl w-full flex justify-center items-center">
                 <div className="bg-maincolor rounded-xl flex flex-col w-[85%] sm:w-[500px] text-wrap md:w-[370px]  my-10 px-2">
                   <div className="flex justify-between items-center w-full">
@@ -612,7 +609,6 @@ const Ad1 = ({
                       />
                     )}
 
-                    {console.log(!three.isImage, "isImage")}
                   </div>
 
                   <div className="py-1 mt-2 font-semibold">
@@ -633,8 +629,6 @@ const Ad1 = ({
               </div>
             </div>
           </div>
-        </div>
-      </div >
     </>
   );
 };

@@ -37,7 +37,8 @@ export const dataSlice = createSlice({
 			random_id: Date.now().toString(),
 			audience: "",
 			isImage: false,
-			postid: ""
+			postid: "",
+			isDisabled: false
 		}
 	},
 	reducers: {

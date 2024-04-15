@@ -75,7 +75,7 @@ const Lotties = () => {
 
 					</div>
 				</div>
-				<div className=" w-[50%] h-[100%] relative flex justify-center items-center pn:max-sm:h-[100%]">
+				<div className=" sm:w-[50%] w-full h-[100%] relative flex justify-center items-center pn:max-sm:h-[100%]">
 					<Number />
 				</div>
 				<div className="flex absolute bottom-3 w-[100%] flex-wrap justify-start items-center dark:text-white text-[#414141] gap-4 text-[12px] select-none">

@@ -110,9 +110,9 @@ const Section8 = () => {
   return (
     <>
       {campdata?.length > 0 ?
-        < div className="grid grid-cols-1 h-full select-none p-2 sm:p-4">
+        < div className="grid  grid-cols-1 h-full bg-black select-none p-2 sm:p-4">
           <div className=" flex flex-col gap-4">
-            <div className=" w-full grid md:grid-cols-4 max-h-[230px] pn:max-md:gap-2 h-full grid-cols-2 py-4 rounded-xl">
+            <div className=" w-full grid md:grid-cols-4 bg-slate-600 max-h-[230px] pn:max-md:gap-2 h-full grid-cols-2 py-4 rounded-xl">
               <div className="flex bg-maincolor justify-center items-center max-h-[100px] p-2 gap-2 sm:gap-5 pn:max-sm:rounded-md sm:max-md:rounded-xl sm:p-3 md:rounded-tl-2xl md:rounded-bl-2xl md:border-r-2">
                 <div className="flex flex-col text-xs justify-center">
                   <div>Spent on this Ad</div>
@@ -296,12 +296,16 @@ const Section8 = () => {
                       {check.cpc && <Line type="monotone" dataKey="cpc" stroke="#047857" />}
                     </LineChart>
                   </ResponsiveContainer>}
+                  {data?.currentbalance ?
+                    <>  {graph?.length === 0 &&
 
-                  {graph?.length === 0 &&
+                      <div className="w-full h-full flex justify-center items-center text-2xl font-semibold">No Data At The Moment</div>
 
-                    <div className="w-full h-full flex justify-center items-center text-2xl font-semibold">No Data At The Moment</div>
+                    }
+                    </> : <>
+                      <div className="w-full h-full flex justify-center items-center text-2xl font-semibold">Not Enough Money to run ad!</div>
 
-                  }
+                    </>}
                 </div>
               </div>
             </div>

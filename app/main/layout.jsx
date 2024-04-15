@@ -4,6 +4,7 @@ import Sidebar from "../component/Sidebar";
 import Link from "next/link";
 import { AiOutlinePlus } from "react-icons/ai";
 import MobileNav from "../component/MobileNav";
+import { ModeToggle } from "../component/ModeToggle";
 
 export default function MainLayout({ children }) {
 	const path = usePathname()
@@ -20,17 +21,24 @@ export default function MainLayout({ children }) {
 							{path === "/main/dashboard" && <div className="flex justify-between items-center w-full">
 								<div>
 									Overview</div>
-								<Link
-									href="/createAd?step=1"
-									className="flex justify-center cursor-pointer text-base items-center bg-[#1A73E8] text-white p-2 sm:px-4 px-3 rounded-full space-x-2"
-								>
+								<div className="flex justify-center items-center gap-2">
+									<ModeToggle />
 									<div>
-										<AiOutlinePlus className="text-xl font-semibold" />
+										<Link
+											href="/createAd?step=1"
+											className="flex justify-center cursor-pointer items-center bg-[#1A73E8] text-white p-2 sm:px-4 px-3 rounded-full space-x-1"
+										>
+											<div>
+												<AiOutlinePlus className="font-semibold" />
+											</div>
+											<div>
+												<p className="pr-2 text-base">Create Ad</p>
+											</div>
+										</Link>
 									</div>
-									<div>
-										<p className="pr-2 ">Create Ad</p>
-									</div>
-								</Link>
+
+								</div>
+
 							</div>}
 						</div>
 					</div>

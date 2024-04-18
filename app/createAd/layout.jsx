@@ -203,37 +203,8 @@ export default function createAdLayout({ children }) {
 							}
 						</div>
 					</div>
-					<div className="flex border-b justify-center dark:bg-[#1e2129] h-[50px] bg-white items-center">
-						{/* <div className="after:mt-4 mb-7 after:block after:h-1 min-w-[83%] sm:min-w-[600px] after:w-full after:rounded-lg after:bg-gray-200">
-							<ol className="grid grid-cols-3 text-sm font-medium text-gray-500">
-								<li className="relative flex justify-start text-green-600">
+					<div className="flex border-b justify-center pl-16 sm:pl-0 dark:bg-[#1e2129] h-[50px] bg-white items-center">
 
-									<span className="absolute -bottom-[1.90rem] -start-1 rounded-full bg-green-600 text-white">
-										{step >= 1 ? <BsCheckLg className="w-7 h-7 p-[5px]" /> : <div className="w-7 h-7 rounded-full bg-blue-600 text-sm flex justify-center items-center">1</div>
-										}
-									</span>
-									<span class={`${step >= 1 ? "text-green-600" : "text-[#3e84e4]"} text-xs pp:text-base`}>Select target</span>
-								</li>
-
-								<li className="relative flex justify-center text-green-600">
-									<span
-										className="absolute -bottom-[1.90rem] left-1/2 -translate-x-1/2 rounded-full bg-green-600 text-white"
-									>
-										{step >= 2 ? <BsCheckLg className="w-7 h-7 p-[5px]" /> : <div className="w-7 h-7 rounded-full bg-blue-600 text-sm flex justify-center items-center">2</div>}
-									</span>
-
-									<span className={`${step >= 2 ? "text-green-600" : "text-[#3e84e4]"} text-xs pp:text-base`}>Set up Ad</span>
-
-								</li>
-
-								<li className="relative flex justify-end">
-									<span className="absolute -bottom-[1.90rem] -end-1 rounded-full bg-gray-600 text-white">
-										<div className="w-7 h-7 rounded-full bg-blue-600 text-sm flex justify-center items-center">3</div>
-									</span>
-									<span className={`text-[#3e84e4] text-xs pp:text-base`}>Preview & Launch</span>
-								</li>
-							</ol>
-						</div> */}
 
 						<ol class="flex items-center justify-center px-3 sm:mt-0 w-full max-w-[800px] text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base">
 
@@ -246,7 +217,7 @@ export default function createAdLayout({ children }) {
 									Set up Ads
 								</span>
 							</li>
-							<li class={`flex md:w-full items-center   sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700 ${step >= 2 ? "text-green-900" : "dark:text-blue-500 text-blue-600"} `}>
+							<li class={`flex md:w-full items-center   sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700 ${step >= 2 ? "text-green-900 dark:text-green-600" : "dark:text-blue-500 text-blue-600"} `}>
 								<span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
 									{step >= 2 ? <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
 										<path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
@@ -269,8 +240,6 @@ export default function createAdLayout({ children }) {
 				<div className="h-[100%] z-40 bg-white  dark:bg-red-600">
 
 					{children}
-
-
 				</div>
 			</div >
 		</>

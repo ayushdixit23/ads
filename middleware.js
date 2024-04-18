@@ -7,15 +7,15 @@ export async function middleware(request) {
 
   const check = await checkToken(token || "");
 
-  if (!token && path !== "/login" && path !== "/registration" && path !== "/") {
+  if (!token && (path !== "/login" && path !== "/registration" && path !== "/")) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  if (!token && path == "/login" && path == "/registration") {
+  if (!token && (path === "/login" || path === "/registration" || path === "/")) {
     return NextResponse.next();
   }
 
-  if (token && check?.isValid && (path === "/login" || path === "/registration" || path === "/")) {
+  if ((token && check?.isValid) && (path === "/login" || path === "/registration" || path === "/")) {
     return NextResponse.redirect(new URL("/main/dashboard", request.url));
   }
 
@@ -31,6 +31,7 @@ export const config = {
     "/",
     "/login",
     "/registration",
-    "/main/dashboard"
+    "/main/dashboard",
+    "/createAd"
   ],
 };

@@ -612,13 +612,13 @@ const Ad1 = ({
               </div>
 
               <div className="py-1 mt-2 font-semibold">
-                {three.Headline ?
-                  three.Headline.length > 20 ? `${three.Headline.slice(0, 20)}...` : three.Headline
+                {three?.Headline ?
+                  three?.Headline?.length > 20 ? `${three?.Headline?.slice(0, 20)}...` : three.Headline
                   : "Never have a bad meal"}
               </div>
               <div className="py-1">
                 {three.Description != ""
-                  ? three.Description.length > 50 ? `${three.Description.slice(0, 50)}...` : three.Description
+                  ? three.Description?.length > 50 ? `${three?.Description?.slice(0, 50)}...` : three.Description
                   : "healthy and sweet dishes"}
               </div>
 

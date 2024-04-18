@@ -247,7 +247,6 @@ function page() {
         ? three.age === ""
         : three.selectedAgeRange === "") ||
       three.type === "" ||
-      three.tags === "" ||
       three.duration === "" ||
       three.TotalBudget === "" ||
       three.category === "" ||

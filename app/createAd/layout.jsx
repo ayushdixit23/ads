@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { formatDateToString } from "../utils/useful";
 import { useAuthContext } from "../utils/AuthWrapper";
+import Cookies from "js-cookie";
 
 export default function createAdLayout({ children }) {
 	const { data } = useAuthContext()
@@ -104,6 +105,8 @@ export default function createAdLayout({ children }) {
 				res = await axios.post(`${API}/newad/${data?.advid}/${data?.userid}`, formDataToSend);
 			}
 			if (res?.data?.success) {
+				Cookies.remove("postid")
+				Cookies.remove("post")
 				router.refresh()
 				router.push("/main/dashboard");
 			}

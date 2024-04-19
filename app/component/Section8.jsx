@@ -112,7 +112,7 @@ const Section8 = () => {
       {campdata?.length > 0 ?
         < div className="grid  grid-cols-1 h-full bg-black select-none p-2 sm:p-4">
           <div className=" flex flex-col gap-4">
-            <div className=" w-full grid md:grid-cols-4 bg-slate-600 max-h-[230px] pn:max-md:gap-2 h-full grid-cols-2 py-4 rounded-xl">
+            <div className=" w-full grid md:grid-cols-4 bg-slate-600 pn:max-md:gap-2  grid-cols-2 rounded-xl">
               <div className="flex bg-maincolor justify-center items-center max-h-[100px] p-2 gap-2 sm:gap-5 pn:max-sm:rounded-md sm:max-md:rounded-xl sm:p-3 md:rounded-tl-2xl md:rounded-bl-2xl md:border-r-2">
                 <div className="flex flex-col text-xs justify-center">
                   <div>Spent on this Ad</div>

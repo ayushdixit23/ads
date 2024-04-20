@@ -1,7 +1,6 @@
 "use client"
-import { BsCheckLg } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { setStep } from "../redux/slice/dataSlice";
+import { setStep, setThree } from "../redux/slice/dataSlice";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { API } from "@/Essentials";
@@ -107,8 +106,40 @@ export default function createAdLayout({ children }) {
 			if (res?.data?.success) {
 				Cookies.remove("postid")
 				Cookies.remove("post")
-				router.refresh()
 				router.push("/main/dashboard");
+				dispatch(setThree({
+					communityName: "",
+					communityDesc: "",
+					communityCategory: "Humor & Memes",
+					communityImage: "",
+					location: [],
+					Headline: "",
+					adName: "",
+					Description: "",
+					Action: "Order Now",
+					link: "",
+					media: "",
+					goal: "",
+					tags: [],
+					maxage: "",
+					minage: "",
+					selectedAgeRange: "",
+					gender: "",
+					age: "",
+					type: "",
+					TotalBudget: "",
+					DailyBudget: "",
+					category: "Business & Finance",
+					startDate: new Date(),
+					comid: "",
+					endDate: "",
+					duration: "1",
+					random_id: Date.now().toString(),
+					audience: "",
+					isImage: false,
+					postid: "",
+					isDisabled: false
+				}))
 			}
 		} catch (err) {
 			console.log(err);

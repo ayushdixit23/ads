@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { LuWallet2 } from "react-icons/lu";
 import { useAuthContext } from "../utils/AuthWrapper";
 // import { getData } from "../utils/useful";
-import Logo from "../assests/logo.png"
+import Logo from "../assests/Logo.png"
 import Image from "next/image"
 
 const OSidebar = () => {

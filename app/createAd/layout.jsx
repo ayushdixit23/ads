@@ -5,12 +5,12 @@ import { Toaster } from 'react-hot-toast'
 import Loader from '../component/Loader'
 const Component = dynamic(() => import('./laycom'), { ssr: false })
 
-const page = () => {
+const page = ({ children }) => {
 	return (
 		<>
 			<Toaster />
 			<Suspense fallback={<Loader />}>
-				<Component />
+				<Component>{children}</Component>
 			</Suspense>
 		</>
 	)

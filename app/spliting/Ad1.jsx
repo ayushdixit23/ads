@@ -27,7 +27,7 @@ const Ad1 = ({
 
   const { data } = useGetCommunityQuery({ id: ads?.userid }, { skip: !ads?.userid })
 
-  const url = "https://dt46iilh1kepb.cloudfront.net/"
+  const url = process.env.NEXT_PUBLIC_URL
 
   useEffect(() => {
     const cookieData = Cookies.get("post")

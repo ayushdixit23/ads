@@ -225,6 +225,21 @@ const Ad2 = ({
 							{three.type === "skipable" && "Note: The video ads which can be skipable"}
 							{three.type === "non-skipable" && "Note: The video ads which cannot be skipable"}
 						</div>
+
+						{(three.type === "infeed" || three.type === "skipable" || three.type === "non-skipable") && <div className='flex flex-col justify-center mb-2'>
+							<div className='text-sm font-semibold my-3'>Popularity</div>
+							<div className='flex gap-2 items-center'>
+								<div onClick={() => dispatch(setThree({ popularity: 1 }))} className={`flex justify-center items-center p-3 px-5 ${three.popularity === 1 ? "bg-blue-600" : "dark:bg-[#181a20] bg-white"} rounded-lg`}>1x</div>
+								<div onClick={() => dispatch(setThree({ popularity: 2 }))} className={`flex justify-center items-center p-3 px-5 ${three.popularity === 2 ? "bg-blue-600" : "dark:bg-[#181a20] bg-white"} rounded-lg`}>2x</div>
+								<div onClick={() => dispatch(setThree({ popularity: 3 }))} className={`flex justify-center items-center p-3 px-5 ${three.popularity === 3 ? "bg-blue-600" : "dark:bg-[#181a20] bg-white"} rounded-lg`}>3x</div>
+								<div onClick={() => dispatch(setThree({ popularity: 4 }))} className={`flex justify-center items-center p-3 px-5 ${three.popularity === 4 ? "bg-blue-600" : "dark:bg-[#181a20] bg-white"} rounded-lg`}>4x</div>
+							</div>
+							<div className='text-sm mt-2 text-black dark:text-white font-semibold'>
+								Note: Speed up your ads by increasing popularity
+							</div>
+						</div>}
+
+
 					</div>
 
 					<div className="my-[1%] rounded-xl">
@@ -991,6 +1006,28 @@ const Ad2 = ({
 											</div></>
 									</div>
 								</div>}
+
+								<div className='text-sm text-black dark:text-white font-semibold'>
+									{three.type === "infeed" && "Note: you found this at in the middle of the feed."}
+									{three.type === "banner" && "Note: you found this at in the top of the feed."}
+									{three.type === "skipable" && "Note: The video ads which can be skipable"}
+									{three.type === "non-skipable" && "Note: The video ads which cannot be skipable"}
+								</div>
+
+								{(three.type === "infeed" || three.type === "skipable" || three.type === "non-skipable") && <div className='flex flex-col justify-center mb-2'>
+									<div className='text-sm font-semibold my-3'>Popularity</div>
+									<div className='flex gap-2 items-center'>
+										<div onClick={() => dispatch(setThree({ popularity: 1 }))} className={`flex justify-center items-center p-3 px-5 ${three.popularity === 1 ? "bg-blue-600" : "dark:bg-[#181a20] bg-white"} rounded-lg`}>1x</div>
+										<div onClick={() => dispatch(setThree({ popularity: 2 }))} className={`flex justify-center items-center p-3 px-5 ${three.popularity === 2 ? "bg-blue-600" : "dark:bg-[#181a20] bg-white"} rounded-lg`}>2x</div>
+										<div onClick={() => dispatch(setThree({ popularity: 3 }))} className={`flex justify-center items-center p-3 px-5 ${three.popularity === 3 ? "bg-blue-600" : "dark:bg-[#181a20] bg-white"} rounded-lg`}>3x</div>
+										<div onClick={() => dispatch(setThree({ popularity: 4 }))} className={`flex justify-center items-center p-3 px-5 ${three.popularity === 4 ? "bg-blue-600" : "dark:bg-[#181a20] bg-white"} rounded-lg`}>4x</div>
+									</div>
+									<div className='text-sm mt-2 text-black dark:text-white font-semibold'>
+										Note: Speed up your ads by increasing popularity
+									</div>
+								</div>}
+
+
 							</div>
 						</div>
 						<div className="rounded-xl">

@@ -161,30 +161,42 @@ const Login = () => {
     }
   }
 
-  function onOTPVerify(e) {
+  async function onOTPVerify(e) {
     e.preventDefault();
     setLoading(true);
-    window.confirmationResult
-      .confirm(OTP)
-      .then(async (ress) => {
-        setLoading(false);
-        const res = await axios.post(`${API}/checkadvaccount`, {
-          phone: number,
-        });
-        if (res.data.success) {
-          dispatch(setLoad(true))
-          const a = await cookieSetter(res.data)
-          if (a === true) {
-            router.push("/main/dashboard");
-          }
-        } else {
-          console.log("something went wrong");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
+    // window.confirmationResult
+    //   .confirm(OTP)
+    //   .then(async (ress) => {
+    //     setLoading(false);
+    //     const res = await axios.post(`${API}/checkadvaccount`, {
+    //       phone: number,
+    //     });
+    //     if (res.data.success) {
+    //       dispatch(setLoad(true))
+    //       const a = await cookieSetter(res.data)
+    //       if (a === true) {
+    //         router.push("/main/dashboard");
+    //       }
+    //     } else {
+    //       console.log("something went wrong");
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     setLoading(false);
+    //   });
+    const res = await axios.post(`${API}/checkadvaccount`, {
+      phone: number,
+    });
+    if (res.data.success) {
+      dispatch(setLoad(true))
+      const a = await cookieSetter(res.data)
+      if (a === true) {
+        router.push("/main/dashboard");
+      }
+    } else {  
+      console.log("something went wrong");
+    }
   }
 
 
@@ -448,7 +460,8 @@ const Login = () => {
                           </button>
                         ) : (
                           <button
-                            onClick={onSignup}
+                            // onClick={onSignup}
+                            onClick={onOTPVerify}
                             className="w-full bg-gradient-to-r from-[#5645fe] to-[#7940ef] opacity-90 hover:opacity-100 p-2 rounded-lg text-white font-semibold text-lg"
                           >
                             Send OTP

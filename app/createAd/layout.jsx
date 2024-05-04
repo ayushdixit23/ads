@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setStep, setThree } from "../redux/slice/dataSlice";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { API } from "@/Essentials";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -12,6 +12,10 @@ import Cookies from "js-cookie";
 
 export default function createAdLayout({ children }) {
 	const { data } = useAuthContext()
+	const params = useSearchParams()
+	const [url, setUrl] = useState()
+	const advid = params.get("advid")
+	const userid = params.get("userid")
 	const step = useSelector((state) => state.data.step)
 	const validateStep1 = useSelector((state) => state.data.validateStep1)
 	const three = useSelector((state) => state.data.three)
@@ -28,6 +32,32 @@ export default function createAdLayout({ children }) {
 		} else {
 		}
 	}
+
+	useEffect(() => {
+		// Your URL string
+		const url = window.location.href;
+
+		// Regular expression to extract the desired URL
+		const regex = /\/createAd\?([^&]*(?!step=1)(?:&[^&]+)*)/;
+
+		// Extracting the URL using the regular expression
+		const match = url.match(regex);
+		console.log(match);
+
+		if (match) {
+			let extractedUrl = match[0]; // Use index 0 to get the entire matched URL
+			// Remove "&step=1" from the extracted URL
+			extractedUrl = extractedUrl.replace(/&step=1(?:&|$)/, '');
+			// Remove the last '&' character, if it exists
+			extractedUrl = extractedUrl.replace(/&$/, '');
+			// Log the extracted URL
+			console.log(extractedUrl);
+			setUrl(extractedUrl)
+		} else {
+			console.log("No matching URL found");
+		}
+	}, []);
+
 
 	const stepBacker = () => {
 		if (step === 2) {
@@ -95,13 +125,13 @@ export default function createAdLayout({ children }) {
 			formDataToSend.append("enddate", three.endDate ? three.endDate : "Not Selected");
 			formDataToSend.append("goal", three.goal);
 			formDataToSend.append("postid", three.postid);
-			formDataToSend.append("advertiserid", data?.advid);
+			formDataToSend.append("popularity", three.popularity);
 
 			let res
 			if (three.comid) {
-				res = await axios.post(`${API}/v1/createad/${data?.advid}`, formDataToSend);
+				res = await axios.post(`${API}/v1/createad/${data?.type === "Individual" ? data?.advid : advid} `, formDataToSend);
 			} else {
-				res = await axios.post(`${API}/newad/${data?.advid}/${data?.userid}`, formDataToSend);
+				res = await axios.post(`${API}/newad/${data?.type === "Individual" ? data?.advid : advid}/${data?.type === "Individual" ? data?.userid : userid}`, formDataToSend);
 			}
 			if (res?.data?.success) {
 				Cookies.remove("postid")
@@ -118,6 +148,7 @@ export default function createAdLayout({ children }) {
 					Description: "",
 					Action: "Order Now",
 					link: "",
+					popularity: 1,
 					media: "",
 					goal: "",
 					tags: [],
@@ -159,7 +190,7 @@ export default function createAdLayout({ children }) {
 					<p className="mt-4 text-gray-500 dark:text-gray-400">Sorry, the page you are looking for doesn't exist or has been moved.</p>
 
 					<div className="flex items-center mt-6 gap-x-3">
-						<Link href="/createAd?step=1" className="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700">
+						<Link href={`${url}&step=1`} className="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700">
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-5 h-5 rtl:rotate-180">
 								<path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
 							</svg>
@@ -176,6 +207,7 @@ export default function createAdLayout({ children }) {
 		</section>
 	}
 
+
 	return (
 		<>
 			<div className=" h-screen w-screen fixed dark:bg-[#181a20] bg-white">
@@ -190,26 +222,26 @@ export default function createAdLayout({ children }) {
 						<div className="flex justify-center sm:pt-2 items-center sm:gap-3">
 							{step === 0 && (
 								<Link href="/main/dashboard" onClick={stepBacker} className="border-b cursor-pointer pn:max-sm:hidden border-black">
-									Discard
+									Back
 								</Link>
 							)
 							}
 							{step === 1 && (
-								<Link href="/createAd?step=1" onClick={stepBacker} className="border-b cursor-pointer pn:max-sm:hidden border-black">
-									Discard
+								<Link href={`${url}&step=1`} onClick={stepBacker} className="border-b cursor-pointer pn:max-sm:hidden border-black">
+									Back
 								</Link>
 							)
 							}
 							{step === 2 &&
 
-								<Link href="/createAd?step=2" onClick={stepBacker} className="border-b cursor-pointer pn:max-sm:hidden border-black">
-									Discard
+								<Link href={`${url}&step=2`} onClick={stepBacker} className="border-b cursor-pointer pn:max-sm:hidden border-black">
+									Back
 								</Link>
 							}
 							{step === 0 && (
 								validateStep1 ?
 
-									<Link href="/createAd?step=2" onClick={stepRunner} className="p-2 px-7 rounded-full bg-blue-800 cursor-pointer  text-white">
+									<Link href={`${url}&step=2`} onClick={stepRunner} className="p-2 px-7 rounded-full bg-blue-800 cursor-pointer  text-white">
 										< div > Next</div>
 									</Link>
 									:
@@ -221,7 +253,7 @@ export default function createAdLayout({ children }) {
 							{step === 1 && (
 								validateStep2 ?
 
-									<Link href="/createAd?step=3" onClick={stepRunner} className="p-2 px-7 rounded-full bg-blue-800 cursor-pointer  text-white">
+									<Link href={`${url}&step=3`} onClick={stepRunner} className="p-2 px-7 rounded-full bg-blue-800 cursor-pointer  text-white">
 										< div > Next</div>
 									</Link>
 									:
@@ -271,7 +303,7 @@ export default function createAdLayout({ children }) {
 
 					</div>
 				</div>
-				<div className="h-[100%] z-40 bg-white  dark:bg-red-600">
+				<div className="h-[100%] z-40 bg-white ">
 
 					{children}
 				</div>

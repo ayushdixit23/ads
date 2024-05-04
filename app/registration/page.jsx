@@ -29,22 +29,22 @@ const Register = () => {
   const cookie = Cookies.get("rigdta")
   // const [change, setChange] = useState(3);
   const [details, setDetails] = useState({
-    firstName: "Ayush",
-    lastName: "Dixit",
-    phoneNumber: "6306760227",
-    email: "fsayush100@gmail.com",
-    address: "A/19 Shanti Nagar",
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    email: "",
+    address: "",
     myImage: "",
-    city: "Kanpur",
-    state: "Uttar Pradesh",
-    postalCode: "208004",
-    LandMark: "Pandit Hotel",
+    city: "",
+    state: "",
+    postalCode: "",
+    LandMark: "",
     PAN: "",
-    type: "Individual",
+    type: "",
     GST: "",
     Organistaion: "",
-    password: "Ayush@123",
-    confirmPass: "Ayush@123",
+    password: "",
+    confirmPass: "",
   });
 
 

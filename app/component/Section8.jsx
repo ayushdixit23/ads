@@ -22,6 +22,7 @@ import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "rec
 import useAdsFetching from "../useFetch/useAdFetching";
 import Loader from "./Loader";
 import { useAuthContext } from "../utils/AuthWrapper";
+import { FaWallet } from "react-icons/fa";
 
 const Section8 = () => {
   const [data, setData] = useState();
@@ -38,7 +39,7 @@ const Section8 = () => {
     views: false,
   })
 
-  console.log(ads)
+  console.log(ads, "mydara")
 
   const [adValues, setAdValues] = useState({
     totalspent: "",
@@ -110,9 +111,9 @@ const Section8 = () => {
   return (
     <>
       {campdata?.length > 0 ?
-        < div className="grid  grid-cols-1 h-full bg-black select-none p-2 sm:p-4">
+        < div className="grid  grid-cols-1 h-[90vh] overflow-y-scroll no-scrollbar bg-black select-none p-2 sm:p-4">
           <div className=" flex flex-col gap-4">
-            <div className=" w-full grid md:grid-cols-4 bg-slate-600 pn:max-md:gap-2  grid-cols-2 rounded-xl">
+            <div className=" w-full grid md:grid-cols-4 pn:max-md:gap-2  grid-cols-2 rounded-xl">
               <div className="flex bg-maincolor justify-center items-center max-h-[100px] p-2 gap-2 sm:gap-5 pn:max-sm:rounded-md sm:max-md:rounded-xl sm:p-3 md:rounded-tl-2xl md:rounded-bl-2xl md:border-r-2">
                 <div className="flex flex-col text-xs justify-center">
                   <div>Spent on this Ad</div>
@@ -132,14 +133,10 @@ const Section8 = () => {
                 </div>
               </div>
               <div className="flex justify-center w-full max-h-[100px] items-center pn:max-sm:rounded-md sm:max-md:rounded-xl gap-2 sm:gap-5 p-2 sm:p-3  bg-maincolor md:border-r-2">
-                <div>
-                  {/* <Icon5 /> */}
-                  <Image
-                    src={circle}
-                    alt="circle"
-                    className="pp:min-w-[50px] h-[30px] w-[30px] pp:min-h-[50px]"
-                  />
+                <div className="h-[50px] w-[50px] bg-blue-500 rounded-full flex justify-center items-center p-3" >
+                  <FaWallet className="h-[35px] w-[35px]" />
                 </div>
+
                 <div className="flex flex-col text-xs w-full sm:w-auto justify-center">
                   <div>Current Balance</div>
                   <div className="sm:text-xl text-base font-semibold">
@@ -303,8 +300,13 @@ const Section8 = () => {
 
                     }
                     </> : <>
-                      <div className="w-full h-full flex justify-center items-center text-2xl font-semibold">Not Enough Money to run ad!</div>
-
+                      <div className="w-full h-full flex flex-col gap-3 justify-center items-center font-semibold">
+                        <div className="text-2xl">
+                          Not Enough Money to run ad!
+                        </div>
+                        <div className="text-xl">Add Money to Wallet</div>
+                        <div><Link href={"/main/wallet"} className="flex justify-center gap-2 bg-blue-500 p-2 px-5 rounded-xl items-center">Add<FaWallet /></Link> </div>
+                      </div>
                     </>}
                 </div>
               </div>

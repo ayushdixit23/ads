@@ -33,5 +33,5 @@ export const AuthContextProvider = ({ children }) => {
     const token = Cookies.get("axetkn") || null
     f(token)
   }, [setAuth, auth])
-  return <AuthContext.Provider value={{ data, auth, setAuth, setData }}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={{ data, auth, setAuth, setData, f }}>{children}</AuthContext.Provider>
 }

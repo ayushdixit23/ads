@@ -1,4 +1,3 @@
-import { formatDateToString } from "@/app/utils/useful"
 import { createSlice } from "@reduxjs/toolkit"
 
 export const dataSlice = createSlice({
@@ -25,6 +24,7 @@ export const dataSlice = createSlice({
 			minage: "",
 			selectedAgeRange: "",
 			gender: "",
+			popularity: 1,
 			age: "",
 			type: "",
 			TotalBudget: "",

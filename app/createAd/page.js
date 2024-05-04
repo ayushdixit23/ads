@@ -13,6 +13,7 @@ import { useGetCommunityQuery } from "../redux/slice/apiSlice";
 import Cookies from "js-cookie";
 import { decryptaes } from "../utils/security";
 import { useAuthContext } from "../utils/AuthWrapper";
+import Ad4 from "../spliting/Ad4";
 
 function page() {
   const { data: communityData } = useGetCommunityQuery()
@@ -71,8 +72,6 @@ function page() {
     setPoint(points);
     // setCtr(ctr);
   };
-
-  console.log(audbyCategory, "aadu")
 
   useEffect(() => {
     const selectedLocations = myLocation.filter((location) =>
@@ -155,8 +154,6 @@ function page() {
   for (let i = 0; i < aud.length; i++) {
     totalAudience += aud[i]
   }
-
-  console.log(totalAudience, "aud")
   // const fullTotalCost = elementMappings[three.type] + point + average;
   // console.log(fullTotalCost, point, average);
   // console.log(fullTotalCost * 82);
@@ -342,7 +339,7 @@ function page() {
     try {
       setUser({
         fullname: data?.firstname + " " + data?.lastname,
-        photo: image,
+        photo: data?.image,
         id: data?.userid
       });
     } catch (error) {
@@ -444,20 +441,37 @@ function page() {
       <div className="no-scrollbar select-none w-screen dark:bg-[#181a20] h-screen overflow-x-hidden">
 
         {(urlSteps === 0) && (
-          <Ad1
-            // setStep={setStep}
-            dispatch={dispatch}
-            step={urlSteps}
-            // validDatas={validDatas}
-            three={three}
-            setThree={setThree}
-            down={down}
-            setDown={setDown}
-            handleFileChanges={handleFileChanges}
-            user={user}
-          />
-        )
-        }
+          <>
+            {data?.type === "Individual" ? (
+              <Ad1
+                // setStep={setStep}
+                dispatch={dispatch}
+                step={urlSteps}
+                // validDatas={validDatas}
+                three={three}
+                setThree={setThree}
+                down={down}
+                setDown={setDown}
+                handleFileChanges={handleFileChanges}
+                user={user}
+              />
+            ) : (
+              <Ad4
+                // setStep={setStep}
+                dispatch={dispatch}
+                step={urlSteps}
+                // validDatas={validDatas}
+                three={three}
+                setThree={setThree}
+                down={down}
+                setDown={setDown}
+                handleFileChanges={handleFileChanges}
+                params={params}
+              />
+            )}
+          </>
+        )}
+
 
         {(urlSteps === 1) && (
 

@@ -1,17 +1,29 @@
 "use client"
 import { usePathname } from "next/navigation";
 import Sidebar from "../component/Sidebar";
+import OSidebar from "../component/OrganisationSidebar";
 import Link from "next/link";
 import { AiOutlinePlus } from "react-icons/ai";
 import MobileNav from "../component/MobileNav";
 import { ModeToggle } from "../component/ModeToggle";
+import { useAuthContext } from "../utils/AuthWrapper";
 
 export default function MainLayout({ children }) {
 	const path = usePathname()
+	const { data } = useAuthContext()
+
+	function generateRandomNumber() {
+		// Generate a random 10-digit number
+		const min = Math.pow(10, 9); // Minimum 10-digit number
+		const max = Math.pow(10, 10) - 1; // Maximum 10-digit number
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
+
+
 	return (
 		<>
 			<div className="flex w-screen h-screen">
-				<Sidebar />
+				{data?.type === "Individual" ? <Sidebar /> : <OSidebar />}
 				<MobileNav />
 				<div className="w-full flex flex-col dark:bg-[#181a20]">
 					<div>
@@ -25,7 +37,7 @@ export default function MainLayout({ children }) {
 									<ModeToggle />
 									<div>
 										<Link
-											href="/createAd?step=1"
+											href={`/createAd?adid=${generateRandomNumber()}&step=1`}
 											className="flex justify-center cursor-pointer items-center bg-[#1A73E8] text-white p-2 sm:px-4 px-3 rounded-full space-x-1"
 										>
 											<div>

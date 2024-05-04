@@ -64,6 +64,20 @@ const Sidebar = () => {
 
             <hr className="my-6 border-gray-200 dark:border-gray-600" />
 
+            {/* <div className="flex justify-center items-center gap-2 flex-col">
+              <div>Manage Acounts</div>
+              <div className="flex flex-col gap-2">{data?.manageusers?.map((d, i) => (
+                <Link href={`/${d?.userid}/createAd?step=1`} key={i} className="flex gap-2 items-center">
+                  <div>
+                    <img src={d?.image} className="w-[34px] rounded-xl h-[34px]" />
+                  </div>
+                  <div>{d?.lastname ? d?.fullname : d?.firstname}</div>
+                </Link>
+              ))}</div>
+              <Link href={"/addAccount"}>Add Account</Link>
+            </div> */}
+
+
             <Link className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" href="/main/wallet">
               <LuWallet2 />
 

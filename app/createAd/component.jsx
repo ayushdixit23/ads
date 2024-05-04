@@ -10,8 +10,6 @@ import { API } from "@/Essentials";
 import { useDispatch, useSelector } from "react-redux";
 import { setValidateStep1, setValidateStep2, setThree, setStep, setAudience } from "../redux/slice/dataSlice";
 import { useGetCommunityQuery } from "../redux/slice/apiSlice";
-import Cookies from "js-cookie";
-import { decryptaes } from "../utils/security";
 import { useAuthContext } from "../utils/AuthWrapper";
 import Ad4 from "../spliting/Ad4";
 

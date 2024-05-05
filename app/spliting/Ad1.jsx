@@ -29,6 +29,8 @@ const Ad1 = ({
 
   const url = process.env.NEXT_PUBLIC_URL
 
+  console.log("ad1")
+
   useEffect(() => {
     const cookieData = Cookies.get("post")
     const postid = Cookies.get("postid")

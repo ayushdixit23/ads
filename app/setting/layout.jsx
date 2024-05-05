@@ -8,6 +8,7 @@ import Image from "next/image";
 // import { getData } from "../utils/useful";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "../utils/AuthWrapper";
+import OSidebar from "../component/OrganisationSidebar";
 
 export default function SettingLayout({ children }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -165,7 +166,7 @@ export default function SettingLayout({ children }) {
     <>
       <div className="flex w-screen h-screen">
         <div>
-          <Sidebar />
+          {data?.type === "Individual" ? <Sidebar /> : <OSidebar />}
         </div>
         <div>
           <MobileNav />

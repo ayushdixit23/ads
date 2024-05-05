@@ -16,14 +16,17 @@ const Ad4 = ({
 	dispatch,
 	setThree,
 	down, params,
+	userid,
+	advid,
+	brand,
 	setDown,
 	handleFileChanges,
 }) => {
 	const [select, setSelect] = useState()
 	const [comimage, setComimage] = useState("")
-	const userid = params.get("userid")
-	const advid = params.get("advid")
-	const brand = params.get("brand")
+	// const userid = params.get("userid")
+	// const advid = params.get("advid")
+	// const brand = params.get("brand")
 	const url = process.env.NEXT_PUBLIC_URL
 	// const { userid, data?.firstname, data?.lastname } = getData()
 	// const { data: ads } = useAuthContext()

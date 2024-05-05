@@ -164,39 +164,28 @@ const Login = () => {
   async function onOTPVerify(e) {
     e.preventDefault();
     setLoading(true);
-    // window.confirmationResult
-    //   .confirm(OTP)
-    //   .then(async (ress) => {
-    //     setLoading(false);
-    //     const res = await axios.post(`${API}/checkadvaccount`, {
-    //       phone: number,
-    //     });
-    //     if (res.data.success) {
-    //       dispatch(setLoad(true))
-    //       const a = await cookieSetter(res.data)
-    //       if (a === true) {
-    //         router.push("/main/dashboard");
-    //       }
-    //     } else {
-    //       console.log("something went wrong");
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     setLoading(false);
-    //   });
-    const res = await axios.post(`${API}/checkadvaccount`, {
-      phone: number,
-    });
-    if (res.data.success) {
-      dispatch(setLoad(true))
-      const a = await cookieSetter(res.data)
-      if (a === true) {
-        router.push("/main/dashboard");
-      }
-    } else {  
-      console.log("something went wrong");
-    }
+    window.confirmationResult
+      .confirm(OTP)
+      .then(async (ress) => {
+        setLoading(false);
+        const res = await axios.post(`${API}/checkadvaccount`, {
+          phone: number,
+        });
+        if (res.data.success) {
+          dispatch(setLoad(true))
+          const a = await cookieSetter(res.data)
+          if (a === true) {
+            router.push("/main/dashboard");
+          }
+        } else {
+          console.log("something went wrong");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+
   }
 
 

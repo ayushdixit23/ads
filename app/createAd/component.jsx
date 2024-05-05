@@ -8,7 +8,7 @@ import axios from "axios";
 import { API } from "@/Essentials";
 // import { formatDateToString, getData } from "../utils/useful";
 import { useDispatch, useSelector } from "react-redux";
-import { setValidateStep1, setValidateStep2, setThree, setStep, setAudience } from "../redux/slice/dataSlice";
+import { setValidateStep1, setValidateStep2, setThree, setStep, setAudience, setAdvertiserid, setUserid, setFullname, setImage } from "../redux/slice/dataSlice";
 import { useGetCommunityQuery } from "../redux/slice/apiSlice";
 import { useAuthContext } from "../utils/AuthWrapper";
 import Ad4 from "../spliting/Ad4";
@@ -18,6 +18,9 @@ function page() {
 	const three = useSelector((state) => state.data.three)
 	// const { firstname, lastname, userid, image, advid } = getData()
 	const { data } = useAuthContext()
+	const advertiserid = useSelector((state) => state.data.advertiserid)
+	const fullname = useSelector((state) => state.data.fullname)
+	const userid = useSelector((state) => state.data.userid)
 	const [inputValue, setInputValue] = useState("");
 	const [t, setT] = useState("");
 	const [down, setDown] = useState(0);
@@ -27,6 +30,20 @@ function page() {
 	const urlStepsString = params.get("step")
 	const urlSteps = Number(urlStepsString) - 1
 	const [point, setPoint] = useState(null);
+	const dispatch = useDispatch()
+	const useridofparams = params.get("userid")
+	const advid = params.get("advid")
+	const brand = params.get("brand")
+	const imageofparams = params.get("image")
+
+	useEffect(() => {
+		if ((advid && useridofparams && brand)) {
+			dispatch(setAdvertiserid(advid))
+			dispatch(setUserid(useridofparams))
+			dispatch(setFullname(brand))
+			dispatch(setImage(imageofparams))
+		}
+	}, [advid, useridofparams, params, dispatch, brand, imageofparams])
 
 	const [PointsCategory, setPointsCategory] = useState([
 		{ category: "All", population: 100, price: 100 },
@@ -59,7 +76,7 @@ function page() {
 	const [female, setFemale] = useState([]);
 	const [audbyCategory, setAudbyCategory] = useState(58);
 	const [ctr, setCtr] = useState("");
-	const dispatch = useDispatch()
+
 	dispatch(setStep(urlSteps))
 
 	const handleCategoryChange = (name, points, audbyCategory) => {
@@ -437,10 +454,25 @@ function page() {
 	return (
 		<>
 			<div className="no-scrollbar select-none w-screen dark:bg-[#181a20] h-screen overflow-x-hidden">
-
 				{(urlSteps === 0) && (
 					<>
-						{data?.type === "Individual" ? (
+						{(advertiserid && userid) ? (
+							<Ad4
+								// setStep={setStep}
+								dispatch={dispatch}
+								userid={userid}
+								advid={advertiserid}
+								brand={fullname}
+								step={urlSteps}
+								// validDatas={validDatas}
+								three={three}
+								setThree={setThree}
+								down={down}
+								setDown={setDown}
+								handleFileChanges={handleFileChanges}
+								params={params}
+							/>
+						) : (
 							<Ad1
 								// setStep={setStep}
 								dispatch={dispatch}
@@ -452,19 +484,6 @@ function page() {
 								setDown={setDown}
 								handleFileChanges={handleFileChanges}
 								user={user}
-							/>
-						) : (
-							<Ad4
-								// setStep={setStep}
-								dispatch={dispatch}
-								step={urlSteps}
-								// validDatas={validDatas}
-								three={three}
-								setThree={setThree}
-								down={down}
-								setDown={setDown}
-								handleFileChanges={handleFileChanges}
-								params={params}
 							/>
 						)}
 					</>

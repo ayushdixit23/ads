@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import koi from "../../../assests/koiimage.svg";
 import axios from "axios";
 import { API } from "@/Essentials";
-import circle from "../../../assests/Pic2.svg";
 import graph2 from "../../../assests/Graph.svg";
 import noads from "../../../assests/noads.svg";
 import {
@@ -17,11 +16,9 @@ import {
 } from "@/components/ui/select"
 import Link from "next/link"
 import dashp2 from "../../../assests/Pic1.svg";
-// import { formatDateToString, getData } from "../../../utils/useful";
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import useAdsFetching from "../../../useFetch/useAdFetching";
 import Loader from "../../../component/Loader";
-import { useAuthContext } from "../../../utils/AuthWrapper";
 import { FaWallet } from "react-icons/fa";
 
 const page = ({ params }) => {

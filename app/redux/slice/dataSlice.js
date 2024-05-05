@@ -39,7 +39,11 @@ export const dataSlice = createSlice({
 			isImage: false,
 			postid: "",
 			isDisabled: false
-		}
+		},
+		advertiserid: "",
+		userid: "",
+		image: "",
+		fullname: ""
 	},
 	reducers: {
 		setStep: (state, action) => {
@@ -56,9 +60,23 @@ export const dataSlice = createSlice({
 		},
 		setAudience: (state, action) => {
 			state.three.audience = action.payload
-		}
+		},
+		setUserid: (state, action) => {
+			state.userid = action.payload
+		},
+		setAdvertiserid: (state, action) => {
+			state.advertiserid = action.payload
+		},
+		setImage: (state, action) => {
+			state.image = action.payload
+		},
+		setFullname: (state, action) => {
+			state.fullname = action.payload
+		},
+
 	}
 })
 
-export const { setStep, setValidateStep1, setValidateStep2, setAudience, setThree } = dataSlice.actions
+export const { setStep, setValidateStep1, setValidateStep2, setAdvertiserid
+	, setUserid, setAudience, setThree, setFullname, setImage } = dataSlice.actions
 export default dataSlice.reducer

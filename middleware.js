@@ -1,17 +1,23 @@
 import { NextResponse } from "next/server";
 import { checkToken } from "./app/utils/useful";
 
+
 export async function middleware(request) {
+
   let path = request.nextUrl.pathname;
   let token = request.cookies.get("axetkn")?.value;
+  const response = NextResponse.next()
 
-  const check = await checkToken(token || "");
+
+  let check = await checkToken(token || "");
 
   if (!token && (path !== "/login" && path !== "/registration" && path !== "/")) {
+
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
   if (!token && (path === "/login" || path === "/registration" || path === "/")) {
+
     return NextResponse.next();
   }
 
@@ -20,8 +26,6 @@ export async function middleware(request) {
   }
 
   if (token && !check?.isValid) {
-    request.cookies.delete("axetkn");
-    request.cookies.delete("rvktkn");
     return NextResponse.redirect(new URL("/login", request.url));
   }
 }

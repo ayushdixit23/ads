@@ -36,15 +36,15 @@ const OSidebar = () => {
 				</div>
 			}
 
-			<aside className="flex flex-col pn:max-sm:hidden sm:w-24 md:w-[268px] h-screen px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-maincolor dark:border-gray-700">
+			<aside className="flex flex-col pn:max-sm:hidden sm:w-24 md:w-[268px] h-[100%] px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-[#0D0D0D] dark:border-gray-700">
 				{/* <a href="#">
           <img className="w-auto h-6 sm:h-7" src="https://merakiui.com/images/logo.svg" alt="" />
         </a> */}
 
-				<div className="flex items-center py-2 gap-2 text-2xl">
+				{/* <div className="flex items-center py-2 gap-2 text-2xl">
 					<Image src={Logo} className="w-[50px] h-[50px]" alt="adspace" />
 					<span className="sm:max-md:hidden font-medium">Adspace</span>
-				</div>
+				</div> */}
 
 				{/* <div className="relative mt-6">
           <span className="absolute inset-y-0 left-0 flex items-center pl-3">

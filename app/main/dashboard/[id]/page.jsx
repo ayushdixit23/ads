@@ -5,6 +5,10 @@ import koi from "../../../assests/koiimage.svg";
 import axios from "axios";
 import { API } from "@/Essentials";
 import graph2 from "../../../assests/Graph.svg";
+import d1 from "../../../assests/d1.png";
+import d2 from "../../../assests/d2.png";
+import d3 from "../../../assests/d3.png";
+import d4 from "../../../assests/d4.png";
 import noads from "../../../assests/noads.svg";
 import {
 	Select,
@@ -20,15 +24,22 @@ import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "rec
 import useAdsFetching from "../../../useFetch/useAdFetching";
 import Loader from "../../../component/Loader";
 import { FaWallet } from "react-icons/fa";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { useAuthContext } from "@/app/utils/AuthWrapper";
+import { setAdvertiserid, setFullname, setImage, setUserid } from "@/app/redux/slice/dataSlice";
+import { useDispatch } from "react-redux";
 
 const page = ({ params }) => {
 
 	const [data, setData] = useState();
+	const { data: user } = useAuthContext()
 	const [campdata, setCampdata] = useState([]);
 	const [graph, setGraph] = useState([])
 	const [defaults, setDefaults] = useState("")
 	const [loading, setLoading] = useState(true)
 	const { CampaignFetch } = useAdsFetching()
+	const [toggle, setToggle] = useState(false)
+	const dispatch = useDispatch()
 
 	const [check, setCheck] = useState({
 		click: true,
@@ -36,6 +47,7 @@ const page = ({ params }) => {
 		cpc: false,
 		views: false,
 	})
+	const [state, setState] = useState("")
 
 	const [adValues, setAdValues] = useState({
 		totalspent: "",
@@ -109,26 +121,86 @@ const page = ({ params }) => {
 			{campdata?.length > 0 ?
 				< div className="grid  grid-cols-1 h-[90vh] overflow-y-scroll no-scrollbar bg-black select-none p-2 sm:p-4">
 					<div className=" flex flex-col gap-4">
-						<div className=" w-full grid md:grid-cols-4 pn:max-md:gap-2  grid-cols-2 rounded-xl">
-							<div className="flex bg-maincolor justify-center items-center max-h-[100px] p-2 gap-2 sm:gap-5 pn:max-sm:rounded-md sm:max-md:rounded-xl sm:p-3 md:rounded-tl-2xl md:rounded-bl-2xl md:border-r-2">
-								<div className="flex flex-col text-xs justify-center">
-									<div>Spent on this Ad</div>
-									<div className="sm:text-xl text-sm font-semibold">
-										{adValues.totalspent
-											? "₹" + adValues.totalspent
-											: "No Data Yet"}
+						<div className=" w-full grid md:grid-cols-4 pn:max-md:gap-2 gap-10  grid-cols-2 rounded-xl">
+							<div className="bg-white dark:bg-[#0D0D0D] py-3 sm:px-8 rounded-2xl">
+								<div className="flex gap-2 items-center">
+									<div>
+										<Image src={d1} className="w-[60px]" />
+									</div>
+									<div className="flex flex-col justify-center h-full gap-2 ">
+										<div className="font-semibold">Accounts</div>
+										<div className="flex flex-col w-full min-w-[130px] bg-[#f7f7f7] dark:bg-[#121212]  rounded-xl">
+											<div
+												onClick={() => setToggle(!toggle)}
+												className="flex justify-between items-center relative p-1.5 cursor-pointer h-full gap-2 px-2 w-full text-sm"
+											>
+												<div className="flex items-center gap-2">
+													{/* <div>
+														<img
+															src={state?.dp}
+															className="max-w-[30px] bg-[#f8f8f8] dark:bg-[#181c24] rounded-lg min-h-[30px] min-w-[30px] max-h-[30px]"
+														/>
+													</div> */}
+													<div className="text-[#0d0d0d] text-xs dark:text-white font-semibold">
+														{state}
+													</div>
+												</div>
+
+												<div className="text-lg ">
+													{toggle ? (
+														<IoIosArrowUp onClick={() => setToggle(!toggle)} />
+													) : (
+														<IoIosArrowDown onClick={() => setToggle(!toggle)} />
+													)}
+												</div>
+
+												<div
+													className={` ${toggle
+														? "top-[45px]"
+														: "top-0 border-none text-[0px] w-[0px] h-[0px]"
+														} absolute left-0 bg-[#f7f7f7] duration-100 dark:bg-[#121212] rounded-xl z-50 w-full`}
+												>
+													<div className="flex flex-col gap-3 px-2 py-1 max-h-[300px] overflow-y-scroll no-scrollbar">
+
+														{user?.manageusers?.map((d, i) => (
+															<div
+																onClick={() => {
+																	dispatch(setAdvertiserid(d?.id))
+																	dispatch(setUserid(d?.userid))
+																	dispatch(setFullname(d?.lastname ? d?.fullname : d?.firstname))
+																	dispatch(setImage(d?.image))
+																	setState(d?.lastname ? d?.fullname : d?.firstname)
+																	setToggle(false);
+																}}
+																key={i}
+																className="flex gap-2 py-1 items-center w-full rounded-lg light:hover:bg-[#ffffff]"
+															>
+																{/* <div className="">
+																	<img
+																		src={d?.image}
+																		className={`${toggle
+																			? "max-w-[30px] bg-[#f8f8f8] dark:bg-[#181c24] rounded-lg min-h-[30px] min-w-[30px] max-h-[30px]"
+																			: "w-0 h-0"
+																			} duration-100`}
+																		alt="image"
+																	/>
+																</div> */}
+																<div className="flex flex-col">
+																	<div className={`text-xs ${toggle ? "" : " hidden"}`}>
+																		{d?.lastname ? d?.fullname : d?.firstname}
+																	</div>
+																</div>
+															</div>
+														))}
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
-
-								<div>
-									<Image
-										src={koi}
-										alt="logo"
-										className="pp:min-w-[50px] h-[30px] w-[30px] pp:min-h-[50px]"
-									/>
-								</div>
 							</div>
-							<div className="flex justify-center w-full max-h-[100px] items-center pn:max-sm:rounded-md sm:max-md:rounded-xl gap-2 sm:gap-5 p-2 sm:p-3  bg-maincolor md:border-r-2">
+
+							{/* <div className="flex justify-center w-full max-h-[100px] items-center pn:max-sm:rounded-md sm:max-md:rounded-xl gap-2 sm:gap-5 p-2 sm:p-3  bg-maincolor md:border-r-2">
 								<div className="h-[50px] w-[50px] bg-blue-500 rounded-full flex justify-center items-center p-3" >
 									<FaWallet className="h-[35px] w-[35px]" />
 								</div>
@@ -139,8 +211,34 @@ const page = ({ params }) => {
 										{data?.currentbalance ? "₹" + data?.currentbalance : "₹0"}
 									</div>
 								</div>
+							</div> */}
+
+							<div className="bg-white dark:bg-[#0D0D0D] py-3 sm:px-8 rounded-2xl">
+								<div className="flex gap-2 items-center">
+									<div>
+										<Image src={d3} className="w-[60px]" />
+									</div>
+									<div className="flex flex-col justify-center h-full ">
+										<div className="font-semibold">Total Spent</div>
+										<div className="text-lg pt-[3px] font-semibold">{data?.currentbalance ? "₹" + data?.currentbalance : "₹0.00"}</div>
+									</div>
+								</div>
 							</div>
-							<div className="flex justify-center max-h-[100px] items-center gap-2 pn:max-sm:rounded-md sm:max-md:rounded-xl sm:gap-5 p-2 sm:p-3  bg-maincolor md:border-r-2">
+
+							<div className="bg-white dark:bg-[#0D0D0D] py-3 sm:px-8 rounded-2xl">
+								<div className="flex gap-2 items-center">
+									<div>
+										<Image src={d2} className="w-[60px]" />
+									</div>
+									<div className="flex flex-col justify-center h-full ">
+										<div className="font-semibold">Current balance</div>
+										<div className="text-lg pt-[3px] font-semibold">{data?.currentbalance ? "₹" + data?.currentbalance : "₹0.00"}</div>
+									</div>
+								</div>
+							</div>
+
+
+							{/* <div className="flex justify-center max-h-[100px] items-center gap-2 pn:max-sm:rounded-md sm:max-md:rounded-xl sm:gap-5 p-2 sm:p-3  bg-maincolor md:border-r-2">
 								<div>
 									<Image
 										src={dashp2}
@@ -157,8 +255,8 @@ const page = ({ params }) => {
 											: "No Data Yet"}
 									</div>
 								</div>
-							</div>
-							<div className="flex sm:justify-center max-h-[100px] items-center p-2 sm:p-3 pn:max-sm:rounded-md sm:max-md:rounded-xl gap-2 sm:gap-5 md:rounded-tr-2xl md:rounded-br-2xl bg-maincolor ">
+							</div> */}
+							{/* <div className="flex sm:justify-center max-h-[100px] items-center p-2 sm:p-3 pn:max-sm:rounded-md sm:max-md:rounded-xl gap-2 sm:gap-5 md:rounded-tr-2xl md:rounded-br-2xl bg-maincolor ">
 								<div className="flex flex-col ml-3 text-xs">
 									<div>Ad Popularitiy</div>
 									<div className="sm:text-xl text-sm font-semibold">
@@ -172,10 +270,23 @@ const page = ({ params }) => {
 										className="pp:min-w-[50px] h-[30px] w-[30px] pp:min-h-[50px]"
 									/>
 								</div>
+							</div> */}
+
+
+							<div className="bg-white dark:bg-[#0D0D0D] py-3 sm:px-8 rounded-2xl">
+								<div className="flex gap-2 items-center">
+									<div>
+										<Image src={d4} className="w-[60px]" />
+									</div>
+									<div className="flex flex-col justify-center h-full ">
+										<div className="font-semibold">Total campaign</div>
+										<div className="text-lg pt-[3px] font-semibold">{data?.currentbalance ? "₹" + data?.currentbalance : 5}</div>
+									</div>
+								</div>
 							</div>
 						</div>
 
-						<div className="w-full bg-maincolor rounded-xl pn:max-sm:mb-[100px] sm:min-h-[400px] sm:max-h-[450px]">
+						<div className="w-full bg-white dark:bg-[#0D0D0D] rounded-xl pn:max-sm:mb-[100px] sm:min-h-[400px] sm:max-h-[450px]">
 							<div className="flex mb-3 justify-between w-full flex-wrap">
 								<div className="flex justify-center items-center">
 									<div className="p-2">
@@ -273,7 +384,7 @@ const page = ({ params }) => {
 								</div>
 
 							</div>
-							<div className="w-full bg-maincolor h-full pn:max-sm:h-[300px]">
+							<div className="w-full bg-white dark:bg-[#0D0D0D] h-full pn:max-sm:h-[300px]">
 								<div className="relative h-full pn:max-sm:-left-8 top-0 w-full pn:max-sm:h-[300px]">
 									{graph && graph?.length > 0 && < ResponsiveContainer className={``}>
 										<LineChart width={730} height={250} data={graph}
@@ -311,7 +422,7 @@ const page = ({ params }) => {
 				</div >
 				:
 				<div className="flex flex-col w-full justify-center
-         items-center h-full font-semibold select-none p-2 sm:p-4 ">
+         items-center h-full font-semibold bg-white dark:bg-[#0D0D0D] select-none p-2 sm:p-4 ">
 					<Image src={noads} className="max-w-[350px]" />
 					<div className="my-5 text-xl">
 						Create Your First Ad!

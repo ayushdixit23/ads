@@ -29,7 +29,7 @@ const Ad3 = ({
               <Link href="/createAd?step=1"
                 onClick={() => dispatch(setStep(0))}
                 // onClick={() => setStep(0)}
-                className="flex justify-center border cursor-pointer border-black p-1 px-4 rounded-full items-center"
+                className="flex justify-center border cursor-pointer hover:bg-[#4C9AFF] p-1 px-4 rounded-full items-center"
               >
                 <div>
                   <AiOutlineEdit />

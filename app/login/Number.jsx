@@ -25,8 +25,8 @@ const Login = () => {
   const router = useRouter();
   const { setAuth } = useAuthContext()
   const [see, setSee] = useState(true);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("ayushdixit@gmail.com");
+  const [password, setPassword] = useState("ayushdixit");
   const [number, setNumber] = useState("");
   const [OTP, setOTP] = useState("");
   const [loading, setLoading] = useState(false);
@@ -92,18 +92,41 @@ const Login = () => {
   };
 
 
+  // const cookieSetter = async (data) => {
+  //   try {
+  //     Cookies.set(`axetkn`, data.access_token)
+  //     Cookies.set(`rvktkn`, data.refresh_token)
+  //     // localStorage.setItem(`axetkn`, data.access_token)
+  //     setAuth(true)
+  //     // localStorage.setItem(`rvktkn`, data.refresh_token)
+  //     return true
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
+
   const cookieSetter = async (data) => {
     try {
-      Cookies.set(`axetkn`, data.access_token)
-      Cookies.set(`rvktkn`, data.refresh_token)
-      // localStorage.setItem(`axetkn`, data.access_token)
-      setAuth(true)
-      // localStorage.setItem(`rvktkn`, data.refresh_token)
-      return true
+      // Calculate the expiration time for 7 days from now
+      const expirationDate = new Date();
+      expirationDate.setDate(expirationDate.getDate() + 7);
+
+      Cookies.set(`axetkn`, data.access_token, { expires: expirationDate });
+
+      // Set refresh token cookie with expiration time of 7 days
+      Cookies.set(`rvktkn`, data.refresh_token, { expires: expirationDate });
+
+      // Assuming `setAuth` is a function to update authentication state
+      setAuth(true);
+
+      // Return true to indicate successful cookie setting
+      return true;
     } catch (error) {
-      console.log(error)
+      // Handle errors, if any
+      console.log(error);
     }
   }
+
   //signup
   // function onSignup(e) {
   //   e.preventDefault();

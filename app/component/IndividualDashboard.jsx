@@ -24,7 +24,7 @@ import Loader from "./Loader";
 import { useAuthContext } from "../utils/AuthWrapper";
 import { FaWallet } from "react-icons/fa";
 
-const Section8 = () => {
+const IndividaulDashboard = () => {
   const [data, setData] = useState();
   const [campdata, setCampdata] = useState([]);
   const [graph, setGraph] = useState([])
@@ -106,7 +106,6 @@ const Section8 = () => {
   if (loading) {
     return <Loader />
   }
-
 
   return (
     <>
@@ -331,4 +330,4 @@ const Section8 = () => {
   );
 };
 
-export default Section8;
+export default IndividaulDashboard;

@@ -15,6 +15,7 @@ const Component = () => {
 	const postid = search.get("pstiq")
 	const router = useRouter()
 	const path = search.get("path")
+	const loc = search.get("loc")
 	const waitkrnevalafunc = async (data) => {
 		try {
 			Cookies.remove("axetkn")
@@ -47,7 +48,11 @@ const Component = () => {
 			setAuth(true)
 			if (a === true) {
 				if (path) {
-					router.push(path)
+					if (path.startsWith("/createAd?")) {
+						router.push(`${path}&step=1`)
+					} else {
+						router.push(path)
+					}
 				} else {
 					router.push("/main/dashboard")
 				}
@@ -66,7 +71,6 @@ const Component = () => {
 			f()
 		}
 	}, [id])
-
 
 	return (
 		<>

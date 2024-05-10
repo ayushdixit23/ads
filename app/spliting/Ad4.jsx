@@ -32,6 +32,8 @@ const Ad4 = ({
 	// const { data: ads } = useAuthContext()
 	const { data } = useGetCommunityQuery({ id: userid }, { skip: !userid })
 
+	console.log("ad4")
+
 	useEffect(() => {
 		setComimage(data?.communitywithDps[0]?.dps)
 		setSelect(data?.communitywithDps[0]?.title)
@@ -48,9 +50,9 @@ const Ad4 = ({
 	return (
 		<>
 			{/* scroll this */}
-			<div className="grid grid-cols-7 sm:px-3 sm:h-[87%] py-2 sm:mb-0 mb-10 pn:max-sm:pb-[30%] bg-[#f1f1f1] dark:bg-[#181a20] sm:fixed md:overflow-auto gap-4 md:scrollbar-hidden pn:max-md:grid-cols-1 w-full">
+			<div className="grid grid-cols-7  sm:h-[87%] sm:mb-0 mb-10 pn:max-sm:pb-[30%] bg-[#f1f1f1] dark:bg-[#2e2e30] sm:fixed md:overflow-auto gap-4 md:scrollbar-hidden pn:max-md:grid-cols-1 w-full">
 				<div
-					className={` ${styles.customScrollbar} sm:px-4 h-[100%] px-2 bg-[#96b6e6] bg-maincolor w-full md:col-span-4 rounded-xl sm:overflow-y-scroll py-2 pn:max-md:order-1`}
+					className={` ${styles.customScrollbar} sm:px-4 h-[100%] px-2 bg-[#96b6e6] bg-maincolor w-full md:col-span-4 sm:overflow-y-scroll py-2 pn:max-md:order-1`}
 				>
 
 					{
@@ -524,7 +526,7 @@ const Ad4 = ({
 
 				<div
 					className="md:col-span-3 pn:max-md:order-2 w-full min-h-full sm:overflow-y-auto sm:no-scrollbar rounded-xl max-h-[780px]">
-					<div className="bg-[#FAFAFA] dark:bg-[#181a20] rounded-xl w-full flex justify-center items-center">
+					<div className=" rounded-xl w-full flex justify-center items-center">
 						<div className="bg-maincolor rounded-xl flex flex-col w-[85%] sm:w-[500px] text-wrap md:w-[370px]  my-10 px-2">
 							<div className="flex justify-between items-center w-full">
 								<div className="flex items-center gap-2 pt-2 w-full">

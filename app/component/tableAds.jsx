@@ -53,7 +53,7 @@ const TableAds = ({ d }) => {
 				<TableCell className="font-medium text-center">
 					{d?.a?.enddate}
 				</TableCell>
-				<TableCell className="font-medium text-center">
+				{/* <TableCell className="font-medium text-center">
 
 					{d?.a.status === "review" ? < div className="flex flex-col w-full  bg-[#f7f7f7] dark:bg-[#c4c0c0] rounded-xl">
 						<div
@@ -75,18 +75,7 @@ const TableAds = ({ d }) => {
 								)}
 							</div>
 
-							{/* <div
-								className={` ${toggle
-									? "top-[45px]"
-									: "top-0 border-none text-[0px] w-[0px] h-[0px]"
-									} absolute left-0 bg-[#f7f7f7] duration-100 dark:bg-[#121212] rounded-xl z-50 w-full`}
-							>
-								<div className="flex flex-col gap-3 px-2 py-3">
-
-									<div onClick={() => { setState("Pause"); pauseAd(d?.a?._id) }}>Pause</div>
-									<div onClick={() => { setState("Run"); runAd(d?.a?._id) }}>Run</div>
-								</div>
-							</div> */}
+							
 						</div>
 					</div>
 
@@ -127,7 +116,7 @@ const TableAds = ({ d }) => {
 						</div>
 					}
 
-				</TableCell>
+				</TableCell> */}
 			</TableRow >
 		</>
 	)

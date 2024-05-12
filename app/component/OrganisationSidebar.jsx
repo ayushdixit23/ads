@@ -4,10 +4,8 @@ import React, { useEffect, useState } from "react";
 import { LuWallet2 } from "react-icons/lu";
 import { useAuthContext } from "../utils/AuthWrapper";
 // import { getData } from "../utils/useful";
-import Logo from "../assests/Logo.png"
 import { MdOutlineCampaign, MdSupervisorAccount } from "react-icons/md";
 import { IoChevronDown, IoPersonAdd } from "react-icons/io5";
-import Image from "next/image"
 import LoginAccount from "./LoginAccount";
 import AddAccount from "./AddAccount";
 import { useDispatch, useSelector } from "react-redux";
@@ -103,7 +101,7 @@ const OSidebar = () => {
 							{open && <div className="absolute bg-white py-3 duration-500 dark:bg-maincolor shadow-lg w-full z-50 rounded-md top-10 left-0">
 								<div className="flex flex-col z-30 gap-2 rounded-md">
 									{data?.manageusers?.map((d, i) => (
-										<Link
+										<div
 											// href={`/createAd?brand=${d?.lastname ? d?.fullname : d?.firstname}&userid=${d?.userid}&advid=${d?.id}&image=${d?.image}&step=1`}
 											onClick={() => {
 												dispatch(setAdvertiserid(d?.id))
@@ -111,13 +109,13 @@ const OSidebar = () => {
 												dispatch(setFullname(d?.lastname ? d?.fullname : d?.firstname))
 												dispatch(setImage(d?.image))
 											}}
-											href={`/main/dashboard/${d?.id}`}
+
 											key={i} className="flex gap-2 px-4 dark:text-gray-400 hover:bg-gray-100 rounded-md dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 py-2 transition-colors duration-300 transform items-center">
 											<div>
 												<img src={d?.image} className="w-[24px] rounded-xl h-[24px]" />
 											</div>
 											<div className="text-sm font-semibold">{d?.lastname ? d?.fullname : d?.firstname}</div>
-										</Link>
+										</div>
 									))}
 								</div>
 								<div onClick={() => setPop(true)} className="flex gap-2 px-4 text-xs py-2 dark:text-gray-400 hover:bg-gray-100 rounded-md dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 transition-colors duration-300 transform items-center">

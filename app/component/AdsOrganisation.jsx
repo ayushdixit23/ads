@@ -21,6 +21,7 @@ const AdsOrganisation = () => {
 	const { data } = useAuthContext()
 	const advertiserid = useSelector((state) => state.data.advertiserid)
 	const fullname = useSelector((state) => state.data.fullname)
+	const image = useSelector((state) => state.data.image)
 	const dispatch = useDispatch()
 	const [state, setState] = useState("")
 	const [toggle, setToggle] = useState(false)
@@ -47,6 +48,11 @@ const AdsOrganisation = () => {
 	}
 
 	useEffect(() => {
+		setState(fullname)
+		setDp(image)
+	}, [advertiserid])
+
+	useEffect(() => {
 		if (advertiserid) {
 			// setLoading(true)
 			fetchData()
@@ -71,7 +77,7 @@ const AdsOrganisation = () => {
 	return (
 		<>
 
-			<div className=" w-full grid md:grid-cols-4 pn:max-md:gap-2 gap-10 grid-cols-2 rounded-xl">
+			<div className="p-3 w-full grid md:grid-cols-4 pn:max-md:gap-2 gap-10 grid-cols-2 rounded-xl">
 				<div className="bg-white dark:bg-[#0D0D0D] py-3 sm:px-8 rounded-2xl">
 					<div className="flex gap-2 items-center">
 						<div>

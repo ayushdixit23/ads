@@ -23,9 +23,13 @@ const Component = () => {
 			// localStorage.removeItem("axetkn")
 			// localStorage.removeItem("rvktkn")
 
+			const expirationDate = new Date();
+			expirationDate.setDate(expirationDate.getDate() + 7);
 
-			Cookies.set(`axetkn`, data?.access_token)
-			Cookies.set(`rvktkn`, data?.refresh_token)
+			Cookies.set(`axetkn`, data.access_token, { expires: expirationDate });
+			// Set refresh token cookie with expiration time of 7 days
+			Cookies.set(`rvktkn`, data.refresh_token, { expires: expirationDate });
+
 			// localStorage.setItem(`axetkn`, data?.access_token)
 			// localStorage.setItem(`rvktkn`, data?.refresh_token)
 

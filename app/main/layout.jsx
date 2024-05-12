@@ -30,9 +30,9 @@ export default function MainLayout({ children }) {
     <>
       <div className="flex w-screen h-screen">
         <MobileNav />
-        <div className="w-full flex flex-col dark:bg-[#1E1E1E]">
+        <div className="w-full flex   flex-col dark:bg-[#1E1E1E]">
           <div>
-            <div className="h-[70px] flex border-b dark:bg-[#0D0D0D] items-center w-full text-2xl font-semibold px-6">
+            <div className="h-[76px] flex border-b dark:bg-[#0D0D0D] items-center w-full text-2xl font-semibold px-6">
               {/* {path.startsWith("/main/ads") && <div>Ads</div>}
               {path.startsWith("/main/wallet") && <div>Wallet</div>}
               {path.startsWith("/main/dashboard") && (
@@ -60,16 +60,15 @@ export default function MainLayout({ children }) {
                   </div>
                 </div>
               )} */}
-              <div className="flex justify-between items-center w-full">
+              <div className="flex justify-between  items-center w-full">
                 <div className="flex items-center py-2 gap-2 text-2xl">
                   <Image
                     src={Logo}
                     className="w-[50px] h-[50px]"
                     alt="adspace"
                   />
-                  <span className="sm:max-md:hidden font-medium">Adspace</span>
+                  <span className="hidden pp:block font-medium">Adspace</span>
                 </div>
-
                 <div className="flex justify-center items-center gap-2">
                   <ModeToggle />
                   <div>
@@ -85,7 +84,7 @@ export default function MainLayout({ children }) {
                         <AiOutlinePlus className="font-semibold" />
                       </div>
                       <div>
-                        <p className="pr-2 text-base">Create Ad</p>
+                        <p className="pr-2 text-sm pp:text-base">Create Ad</p>
                       </div>
                     </Link>
                   </div>

@@ -23,12 +23,12 @@ const Fetch = ({ data, length, router }) => {
 
 				<div
 					className={`p-3 ${length != 0
-						? "max-w-full my-3 h-full overflow-x-scroll no-scrollbar"
+						? "max-w-full my-3 rounded-2xl h-full overflow-x-scroll no-scrollbar"
 						: ""
 						}`}
 				>
 
-					<Table className="w-full border h-full no-scrollbar bg-maincolor min-w-[900px] border-border">
+					<Table className="w-full border h-full no-scrollbar bg-white dark:bg-[#0D0D0D] min-w-[900px] border-border">
 						<TableHeader className="h-[70px] ">
 							<TableRow>
 								<TableHead className="text-center">NAME</TableHead>
@@ -38,7 +38,7 @@ const Fetch = ({ data, length, router }) => {
 								<TableHead className="text-center">CPC</TableHead>
 								<TableHead className="text-center">START DATE</TableHead>
 								<TableHead className="text-center">END Date</TableHead>
-								<TableHead className="">Actions</TableHead>
+								{/* <TableHead className="">Actions</TableHead> */}
 							</TableRow>
 						</TableHeader>
 						<TableBody>

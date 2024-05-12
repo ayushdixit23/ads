@@ -7,6 +7,10 @@ import { API } from "@/Essentials";
 import circle from "../assests/Pic2.svg";
 import graph2 from "../assests/Graph.svg";
 import noads from "../assests/noads.svg";
+import d1 from "../assests/d1.png";
+import d2 from "../assests/d2.png";
+import d3 from "../assests/d3.png";
+import d4 from "../assests/d4.png";
 import {
   Select,
   SelectContent,
@@ -110,9 +114,11 @@ const IndividaulDashboard = () => {
   return (
     <>
       {campdata?.length > 0 ?
-        < div className="grid  grid-cols-1 h-[90vh] overflow-y-scroll no-scrollbar bg-black select-none p-2 sm:p-4">
+        <div className="grid grid-cols-1 h-full overflow-y-scroll no-scrollbar w-[100%] bg-[#f7f7f7] dark:bg-black select-none p-2 sm:p-4">
           <div className=" flex flex-col gap-4">
-            <div className=" w-full grid md:grid-cols-4 pn:max-md:gap-2  grid-cols-2 rounded-xl">
+
+
+            {/* <div className=" w-full grid   md:grid-cols-4 pn:max-md:gap-2  grid-cols-2 rounded-xl">
               <div className="flex bg-maincolor justify-center items-center max-h-[100px] p-2 gap-2 sm:gap-5 pn:max-sm:rounded-md sm:max-md:rounded-xl sm:p-3 md:rounded-tl-2xl md:rounded-bl-2xl md:border-r-2">
                 <div className="flex flex-col text-xs justify-center">
                   <div>Spent on this Ad</div>
@@ -176,15 +182,78 @@ const IndividaulDashboard = () => {
                   />
                 </div>
               </div>
+            </div> */}
+
+
+            <div className=" w-full grid md:grid-cols-4 pn:max-md:gap-2 gap-4 lg:gap-10 grid-cols-2 rounded-xl">
+              <div className="bg-white dark:bg-[#0D0D0D] h-[80px] pp:h-[100px]  rounded-2xl">
+                <div className="flex gap-2 items-center justify-start pl-4 md:pl-3 lg:pl-6 h-full">
+                  <div>
+                    <Image src={d1} className="w-[35px] pp:w-[60px]" />
+                  </div>
+                  <div className="flex flex-col justify-center h-full gap-2 ">
+                    <div className="text-xs pp:text-sm sm:text-base font-semibold">Spent on this Ad</div>
+                    <div className="text-xs pp:text-sm sm:text-base font-semibold">  {adValues.totalspent
+                      ? "₹" + adValues.totalspent
+                      : "No Data Yet"}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white dark:bg-[#0D0D0D] h-[80px] pp:h-[100px]  rounded-2xl">
+                <div className="flex gap-2 items-center justify-start pl-4 md:pl-3 lg:pl-6 h-full">
+                  <div>
+                    <Image src={d3} className="w-[35px] pp:w-[60px]" />
+                  </div>
+                  <div className="flex flex-col justify-center h-full ">
+                    <div className="font-semibold text-xs pp:text-sm sm:text-base">Current Balance</div>
+                    <div className="text-xs pp:text-sm sm:text-base pt-[2px] font-semibold">
+                      {data?.currentbalance ? "₹" + data?.currentbalance : "₹0"}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white dark:bg-[#0D0D0D] h-[80px] pp:h-[100px]  rounded-2xl">
+                <div className="flex gap-2 items-center justify-start pl-4 md:pl-3 lg:pl-6 h-full">
+                  <div>
+                    <Image src={d2} className="w-[35px] pp:w-[60px]" />
+                  </div>
+                  <div className="flex flex-col justify-center h-full ">
+                    <div className="font-semibold  text-xs pp:text-sm sm:text-base">Total Conversion</div>
+                    <div className="text-xs pp:text-sm sm:text-base pt-[3px] font-semibold">
+                      {adValues.conversion
+                        ? parseFloat(adValues.conversion).toFixed(1) + "%"
+                        : "No Data Yet"}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white dark:bg-[#0D0D0D] h-[80px] pp:h-[100px] rounded-2xl">
+                <div className="flex gap-2 items-center justify-start pl-4 md:pl-3 lg:pl-6 h-full">
+                  <div>
+                    <Image src={d4} className="w-[35px] pp:w-[60px]" />
+                  </div>
+                  <div className="flex flex-col justify-center h-full ">
+                    <div className="font-semibold text-xs pp:text-sm sm:text-base">Ad Popularity</div>
+                    <div className="text-xs pp:text-sm sm:text-base pt-[3px] font-semibold">
+                      {adValues.popularity ? parseFloat(adValues.popularity).toFixed(1) + "%" : "No Data Yet"}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="w-full bg-maincolor rounded-xl pn:max-sm:mb-[100px] sm:min-h-[400px] sm:max-h-[450px]">
+
+            <div className="w-full bg-white dark:bg-[#0D0D0D] rounded-xl pn:max-sm:mb-[100px] sm:min-h-[400px] sm:max-h-[450px]">
               <div className="flex mb-3 justify-between w-full flex-wrap">
                 <div className="flex justify-center items-center">
                   <div className="p-2">
                     <Select onValueChange={(selectValue) => {
 
                       const data = campdata.find((va) => va.a._id === selectValue)
+                     
                       setValue({
                         click: data.a.clicks,
                         views: data.a.views,
@@ -276,7 +345,7 @@ const IndividaulDashboard = () => {
                 </div>
 
               </div>
-              <div className="w-full bg-maincolor h-full pn:max-sm:h-[300px]">
+              <div className="w-full bg-white dark:bg-[#0D0D0D] h-full pn:max-sm:h-[300px]">
                 <div className="relative h-full pn:max-sm:-left-8 top-0 w-full pn:max-sm:h-[300px]">
                   {graph && graph?.length > 0 && < ResponsiveContainer className={``}>
                     <LineChart width={730} height={250} data={graph}

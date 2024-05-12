@@ -3,7 +3,6 @@ import Cookies from 'js-cookie'
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { checkToken } from './useful'
 
-
 export const AuthContext = createContext()
 
 export const useAuthContext = () => {

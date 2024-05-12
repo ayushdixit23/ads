@@ -73,8 +73,11 @@ const Page = () => {
   const setCookieAds = (datas) => {
     // localStorage.setItem(`axetkn`, data.access_token)
     // localStorage.setItem(`rvktkn`, data.refresh_token)
-    Cookies.set(`axetkn`, datas.access_token)
-    Cookies.set(`rvktkn`, datas.refresh_token)
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + 7);
+
+    Cookies.set(`axetkn`, data.access_token, { expires: expirationDate })
+    Cookies.set(`rvktkn`, data.refresh_token, { expires: expirationDate })
   }
 
   return (

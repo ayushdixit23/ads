@@ -35,8 +35,11 @@ const LoginAccount = ({ setLogin, setPop, login }) => {
 
 	const cookieSetter = async (data) => {
 		try {
-			Cookies.set(`axetkn`, data.access_token)
-			Cookies.set(`rvktkn`, data.refresh_token)
+			const expirationDate = new Date();
+			expirationDate.setDate(expirationDate.getDate() + 7);
+
+			Cookies.set(`axetkn`, data.access_token, { expires: expirationDate })
+			Cookies.set(`rvktkn`, data.refresh_token, { expires: expirationDate })
 			const cookies = Cookies.get("axetkn")
 			await f(cookies)
 			setAuth(true)
@@ -97,6 +100,19 @@ const LoginAccount = ({ setLogin, setPop, login }) => {
 				console.log(err);
 				setLoading(false);
 			});
+
+		// const res = await axios.post(`${API}/loginagency/${data?.advid}`, {
+		// 	phone: 91 + number,
+		// });
+		// if (res.data.success) {
+		// 	const a = await cookieSetter(res.data)
+		// 	if (a === true) {
+		// 		setPop(false)
+		// 		router.push("/main/dashboard");
+		// 	}
+		// } else {
+		// 	console.log("something went wrong");
+		// }
 	}
 
 	return (
@@ -148,7 +164,9 @@ const LoginAccount = ({ setLogin, setPop, login }) => {
 								<AiOutlineLoading3Quarters className="animate-spin" />
 							</div>
 						) : (
-							<div onClick={onOTPVerify} className='bg-[#282828] text-white flex justify-center -mt-3 items-center rounded-md p-3 font-semibold'>Verify Otp</div>
+							<div
+								onClick={onOTPVerify}
+								className='bg-[#282828] text-white flex justify-center -mt-3 items-center rounded-md p-3 font-semibold'>Verify Otp</div>
 						)}
 
 					</>
@@ -162,7 +180,7 @@ const LoginAccount = ({ setLogin, setPop, login }) => {
 						) : (
 							<div
 								onClick={onSignup}
-
+								// onClick={onOTPVerify}
 								className='bg-[#282828] text-white flex justify-center -mt-3 items-center rounded-md p-3 font-semibold'>Send Otp</div>
 						)}
 

@@ -1,7 +1,8 @@
 import React from "react";
+import { IoIosArrowRoundUp } from "react-icons/io";
 import { useSelector } from "react-redux";
 
-const Square3 = ({ display }) => {
+const Square3 = ({ display, popularity }) => {
   const totalbudget = useSelector((state) => state.data.three.TotalBudget)
   const audience = useSelector((state) => state.data.three.audience)
 
@@ -22,7 +23,32 @@ const Square3 = ({ display }) => {
             Impressions
           </div>
           <div className="flex flex-col">
-            <div className="sm:text-3xl text-2xl font-bold dark:text-white text-black">{formatNumberWithCommas(Math.ceil(audience))}</div>
+            <div className="flex items-center gap-1">
+              <div className="sm:text-3xl text-2xl font-bold dark:text-white text-black">{formatNumberWithCommas(Math.ceil(audience))}</div>
+
+              <div className="mt-1  text-green-600">
+                {popularity === 2 && <div className="flex justify-center items-center">
+                  <div>
+                    <IoIosArrowRoundUp className="text-lg font-semibold" />
+                  </div>
+                  <div>10%</div>
+                </div>}
+                {popularity === 3 && <div className="flex justify-center items-center">
+                  <div>
+                    <IoIosArrowRoundUp className="text-lg font-semibold" />
+                  </div>
+                  <div>25%</div>
+                </div>}
+                {popularity === 4 && <div className="flex justify-center items-center">
+                  <div>
+                    <IoIosArrowRoundUp className="text-lg font-semibold" />
+                  </div>
+                  <div>35%</div>
+                </div>}
+              </div>
+            </div>
+
+
             <div><span className="text-sm">(Appprox.)</span></div>
           </div>
           <div className="text-[#333333] dark:text-white">Based on the data you entered</div>

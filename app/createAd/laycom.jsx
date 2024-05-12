@@ -121,6 +121,7 @@ export default function createAdLayout({ children }) {
       formDataToSend.append("maxage", three.maxage);
       formDataToSend.append("startdate", formatDateToString(three.startDate));
       formDataToSend.append("adid", three.random_id);
+      formDataToSend.append("advertiserid", advid ? advid : data?.advid);
       formDataToSend.append(
         "enddate",
         three.endDate ? three.endDate : "Not Selected"
@@ -137,8 +138,7 @@ export default function createAdLayout({ children }) {
         );
       } else {
         res = await axios.post(
-          `${API}/newad/${advid ? advid : data?.advid}/${
-            userid ? userid : data?.userid
+          `${API}/newad/${advid ? advid : data?.advid}/${userid ? userid : data?.userid
           }`,
           formDataToSend
         );
@@ -325,11 +325,10 @@ export default function createAdLayout({ children }) {
           <div className="flex border-b justify-center pl-16 sm:pl-0 dark:bg-[#1e2129] h-[50px] bg-white items-center">
             <ol class="flex items-center justify-center px-3 sm:mt-0 w-full max-w-[800px] text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base">
               <li
-                class={`flex md:w-full ${
-                  step >= 1
-                    ? "text-green-900 dark:text-green-600"
-                    : "dark:text-blue-500 text-blue-600"
-                } items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700`}
+                class={`flex md:w-full ${step >= 1
+                  ? "text-green-900 dark:text-green-600"
+                  : "dark:text-blue-500 text-blue-600"
+                  } items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700`}
               >
                 <span class="flex items-center after:content-['/'] min-w-[117px] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
                   {step >= 1 ? (
@@ -351,11 +350,10 @@ export default function createAdLayout({ children }) {
                 </span>
               </li>
               <li
-                class={`flex md:w-full items-center   sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700 ${
-                  step >= 2
-                    ? "text-green-900 dark:text-green-600"
-                    : "dark:text-blue-500 text-blue-600"
-                } `}
+                class={`flex md:w-full items-center   sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700 ${step >= 2
+                  ? "text-green-900 dark:text-green-600"
+                  : "dark:text-blue-500 text-blue-600"
+                  } `}
               >
                 <span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
                   {step >= 2 ? (

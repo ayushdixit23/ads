@@ -72,11 +72,10 @@ const Ad2 = ({
                   dispatch(setThree({ type: "infeed" }));
                   setOpen(false);
                 }}
-                className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${
-                  three.type.includes("infeed")
-                    ? "border-[#4C9AFF]  bg-[#3e84e4]/10"
-                    : ""
-                }`}
+                className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type.includes("infeed")
+                  ? "border-[#4C9AFF]  bg-[#3e84e4]/10"
+                  : ""
+                  }`}
               >
                 <div>
                   <Image
@@ -118,9 +117,8 @@ const Ad2 = ({
                   setOpen(!open);
                   dispatch(setThree({ type: "" }));
                 }}
-                className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${
-                  open ? "border-[#4C9AFF]  bg-[#3e84e4]/10" : ""
-                }`}
+                className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${open ? "border-[#4C9AFF]  bg-[#3e84e4]/10" : ""
+                  }`}
               >
                 <div>
                   <Image
@@ -146,11 +144,10 @@ const Ad2 = ({
                     toast.error("Banner Ads should contain image!");
                   }
                 }}
-                className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${
-                  three.type.includes("banner")
-                    ? "border-[#4C9AFF]  bg-[#3e84e4]/10"
-                    : ""
-                }`}
+                className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type.includes("banner")
+                  ? "border-[#4C9AFF]  bg-[#3e84e4]/10"
+                  : ""
+                  }`}
               >
                 <div>
                   <Image
@@ -182,11 +179,10 @@ const Ad2 = ({
                           dispatch(setThree({ type: "skipable" }));
                         }
                       }}
-                      className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${
-                        three.type === "skipable"
-                          ? "border-[#4C9AFF]  bg-[#3e84e4]/10"
-                          : ""
-                      }`}
+                      className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type === "skipable"
+                        ? "border-[#4C9AFF]  bg-[#3e84e4]/10"
+                        : ""
+                        }`}
                     >
                       <div>
                         <Image
@@ -212,11 +208,10 @@ const Ad2 = ({
                           dispatch(setThree({ type: "non-skipable" }));
                         }
                       }}
-                      className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${
-                        three.type === "non-skipable"
-                          ? "border-[#4C9AFF]  bg-[#3e84e4]/10"
-                          : ""
-                      }`}
+                      className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type === "non-skipable"
+                        ? "border-[#4C9AFF]  bg-[#3e84e4]/10"
+                        : ""
+                        }`}
                     >
                       <div>
                         <Image
@@ -253,55 +248,51 @@ const Ad2 = ({
             {(three.type === "infeed" ||
               three.type === "skipable" ||
               three.type === "non-skipable") && (
-              <div className="flex flex-col justify-center mb-2">
-                <div className="text-sm font-semibold my-3">Popularity</div>
-                <div className="flex gap-2 items-center">
-                  <div
-                    onClick={() => dispatch(setThree({ popularity: 1 }))}
-                    className={`flex justify-center items-center p-3 px-5 ${
-                      three.popularity === 1
+                <div className="flex flex-col justify-center mb-2">
+                  <div className="text-sm font-semibold my-3">Popularity</div>
+                  <div className="flex gap-2 items-center">
+                    <div
+                      onClick={() => dispatch(setThree({ popularity: 1 }))}
+                      className={`flex justify-center items-center p-3 px-5 ${three.popularity === 1
                         ? "bg-blue-600"
                         : "dark:bg-[#181a20] bg-white"
-                    } rounded-lg`}
-                  >
-                    1x
+                        } rounded-lg`}
+                    >
+                      1x
+                    </div>
+                    <div
+                      onClick={() => dispatch(setThree({ popularity: 2 }))}
+                      className={`flex justify-center items-center p-3 px-5 ${three.popularity === 2
+                        ? "bg-blue-600"
+                        : "dark:bg-[#181a20] bg-white"
+                        } rounded-lg`}
+                    >
+                      2x
+                    </div>
+                    <div
+                      onClick={() => dispatch(setThree({ popularity: 3 }))}
+                      className={`flex justify-center items-center p-3 px-5 ${three.popularity === 3
+                        ? "bg-blue-600"
+                        : "dark:bg-[#181a20] bg-white"
+                        } rounded-lg`}
+                    >
+                      3x
+                    </div>
+                    <div
+                      onClick={() => dispatch(setThree({ popularity: 4 }))}
+                      className={`flex justify-center items-center p-3 px-5 ${three.popularity === 4
+                        ? "bg-blue-600"
+                        : "dark:bg-[#181a20] bg-white"
+                        } rounded-lg`}
+                    >
+                      4x
+                    </div>
                   </div>
-                  <div
-                    onClick={() => dispatch(setThree({ popularity: 2 }))}
-                    className={`flex justify-center items-center p-3 px-5 ${
-                      three.popularity === 2
-                        ? "bg-blue-600"
-                        : "dark:bg-[#181a20] bg-white"
-                    } rounded-lg`}
-                  >
-                    2x
-                  </div>
-                  <div
-                    onClick={() => dispatch(setThree({ popularity: 3 }))}
-                    className={`flex justify-center items-center p-3 px-5 ${
-                      three.popularity === 3
-                        ? "bg-blue-600"
-                        : "dark:bg-[#181a20] bg-white"
-                    } rounded-lg`}
-                  >
-                    3x
-                  </div>
-                  <div
-                    onClick={() => dispatch(setThree({ popularity: 4 }))}
-                    className={`flex justify-center items-center p-3 px-5 ${
-                      three.popularity === 4
-                        ? "bg-blue-600"
-                        : "dark:bg-[#181a20] bg-white"
-                    } rounded-lg`}
-                  >
-                    4x
+                  <div className="text-sm mt-2 text-black dark:text-white font-semibold">
+                    Note: Speed up your ads by increasing popularity
                   </div>
                 </div>
-                <div className="text-sm mt-2 text-black dark:text-white font-semibold">
-                  Note: Speed up your ads by increasing popularity
-                </div>
-              </div>
-            )}
+              )}
           </div>
 
           <div className="my-[1%] rounded-xl">
@@ -431,15 +422,15 @@ const Ad2 = ({
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   className="w-full rounded-xl p-2 bg-transparent outline-none"
-                  // onKeyDown={(e) => {
-                  // 	if (e.key === "Enter") {
-                  // 		if (inputValue && three.location.length < 3) {
+                // onKeyDown={(e) => {
+                // 	if (e.key === "Enter") {
+                // 		if (inputValue && three.location.length < 3) {
 
-                  // 			dispatch(setThree({ location: [...three.location, inputValue] }))
-                  // 			setInputValue("");
-                  // 		}
-                  // 	}
-                  // }}
+                // 			dispatch(setThree({ location: [...three.location, inputValue] }))
+                // 			setInputValue("");
+                // 		}
+                // 	}
+                // }}
                 />
               </div>
 
@@ -530,11 +521,10 @@ const Ad2 = ({
                   onClick={() => {
                     dispatch(setThree({ gender: "Men" }));
                   }}
-                  className={`p-2 px-6 rounded-full ${
-                    three.gender === "Men"
-                      ? "text-white bg-blue-500"
-                      : "border border-black"
-                  } `}
+                  className={`p-2 px-6 rounded-full ${three.gender === "Men"
+                    ? "text-white bg-blue-500"
+                    : "border border-black"
+                    } `}
                 >
                   Men
                 </div>
@@ -542,11 +532,10 @@ const Ad2 = ({
                   onClick={() => {
                     dispatch(setThree({ gender: "Women" }));
                   }}
-                  className={`p-2 px-6 rounded-full ${
-                    three.gender === "Women"
-                      ? "text-white bg-blue-500"
-                      : "border border-black"
-                  } `}
+                  className={`p-2 px-6 rounded-full ${three.gender === "Women"
+                    ? "text-white bg-blue-500"
+                    : "border border-black"
+                    } `}
                 >
                   Women
                 </div>
@@ -554,11 +543,10 @@ const Ad2 = ({
                   onClick={() => {
                     dispatch(setThree({ gender: "Both" }));
                   }}
-                  className={`p-2 px-6  rounded-full ${
-                    three.gender === "Both"
-                      ? "text-white bg-blue-500"
-                      : "border border-black"
-                  } `}
+                  className={`p-2 px-6  rounded-full ${three.gender === "Both"
+                    ? "text-white bg-blue-500"
+                    : "border border-black"
+                    } `}
                 >
                   Both
                 </div>
@@ -763,7 +751,7 @@ const Ad2 = ({
                   name="myFormzder"
                   id="234"
                   type="radio"
-                  onChange={() => {}}
+                  onChange={() => { }}
                   onClick={() => {
                     setDate(true);
                     setThree({ ...three, endDate: "" });
@@ -837,7 +825,7 @@ const Ad2 = ({
         </div>
         <div className="flex flex-col items-center">
           <div>
-            <Square3 display={ProperAudience ? ProperAudience : 0} />
+            <Square3 popularity={three.popularity} display={ProperAudience ? ProperAudience : 0} />
           </div>
           {/* <Square4
 									ctr={ctr ? ctr : 0}
@@ -852,7 +840,7 @@ const Ad2 = ({
       <div className="flex bg-maincolor flex-col md:hidden pb-[180px] py-2">
         <div className="grid grid-cols-1">
           <div className="flex flex-col">
-            <Square3 display={ProperAudience ? ProperAudience : 0} />
+            <Square3 popularity={three.popularity} display={ProperAudience ? ProperAudience : 0} />
             {/* <Square4
 									ctr={ctr ? ctr : 0}
 									duration={three.duration ? three.duration : 1}
@@ -876,11 +864,10 @@ const Ad2 = ({
                       dispatch(setThree({ type: "infeed" }));
                       setOpen(false);
                     }}
-                    className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${
-                      three.type.includes("infeed")
-                        ? "border-[#4C9AFF]  bg-[#3e84e4]/10"
-                        : ""
-                    }`}
+                    className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type.includes("infeed")
+                      ? "border-[#4C9AFF]  bg-[#3e84e4]/10"
+                      : ""
+                      }`}
                   >
                     <div>
                       <Image
@@ -903,9 +890,8 @@ const Ad2 = ({
                       setOpen(!open);
                       dispatch(setThree({ type: "" }));
                     }}
-                    className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${
-                      open ? "border-[#4C9AFF]  bg-[#3e84e4]/10" : ""
-                    }`}
+                    className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${open ? "border-[#4C9AFF]  bg-[#3e84e4]/10" : ""
+                      }`}
                   >
                     <div>
                       <Image
@@ -973,11 +959,10 @@ const Ad2 = ({
                         toast.error("Banner Ads should contain image!");
                       }
                     }}
-                    className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${
-                      three.type.includes("banner")
-                        ? "border-[#4C9AFF]  bg-[#3e84e4]/10"
-                        : ""
-                    }`}
+                    className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type.includes("banner")
+                      ? "border-[#4C9AFF]  bg-[#3e84e4]/10"
+                      : ""
+                      }`}
                   >
                     <div>
                       <Image
@@ -1009,11 +994,10 @@ const Ad2 = ({
                               dispatch(setThree({ type: "skipable" }));
                             }
                           }}
-                          className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${
-                            three.type === "skipable"
-                              ? "border-[#4C9AFF]  bg-[#3e84e4]/10"
-                              : ""
-                          }`}
+                          className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type === "skipable"
+                            ? "border-[#4C9AFF]  bg-[#3e84e4]/10"
+                            : ""
+                            }`}
                         >
                           <div>
                             <Image
@@ -1039,11 +1023,10 @@ const Ad2 = ({
                               dispatch(setThree({ type: "non-skipable" }));
                             }
                           }}
-                          className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${
-                            three.type === "non-skipable"
-                              ? "border-[#4C9AFF]  bg-[#3e84e4]/10"
-                              : ""
-                          }`}
+                          className={` flex flex-col justify-center border relative  p-2 z-0  items-center min-w-[150px] max-w-[250px] rounded-lg ${three.type === "non-skipable"
+                            ? "border-[#4C9AFF]  bg-[#3e84e4]/10"
+                            : ""
+                            }`}
                         >
                           <div>
                             <Image
@@ -1080,55 +1063,51 @@ const Ad2 = ({
                 {(three.type === "infeed" ||
                   three.type === "skipable" ||
                   three.type === "non-skipable") && (
-                  <div className="flex flex-col justify-center mb-2">
-                    <div className="text-sm font-semibold my-3">Popularity</div>
-                    <div className="flex gap-2 items-center">
-                      <div
-                        onClick={() => dispatch(setThree({ popularity: 1 }))}
-                        className={`flex justify-center items-center p-3 px-5 ${
-                          three.popularity === 1
+                    <div className="flex flex-col justify-center mb-2">
+                      <div className="text-sm font-semibold my-3">Popularity</div>
+                      <div className="flex gap-2 items-center">
+                        <div
+                          onClick={() => dispatch(setThree({ popularity: 1 }))}
+                          className={`flex justify-center items-center p-3 px-5 ${three.popularity === 1
                             ? "bg-blue-600"
                             : "dark:bg-[#181a20] bg-white"
-                        } rounded-lg`}
-                      >
-                        1x
+                            } rounded-lg`}
+                        >
+                          1x
+                        </div>
+                        <div
+                          onClick={() => dispatch(setThree({ popularity: 2 }))}
+                          className={`flex justify-center items-center p-3 px-5 ${three.popularity === 2
+                            ? "bg-blue-600"
+                            : "dark:bg-[#181a20] bg-white"
+                            } rounded-lg`}
+                        >
+                          2x
+                        </div>
+                        <div
+                          onClick={() => dispatch(setThree({ popularity: 3 }))}
+                          className={`flex justify-center items-center p-3 px-5 ${three.popularity === 3
+                            ? "bg-blue-600"
+                            : "dark:bg-[#181a20] bg-white"
+                            } rounded-lg`}
+                        >
+                          3x
+                        </div>
+                        <div
+                          onClick={() => dispatch(setThree({ popularity: 4 }))}
+                          className={`flex justify-center items-center p-3 px-5 ${three.popularity === 4
+                            ? "bg-blue-600"
+                            : "dark:bg-[#181a20] bg-white"
+                            } rounded-lg`}
+                        >
+                          4x
+                        </div>
                       </div>
-                      <div
-                        onClick={() => dispatch(setThree({ popularity: 2 }))}
-                        className={`flex justify-center items-center p-3 px-5 ${
-                          three.popularity === 2
-                            ? "bg-blue-600"
-                            : "dark:bg-[#181a20] bg-white"
-                        } rounded-lg`}
-                      >
-                        2x
-                      </div>
-                      <div
-                        onClick={() => dispatch(setThree({ popularity: 3 }))}
-                        className={`flex justify-center items-center p-3 px-5 ${
-                          three.popularity === 3
-                            ? "bg-blue-600"
-                            : "dark:bg-[#181a20] bg-white"
-                        } rounded-lg`}
-                      >
-                        3x
-                      </div>
-                      <div
-                        onClick={() => dispatch(setThree({ popularity: 4 }))}
-                        className={`flex justify-center items-center p-3 px-5 ${
-                          three.popularity === 4
-                            ? "bg-blue-600"
-                            : "dark:bg-[#181a20] bg-white"
-                        } rounded-lg`}
-                      >
-                        4x
+                      <div className="text-sm mt-2 text-black dark:text-white font-semibold">
+                        Note: Speed up your ads by increasing popularity
                       </div>
                     </div>
-                    <div className="text-sm mt-2 text-black dark:text-white font-semibold">
-                      Note: Speed up your ads by increasing popularity
-                    </div>
-                  </div>
-                )}
+                  )}
               </div>
             </div>
             <div className="rounded-xl">
@@ -1250,15 +1229,15 @@ const Ad2 = ({
                       value={inputValue}
                       onChange={(e) => setInputValue(e.target.value)}
                       className="w-full rounded-xl p-2 bg-transparent outline-none"
-                      // onKeyDown={(e) => {
-                      // 	if (e.key === "Enter") {
-                      // 		if (inputValue && three.location.length < 3) {
+                    // onKeyDown={(e) => {
+                    // 	if (e.key === "Enter") {
+                    // 		if (inputValue && three.location.length < 3) {
 
-                      // 			dispatch(setThree({ location: [...three.location, inputValue] }))
-                      // 			setInputValue("");
-                      // 		}
-                      // 	}
-                      // }}
+                    // 			dispatch(setThree({ location: [...three.location, inputValue] }))
+                    // 			setInputValue("");
+                    // 		}
+                    // 	}
+                    // }}
                     />
                   </div>
 
@@ -1355,11 +1334,10 @@ const Ad2 = ({
                     onClick={() => {
                       dispatch(setThree({ gender: "Men" }));
                     }}
-                    className={`p-2 px-6 rounded-full ${
-                      three.gender === "Men"
-                        ? "text-white bg-blue-500"
-                        : "border "
-                    } `}
+                    className={`p-2 px-6 rounded-full ${three.gender === "Men"
+                      ? "text-white bg-blue-500"
+                      : "border "
+                      } `}
                   >
                     Men
                   </div>
@@ -1367,11 +1345,10 @@ const Ad2 = ({
                     onClick={() => {
                       dispatch(setThree({ gender: "Women" }));
                     }}
-                    className={`p-2 px-6 rounded-full ${
-                      three.gender === "Women"
-                        ? "text-white bg-blue-500"
-                        : "border "
-                    } `}
+                    className={`p-2 px-6 rounded-full ${three.gender === "Women"
+                      ? "text-white bg-blue-500"
+                      : "border "
+                      } `}
                   >
                     Women
                   </div>
@@ -1379,11 +1356,10 @@ const Ad2 = ({
                     onClick={() => {
                       dispatch(setThree({ gender: "Both" }));
                     }}
-                    className={`p-2 px-6  rounded-full ${
-                      three.gender === "Both"
-                        ? "text-white bg-blue-500"
-                        : "border "
-                    } `}
+                    className={`p-2 px-6  rounded-full ${three.gender === "Both"
+                      ? "text-white bg-blue-500"
+                      : "border "
+                      } `}
                   >
                     Both
                   </div>
@@ -1544,15 +1520,14 @@ const Ad2 = ({
                       />
                       {formatDateToString(three.startDate) <
                         formatDateToString(new Date()) && (
-                        <div className="text-sm text-red-700">
-                          Please Enter a Valid Startdate
-                        </div>
-                      )}
+                          <div className="text-sm text-red-700">
+                            Please Enter a Valid Startdate
+                          </div>
+                        )}
                     </div>
                     <div
-                      className={`${
-                        date ? "flex flex-col space-y-1" : "hidden"
-                      }`}
+                      className={`${date ? "flex flex-col space-y-1" : "hidden"
+                        }`}
                     >
                       <label
                         htmlFor="edate"
@@ -1576,10 +1551,10 @@ const Ad2 = ({
                       />
                       {formatDateToString(three.endDate) <
                         formatDateToString(three.startDate) && (
-                        <div className="text-sm text-red-700">
-                          Please Enter a Valid Enddate
-                        </div>
-                      )}
+                          <div className="text-sm text-red-700">
+                            Please Enter a Valid Enddate
+                          </div>
+                        )}
                     </div>
                   </div>
                 </div>
@@ -1610,7 +1585,7 @@ const Ad2 = ({
                       name="myFormerloi"
                       id="234123565"
                       type="radio"
-                      onChange={() => {}}
+                      onChange={() => { }}
                       onClick={() => {
                         setDate(true);
                         setThree({ ...three, endDate: "" });

@@ -40,6 +40,7 @@ import {
   setUserid,
 } from "@/app/redux/slice/dataSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { formatDateToString } from "../utils/useful";
 
 const OrganisationDashboard = () => {
   const [data, setData] = useState();
@@ -47,6 +48,7 @@ const OrganisationDashboard = () => {
   const [campdata, setCampdata] = useState([]);
   const advertiserid = useSelector((state) => state.data.advertiserid);
   const fullname = useSelector((state) => state.data.fullname);
+  const image = useSelector((state) => state.data.image);
   const [state, setState] = useState("");
   const [dp, setDp] = useState("");
   const [graph, setGraph] = useState([]);
@@ -55,6 +57,12 @@ const OrganisationDashboard = () => {
   const { CampaignFetch } = useAdsFetching();
   const [toggle, setToggle] = useState(false);
   const dispatch = useDispatch();
+  const [adsData, setAdsData] = useState([])
+  const [currentbalance, setCurrentBalance] = useState(null)
+  const [activeData, setActiveData] = useState({
+    totalspent: 0,
+    totalads: ""
+  })
 
   const [check, setCheck] = useState({
     click: true,
@@ -77,9 +85,18 @@ const OrganisationDashboard = () => {
 
   const fetchData = async (id) => {
     try {
-      const res = await axios.get(`${API}/fetchdashboard/${id}`);
+      const res = await axios.get(`${API}/fetchdashboardO/${id}/${user.advid}`);
       if (res?.data?.success) {
+        console.log(res.data)
         setData(res.data.user);
+        setCurrentBalance(res.data.currentbalance)
+        setAdsData(res.data.data)
+        res.data.data.map((d) => {
+          if (d?.id == advertiserid) {
+            setActiveData({ ...activeData, totalads: d?.totalads, totalspent: d?.totalSpent })
+          }
+        })
+
       }
     } catch (e) {
       console.log(e);
@@ -92,7 +109,7 @@ const OrganisationDashboard = () => {
         setLoading(true);
         fetchData(advertiserid);
         const data = await CampaignFetch(advertiserid);
-        console.log(data);
+        console.log(data, "campdata");
         setCampdata(data);
         setDefaults(data[0].a.adname);
         setGraph(data[0].analytics);
@@ -108,6 +125,7 @@ const OrganisationDashboard = () => {
           conversion: data[0].conversion,
           popularity: data[0].popularity,
         });
+
         setLoading(false);
       }
     } catch (error) {
@@ -135,10 +153,18 @@ const OrganisationDashboard = () => {
       dispatch(setFullname(user.manageusers[0].fullname));
       dispatch(setImage(user.manageusers[0].image));
       dispatch(setUserid(user.manageusers[0].userid));
+      adsData.map((f) => {
+        if (f?.id === user.manageusers[0].id) {
+          setActiveData({ ...activeData, totalads: f?.totalads, totalspent: f?.totalSpent })
+        }
+      })
     }
   }, [user]);
 
-  console.log(advertiserid, "advid");
+  useEffect(() => {
+    setState(fullname)
+    setDp(image)
+  }, [advertiserid])
 
   if (loading) {
     return <Loader />;
@@ -146,7 +172,7 @@ const OrganisationDashboard = () => {
 
   return (
     <>
-      <div className="grid  grid-cols-1 h-[90vh] overflow-y-scroll no-scrollbar w-[100%] bg-[#f7f7f7] dark:bg-black select-none p-2 sm:p-4">
+      <div className="grid grid-cols-1 h-full overflow-y-scroll no-scrollbar w-[100%] bg-[#f7f7f7] dark:bg-black select-none p-2 sm:p-4">
         <div className=" flex flex-col gap-4">
           <div className=" w-full grid md:grid-cols-4 pn:max-md:gap-2 gap-10 grid-cols-2 rounded-xl">
             <div className="bg-white dark:bg-[#0D0D0D] h-[100px]  rounded-2xl">
@@ -156,7 +182,7 @@ const OrganisationDashboard = () => {
                 </div>
                 <div className="flex flex-col justify-center h-full gap-2 ">
                   <div className="font-semibold">Accounts</div>
-                  <div className="flex flex-col w-full min-w-[130px] bg-[#f7f7f7] dark:bg-[#121212]  rounded-xl">
+                  <div className="flex flex-col w-full min-w-[130px] bg-[#f7f7f7] dark:bg-[#121212] rounded-xl">
                     <div
                       onClick={() => setToggle(!toggle)}
                       className="flex justify-between items-center relative p-1.5 cursor-pointer h-full gap-2 px-2 w-full text-sm"
@@ -182,11 +208,10 @@ const OrganisationDashboard = () => {
                       </div>
 
                       <div
-                        className={` ${
-                          toggle
-                            ? "top-[45px]"
-                            : "top-0 border-none text-[0px] w-[0px] h-[0px]"
-                        } absolute left-0 bg-[#f7f7f7] duration-100 dark:bg-[#121212] rounded-xl z-50 w-full`}
+                        className={` ${toggle
+                          ? "top-[45px]"
+                          : "top-0 border-none text-[0px] w-[0px] h-[0px]"
+                          } absolute left-0 bg-[#f7f7f7] duration-100 dark:bg-[#121212] rounded-xl z-50 w-full`}
                       >
                         <div className="flex flex-col gap-3 px-2 py-1 max-h-[300px] overflow-y-scroll no-scrollbar">
                           {user?.manageusers?.map((d, i) => (
@@ -199,6 +224,11 @@ const OrganisationDashboard = () => {
                                     d?.lastname ? d?.fullname : d?.firstname
                                   )
                                 );
+                                adsData.map((f) => {
+                                  if (f?.id === d?.id) {
+                                    setActiveData({ ...activeData, totalads: f?.totalads, totalspent: f?.totalSpent })
+                                  }
+                                })
                                 dispatch(setImage(d?.image));
                                 setDp(d?.image);
                                 setState(
@@ -212,19 +242,17 @@ const OrganisationDashboard = () => {
                               <div className="">
                                 <img
                                   src={d?.image}
-                                  className={`${
-                                    toggle
-                                      ? "max-w-[30px] bg-[#f8f8f8] dark:bg-[#181c24] rounded-lg min-h-[30px] min-w-[30px] max-h-[30px]"
-                                      : "w-0 h-0"
-                                  } duration-100`}
+                                  className={`${toggle
+                                    ? "max-w-[30px] bg-[#f8f8f8] dark:bg-[#181c24] rounded-lg min-h-[30px] min-w-[30px] max-h-[30px]"
+                                    : "w-0 h-0"
+                                    } duration-100`}
                                   alt="image"
                                 />
                               </div>
                               <div className="flex flex-col">
                                 <div
-                                  className={`text-xs ${
-                                    toggle ? "" : " hidden"
-                                  }`}
+                                  className={`text-xs ${toggle ? "" : " hidden"
+                                    }`}
                                 >
                                   {d?.lastname ? d?.fullname : d?.firstname}
                                 </div>
@@ -260,8 +288,8 @@ const OrganisationDashboard = () => {
                 <div className="flex flex-col justify-center h-full ">
                   <div className="font-semibold">Total Spent</div>
                   <div className="text-lg pt-[2px] font-semibold">
-                    {data?.currentbalance
-                      ? "₹" + data?.currentbalance
+                    {activeData.totalspent
+                      ? "₹" + activeData.totalspent
                       : "₹0.00"}
                   </div>
                 </div>
@@ -276,8 +304,8 @@ const OrganisationDashboard = () => {
                 <div className="flex flex-col justify-center h-full ">
                   <div className="font-semibold">Current balance</div>
                   <div className="text-lg pt-[3px] font-semibold">
-                    {data?.currentbalance
-                      ? "₹" + data?.currentbalance
+                    {currentbalance
+                      ? "₹" + currentbalance
                       : "₹0.00"}
                   </div>
                 </div>
@@ -326,7 +354,7 @@ const OrganisationDashboard = () => {
                 <div className="flex flex-col justify-center h-full ">
                   <div className="font-semibold">Total campaign</div>
                   <div className="text-lg pt-[3px] font-semibold">
-                    {data?.currentbalance ? "₹" + data?.currentbalance : 5}
+                    {activeData.totalads}
                   </div>
                 </div>
               </div>
@@ -334,7 +362,7 @@ const OrganisationDashboard = () => {
           </div>
           {campdata?.length > 0 ? (
             <div className="w-full bg-white dark:bg-[#0D0D0D] rounded-xl pn:max-sm:mb-[100px] sm:min-h-[400px] sm:max-h-[450px]">
-              {data?.currentbalance ? (
+              {currentbalance ? (
                 <>
                   <div className="flex mb-3 justify-between w-full flex-wrap">
                     <div className="flex justify-center items-center">
@@ -344,7 +372,10 @@ const OrganisationDashboard = () => {
                             const data = campdata.find(
                               (va) => va.a._id === selectValue
                             );
+
+                            console.log(data, "data Graph")
                             setValue({
+                              ...value,
                               click: data.a.clicks,
                               views: data.a.views,
                               impressions: data.a.impressions,
@@ -358,17 +389,17 @@ const OrganisationDashboard = () => {
                               popularity: data.popularity,
                             });
                             if (data) {
-                              const adsGraph = data.a.adsDetails.map((d) => {
+                              const adsGraph = data.analytics.map((d) => {
                                 return {
                                   ...d,
-                                  time: formatDateToString(d.time),
+                                  time: formatDateToString(d.creation),
                                 };
                               });
                               setGraph(adsGraph);
                             }
                           }}
                           className="bg-maincolor"
-                        >
+                        >{console.log(graph)}
                           <SelectTrigger className="pp:w-[180px]">
                             <SelectValue placeholder={defaults} />
                           </SelectTrigger>
@@ -408,9 +439,8 @@ const OrganisationDashboard = () => {
                             click: !check.click,
                           })
                         }
-                        className={`flex justify-center ${
-                          check.click ? "bg-yellow-600" : ""
-                        } cursor-pointer pn:max-sm:rounded-xl sm:rounded-l-xl w-[150px] border border-l-none p-2 items-center`}
+                        className={`flex justify-center ${check.click ? "bg-yellow-600" : ""
+                          } cursor-pointer pn:max-sm:rounded-xl sm:rounded-l-xl w-[150px] border border-l-none p-2 items-center`}
                       >
                         <div className="flex  w-full p-2 gap-1 font-semibold flex-col">
                           <div>Click</div>
@@ -424,9 +454,8 @@ const OrganisationDashboard = () => {
                             impressions: !check.impressions,
                           })
                         }
-                        className={`flex justify-center ${
-                          check.impressions ? "bg-red-600" : ""
-                        } cursor-pointer pn:max-sm:rounded-xl w-[150px] border border-l-none border-r-none p-2 items-center`}
+                        className={`flex justify-center ${check.impressions ? "bg-red-600" : ""
+                          } cursor-pointer pn:max-sm:rounded-xl w-[150px] border border-l-none border-r-none p-2 items-center`}
                       >
                         <div className="flex  w-full p-2 gap-1 font-semibold flex-col">
                           <div>Impressions</div>
@@ -441,9 +470,8 @@ const OrganisationDashboard = () => {
                             cpc: !check.cpc,
                           })
                         }
-                        className={`flex justify-center ${
-                          check.cpc ? "bg-green-700" : ""
-                        } cursor-pointer pn:max-sm:rounded-xl w-[150px] border border-l-none border-r-none p-2 items-center`}
+                        className={`flex justify-center ${check.cpc ? "bg-green-700" : ""
+                          } cursor-pointer pn:max-sm:rounded-xl w-[150px] border border-l-none border-r-none p-2 items-center`}
                       >
                         <div className="flex w-full p-2 gap-1 font-semibold flex-col">
                           <div>Cost</div>
@@ -458,9 +486,8 @@ const OrganisationDashboard = () => {
                             views: !check.views,
                           })
                         }
-                        className={`flex justify-center ${
-                          check.views ? "bg-white text-black" : ""
-                        } cursor-pointer pn:max-sm:rounded-xl sm:rounded-r-xl w-[150px] border p-2 items-center`}
+                        className={`flex justify-center ${check.views ? "bg-white text-black" : ""
+                          } cursor-pointer pn:max-sm:rounded-xl sm:rounded-r-xl w-[150px] border p-2 items-center`}
                       >
                         <div className="flex  w-full p-2 gap-1 font-semibold flex-col">
                           <div>Views</div>
@@ -478,7 +505,7 @@ const OrganisationDashboard = () => {
                             width={730}
                             height={250}
                             data={graph}
-                            // margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                          // margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                           >
                             <XAxis dataKey="time" />
                             <YAxis className="pn:max-sm:text-xs" />

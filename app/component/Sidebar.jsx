@@ -12,7 +12,9 @@ const Sidebar = () => {
   const { data } = useAuthContext();
   return (
     <>
-      <aside className="flex flex-col pn:max-sm:hidden sm:w-24 md:w-64 h-[100%] px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-[#848484] dark:border-gray-700">
+      {/* <aside className="flex flex-col pn:max-sm:hidden sm:w-24 md:w-64 h-[100%] px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-[#848484] dark:border-gray-700"> */}
+
+      <aside className="flex flex-col pn:max-sm:hidden sm:w-24 md:w-64 h-[100%] px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-[#0D0D0D] dark:border-gray-700">
         {/* <a href="#">
           <img className="w-auto h-6 sm:h-7" src="https://merakiui.com/images/logo.svg" alt="" />
         </a> */}

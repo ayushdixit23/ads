@@ -19,8 +19,12 @@ const Component = () => {
 			Cookies.remove("axetkn")
 			Cookies.remove("rvktkn")
 
-			Cookies.set(`axetkn`, data?.access_token)
-			Cookies.set(`rvktkn`, data?.refresh_token)
+			const expirationDate = new Date();
+			expirationDate.setDate(expirationDate.getDate() + 7);
+
+			Cookies.set(`axetkn`, data.access_token, { expires: expirationDate });
+			// Set refresh token cookie with expiration time of 7 days
+			Cookies.set(`rvktkn`, data.refresh_token, { expires: expirationDate });
 
 			return true;
 		} catch (e) {

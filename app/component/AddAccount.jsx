@@ -41,10 +41,14 @@ const AddAccount = ({ setLogin, setPop, login }) => {
 			const res = await axios.post(`${API}/addAccount/${data?.userid}/${data?.advid}`, formDataToSend)
 			console.log(res.data)
 			if (res.data.success) {
-				Cookies.set(`axetkn`, res.data.access_token)
-				Cookies.set(`rvktkn`, res.data.refresh_token)
+				const expirationDate = new Date();
+				expirationDate.setDate(expirationDate.getDate() + 7);
+
+				Cookies.set(`axetkn`, data.access_token, { expires: expirationDate })
+				Cookies.set(`rvktkn`, data.refresh_token, { expires: expirationDate })
 				const cookies = Cookies.get("axetkn")
 				await f(cookies)
+				setPop(false)
 
 				router.push("/main/dashboard")
 			}

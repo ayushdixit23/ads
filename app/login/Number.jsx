@@ -25,8 +25,8 @@ const Login = () => {
   const router = useRouter();
   const { setAuth } = useAuthContext()
   const [see, setSee] = useState(true);
-  const [email, setEmail] = useState("ayushdixit@gmail.com");
-  const [password, setPassword] = useState("ayushdixit");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [number, setNumber] = useState("");
   const [OTP, setOTP] = useState("");
   const [loading, setLoading] = useState(false);

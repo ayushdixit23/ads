@@ -73,8 +73,9 @@ const Wallet = () => {
           //   amount: inp * 100,
           // });
           const response = await axios.post(`${API}/addmoneytowallet/${data?.advid}`, {
-            amount: value * 100,
+            amount: 5 * 100,
           });
+
           console.log(response.data)
           if (response.data.success) {
 

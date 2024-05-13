@@ -31,8 +31,8 @@ export default function MainLayout({ children }) {
       <div className="flex w-screen h-screen">
         <MobileNav />
         <div className="w-full flex   flex-col dark:bg-[#1E1E1E]">
-          <div>
-            <div className="h-[76px] flex border-b dark:bg-[#0D0D0D] items-center w-full text-2xl font-semibold px-6">
+          <div className="h-[10%]">
+            <div className="h-full flex border-b dark:bg-[#0D0D0D] items-center w-full text-2xl font-semibold px-6">
               {/* {path.startsWith("/main/ads") && <div>Ads</div>}
               {path.startsWith("/main/wallet") && <div>Wallet</div>}
               {path.startsWith("/main/dashboard") && (
@@ -92,7 +92,7 @@ export default function MainLayout({ children }) {
               </div>
             </div>
           </div>
-          <div className="flex h-[90%] ">
+          <div className="flex h-[90%]">
             {data?.type === "Individual" ? <Sidebar /> : <OSidebar />}
             <div className="h-full w-full overflow-y-scroll no-scrollbar">
               {children}

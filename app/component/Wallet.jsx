@@ -308,8 +308,8 @@ const Wallet = () => {
         <div className="text-2xl font-semibold">Wallet</div>
 
       </div> */}
-
-      <div className="grid sm:mt-0 grid-cols-1 z-10">
+      <div className="grid grid-cols-1 h-full overflow-y-scroll no-scrollbar w-[100%] bg-[#f7f7f7] dark:bg-black select-none p-2 sm:p-4">
+        {/* <div className="grid sm:mt-0 grid-cols-1 w-full  dark:bg-red-800 z-10"> */}
         <div className="grid grid-cols-1 sm:m-5 w-full sm:w-[95%] ">
           <div className="flex p-3 sm:flex-row flex-col gap-4">
             <div className="md:w-[75%] bg-maincolor p-3 pb-5 sm:w-[60%] border rounded-2xl">

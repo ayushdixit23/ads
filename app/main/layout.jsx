@@ -10,9 +10,10 @@ import { useAuthContext } from "../utils/AuthWrapper";
 import { useSelector } from "react-redux";
 import Logo from "../assests/Logo.png";
 import Image from "next/image";
+import Cookies from "js-cookie";
+import { useEffect } from "react";
 
 export default function MainLayout({ children }) {
-  const path = usePathname();
   const { data } = useAuthContext();
   const advertiserid = useSelector((state) => state.data.advertiserid);
   const userid = useSelector((state) => state.data.userid);
@@ -25,6 +26,24 @@ export default function MainLayout({ children }) {
     const max = Math.pow(10, 10) - 1; // Maximum 10-digit number
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
+
+  const path = usePathname("")
+
+  useEffect(() => {
+
+    if (!path.startsWith("/createAd")) {
+      const c1 = Cookies.get("post")
+      const c2 = Cookies.get("postid")
+
+      if (c1) {
+        Cookies.remove("post")
+      }
+      if (c2) {
+        Cookies.remove("postid")
+      }
+
+    }
+  }, [path])
 
   return (
     <>

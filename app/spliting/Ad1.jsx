@@ -1,6 +1,5 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { AiOutlineClose } from "react-icons/ai";
 import { BsLink, BsThreeDotsVertical } from "react-icons/bs";
 import styles from "../CustomScrollbarComponent.module.css";
 import adss from "../assests/defaultads.jpg";
@@ -44,6 +43,7 @@ const Ad1 = ({
     const postid = Cookies.get("postid");
     if (cookieData) {
       const parsedData = JSON.parse(cookieData);
+
       setComimage(parsedData?.dp);
       setSelect(parsedData?.communityName);
 
@@ -283,18 +283,16 @@ const Ad1 = ({
                 <div
                   onClick={() => dispatch(setThree({ goal: "Sales" }))}
                   // onClick={() => setThree({ ...three, goal: "Sales" })}
-                  className={`p-1 border-2 inline-block  text-text w-full sm:w-[220px] rounded-xl ${
-                    three.goal === "Sales"
-                      ? "border-2 border-[#2D9AFF]"
-                      : " sm:hover:text-black"
-                  } `}
+                  className={`p-1 border-2 inline-block  text-text w-full sm:w-[220px] rounded-xl ${three.goal === "Sales"
+                    ? "border-2 border-[#2D9AFF]"
+                    : " sm:hover:text-black"
+                    } `}
                 >
                   <div
-                    className={`p-2 h-full rounded-lg ${
-                      three.goal === "Sales"
-                        ? "bg-[#2D9AFF]/30"
-                        : "bg-maincolor sm:hover:bg-[#3e3e3e]/80 sm:hover:text-white"
-                    }  `}
+                    className={`p-2 h-full rounded-lg ${three.goal === "Sales"
+                      ? "bg-[#2D9AFF]/30"
+                      : "bg-maincolor sm:hover:bg-[#3e3e3e]/80 sm:hover:text-white"
+                      }  `}
                   >
                     {" "}
                     <h1 className="sm:text-2xl text-lg  font-robot font-bold py-1">
@@ -307,18 +305,16 @@ const Ad1 = ({
                 </div>
                 <div
                   onClick={() => dispatch(setThree({ goal: "Awareness" }))}
-                  className={`p-1 border-2 inline-block w-full sm:w-[220px] rounded-xl ${
-                    three.goal === "Awareness"
-                      ? "border-2 border-[#2D9AFF]"
-                      : " sm:hover:text-black"
-                  } `}
+                  className={`p-1 border-2 inline-block w-full sm:w-[220px] rounded-xl ${three.goal === "Awareness"
+                    ? "border-2 border-[#2D9AFF]"
+                    : " sm:hover:text-black"
+                    } `}
                 >
                   <div
-                    className={`p-2 h-full rounded-lg ${
-                      three.goal === "Awareness"
-                        ? "bg-[#2D9AFF]/30"
-                        : "bg-maincolor sm:hover:bg-[#3e3e3e]/80 sm:hover:text-white"
-                    }  `}
+                    className={`p-2 h-full rounded-lg ${three.goal === "Awareness"
+                      ? "bg-[#2D9AFF]/30"
+                      : "bg-maincolor sm:hover:bg-[#3e3e3e]/80 sm:hover:text-white"
+                      }  `}
                   >
                     <h1 className="sm:text-2xl text-lg  font-robot font-bold py-1">
                       Awareness
@@ -330,18 +326,16 @@ const Ad1 = ({
                 </div>
                 <div
                   onClick={() => dispatch(setThree({ goal: "Clicks" }))}
-                  className={` p-1 border-2 inline-block w-full sm:w-[220px] rounded-xl ${
-                    three.goal === "Clicks"
-                      ? "border-2 border-[#2D9AFF]"
-                      : " sm:hover:text-black"
-                  } `}
+                  className={` p-1 border-2 inline-block w-full sm:w-[220px] rounded-xl ${three.goal === "Clicks"
+                    ? "border-2 border-[#2D9AFF]"
+                    : " sm:hover:text-black"
+                    } `}
                 >
                   <div
-                    className={`p-2 h-full rounded-lg ${
-                      three.goal === "Clicks"
-                        ? "bg-[#2D9AFF]/30"
-                        : "bg-maincolor sm:hover:bg-[#3e3e3e]/80 sm:hover:text-white"
-                    }  `}
+                    className={`p-2 h-full rounded-lg ${three.goal === "Clicks"
+                      ? "bg-[#2D9AFF]/30"
+                      : "bg-maincolor sm:hover:bg-[#3e3e3e]/80 sm:hover:text-white"
+                      }  `}
                   >
                     <h1 className="sm:text-2xl text-lg  font-robot font-bold py-1">
                       Clicks
@@ -353,18 +347,16 @@ const Ad1 = ({
                 </div>
                 <div
                   onClick={() => dispatch(setThree({ goal: "Downloads" }))}
-                  className={` p-1 border-2 inline-block w-full sm:w-[220px] rounded-xl ${
-                    three.goal === "Downloads"
-                      ? "border-2 border-[#2D9AFF]"
-                      : " sm:hover:text-black"
-                  } `}
+                  className={` p-1 border-2 inline-block w-full sm:w-[220px] rounded-xl ${three.goal === "Downloads"
+                    ? "border-2 border-[#2D9AFF]"
+                    : " sm:hover:text-black"
+                    } `}
                 >
                   <div
-                    className={`p-2 h-full rounded-lg ${
-                      three.goal === "Downloads"
-                        ? "bg-[#2D9AFF]/30"
-                        : "bg-maincolor sm:hover:bg-[#3e3e3e]/80 sm:hover:text-white"
-                    }  `}
+                    className={`p-2 h-full rounded-lg ${three.goal === "Downloads"
+                      ? "bg-[#2D9AFF]/30"
+                      : "bg-maincolor sm:hover:bg-[#3e3e3e]/80 sm:hover:text-white"
+                      }  `}
                   >
                     {" "}
                     <h1 className="sm:text-2xl text-lg  font-robot font-bold py-1">
@@ -377,18 +369,16 @@ const Ad1 = ({
                 </div>
                 <div
                   onClick={() => dispatch(setThree({ goal: "Views" }))}
-                  className={` p-1 border-2 inline-block w-full sm:w-[220px] rounded-xl ${
-                    three.goal === "Views"
-                      ? "border-2 border-[#2D9AFF]"
-                      : " sm:hover:text-black"
-                  } `}
+                  className={` p-1 border-2 inline-block w-full sm:w-[220px] rounded-xl ${three.goal === "Views"
+                    ? "border-2 border-[#2D9AFF]"
+                    : " sm:hover:text-black"
+                    } `}
                 >
                   <div
-                    className={`p-2 h-full rounded-lg ${
-                      three.goal === "Views"
-                        ? "bg-[#2D9AFF]/30"
-                        : "bg-maincolor sm:hover:bg-[#3e3e3e]/80 sm:hover:text-white"
-                    }  `}
+                    className={`p-2 h-full rounded-lg ${three.goal === "Views"
+                      ? "bg-[#2D9AFF]/30"
+                      : "bg-maincolor sm:hover:bg-[#3e3e3e]/80 sm:hover:text-white"
+                      }  `}
                   >
                     {" "}
                     <h1 className="sm:text-2xl text-lg  font-robot font-bold py-1">

@@ -73,7 +73,7 @@ const Wallet = () => {
           //   amount: inp * 100,
           // });
           const response = await axios.post(`${API}/addmoneytowallet/${data?.advid}`, {
-            amount: 5 * 100,
+            amount: value * 100,
           });
 
           console.log(response.data)
@@ -182,7 +182,7 @@ const Wallet = () => {
                     <h1 class="text-black font-semibold text-2xl">Basic</h1>
                     <p class="pt-2 tracking-wide">
                       <span class="text-black align-top">₹ </span>
-                      <span class="text-3xl text-black font-semibold">500</span>
+                      <span class="text-3xl text-black font-semibold">15000</span>
                       <span class="text-black font-medium">/ month</span>
                     </p>
                     <hr class="mt-4 border-1" />
@@ -207,7 +207,7 @@ const Wallet = () => {
                       </p>
 
                       <div class="">
-                        <p onClick={(e) => handlePayment(e, 500)} class="w-full py-4 bg-blue-600 mt-8 rounded-xl text-white">
+                        <p onClick={(e) => handlePayment(e, 15000)} class="w-full py-4 bg-blue-600 mt-8 rounded-xl text-white">
                           <span class="font-medium">
                             Choose Plan
                           </span>
@@ -221,7 +221,7 @@ const Wallet = () => {
                     <h1 class="text-white font-semibold text-2xl">Startup</h1>
                     <p class="pt-2 tracking-wide">
                       <span class="text-gray-400 align-top">₹ </span>
-                      <span class="text-3xl font-semibold">1000</span>
+                      <span class="text-3xl font-semibold">25000</span>
                       <span class="text-gray-400 font-medium">/ user</span>
                     </p>
                     <hr class="mt-4 border-1 border-gray-600" />
@@ -246,7 +246,7 @@ const Wallet = () => {
                       </p>
 
                       <div class="">
-                        <p onClick={(e) => handlePayment(e, 1000)} class="w-full py-4 bg-blue-600 mt-8 rounded-xl text-white">
+                        <p onClick={(e) => handlePayment(e, 25000)} class="w-full py-4 bg-blue-600 mt-8 rounded-xl text-white">
                           <span class="font-medium">
                             Choose Plan
                           </span>
@@ -263,7 +263,7 @@ const Wallet = () => {
                     <h1 class="text-black font-semibold text-2xl">Enterprise</h1>
                     <p class="pt-2 tracking-wide">
                       <span class="text-black align-top">₹ </span>
-                      <span class="text-3xl text-black font-semibold">2000</span>
+                      <span class="text-3xl text-black font-semibold">30000</span>
                       <span class="text-black font-medium">/ user</span>
                     </p>
                     <hr class="mt-4 border-1" />
@@ -288,7 +288,7 @@ const Wallet = () => {
                       </p>
 
                       <div class="">
-                        <p onClick={(e) => handlePayment(e, 2000)} class="w-full py-4 bg-blue-600 mt-8 rounded-xl text-white">
+                        <p onClick={(e) => handlePayment(e, 30000)} class="w-full py-4 bg-blue-600 mt-8 rounded-xl text-white">
                           <span class="font-medium">
                             Choose Plan
                           </span>

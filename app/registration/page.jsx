@@ -43,7 +43,7 @@ const Register = () => {
     postalCode: "",
     LandMark: "",
     PAN: "",
-    type: "",
+    type: "Individual",
     GST: "",
     Organistaion: "",
     password: "",
@@ -356,7 +356,7 @@ const Register = () => {
             </div>
             <div onClick={hundl} className={`flex p-2 px-3 sm:px-5 ${(details.type === "Organization" && aff === false) ? "border-2 border-blue-600 rounded-lg" : ""} sm:flex-row flex-col gap-2 sm:gap-4 w-full sm:items-center`}>
               <div>
-                <Image src={indiv} />
+                <Image src={organis} />
               </div>
               <div className="flex flex-col gap-1">
                 <div className="text-lg font-semibold">Organization</div>
@@ -365,7 +365,7 @@ const Register = () => {
             </div>
             <div onClick={alagaff} className={`flex p-2 px-3 sm:px-5 ${aff ? "border-2 border-blue-600 rounded-lg" : ""} sm:flex-row flex-col gap-2 sm:gap-4 w-full sm:items-center`}>
               <div>
-                <Image src={indiv} />
+                <Image src={affic} />
               </div>
               <div className="flex flex-col gap-1">
                 <div className="text-lg font-semibold">Affiliater</div>

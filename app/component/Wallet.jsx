@@ -113,7 +113,7 @@ const Wallet = () => {
           : "hidden"
           }`}
       >
-        <div className="sm:w-[58%] w-[85%] md:w-[43%] h-auto rounded-2xl bg-maincolor p-5 sm:p-[2%]">
+        <div className="sm:w-[58%] w-[85%] md:w-[43%] h-auto rounded-2xl bg-white dark:bg-[#0D0D0D] p-5 sm:p-[2%]">
           <div className="flex justify-end">
             <RxCross2
               onClick={() => setWallet(0)}
@@ -125,7 +125,7 @@ const Wallet = () => {
             value={inp}
             onChange={(e) => setInp(e.target.value)}
             type="number"
-            className="p-2 w-full my-1 outline-none rounded-xl dark:bg-[#273142] dark:border-border dark:border bg-[#f4f5f7]"
+            className="p-2 w-full my-1 outline-none rounded-xl  dark:bg-[#0D0D0D] dark:border-border dark:border bg-[#f4f5f7]"
           />
           <div className="text-sm py-2 underline">Min 100 rs</div>
           <div>
@@ -133,25 +133,25 @@ const Wallet = () => {
             <div className="flex items-center gap-2 flex-wrap">
               <div
                 onClick={() => setInp(199)}
-                className="p-3 rounded-xl cursor-pointer dark:bg-[#273142] dark:border-border dark:border bg-[#f4f5f7] "
+                className="p-3 rounded-xl cursor-pointer  dark:bg-[#0D0D0D] dark:border-border dark:border bg-[#f4f5f7] "
               >
                 199 rs
               </div>
               <div
                 onClick={() => setInp(299)}
-                className="p-3 rounded-xl cursor-pointer dark:bg-[#273142] dark:border-border dark:border bg-[#f4f5f7] "
+                className="p-3 rounded-xl cursor-pointer  dark:bg-[#0D0D0D] dark:border-border dark:border bg-[#f4f5f7] "
               >
                 299 rs
               </div>
               <div
                 onClick={() => setInp(499)}
-                className="p-3 rounded-xl cursor-pointer dark:bg-[#273142] dark:border-border dark:border bg-[#f4f5f7] "
+                className="p-3 rounded-xl cursor-pointer  dark:bg-[#0D0D0D] dark:border-border dark:border bg-[#f4f5f7] "
               >
                 499 rs
               </div>
               <div
                 onClick={() => setInp(899)}
-                className="p-3 rounded-xl cursor-pointer dark:bg-[#273142] dark:border-border dark:border bg-[#f4f5f7] "
+                className="p-3 rounded-xl cursor-pointer  dark:bg-[#0D0D0D] dark:border-border dark:border bg-[#f4f5f7] "
               >
                 899 rs
               </div>
@@ -309,11 +309,11 @@ const Wallet = () => {
       } */}
 
 
-      <div className="grid grid-cols-1 w-[100%] h-[95%] bg-[#f7f7f7] dark:bg-[#141414] select-none p-2 sm:p-4">
+      <div className="grid grid-cols-1 w-[100%] h-[95%] bg-[#f7f7f7] dark:bg-[#1E1E1E] select-none p-2 sm:p-4">
         {/* <div className="grid sm:mt-0 grid-cols-1 w-full  dark:bg-red-800 z-10"> */}
-        <div className="grid grid-cols-1 sm:m-5 w-full sm:w-[95%] ">
+        <div className="grid grid-cols-1 sm:m-1 w-full sm:w-[95%] ">
           <div className="flex p-3 sm:flex-row flex-col gap-4">
-            <div className="md:w-[75%] bg-maincolor p-3 pb-5 sm:w-[60%] border rounded-2xl">
+            <div className="md:w-[75%] bg-white dark:bg-[#0D0D0D] p-3 sm:px-6 pb-5 sm:w-[60%] light:border rounded-2xl">
               <div className="flex items-center space-x-2">
                 <div>
                   <Image src={newWallet} alt="wallet" />
@@ -332,7 +332,7 @@ const Wallet = () => {
             {/* hshs */}
             <div
               onClick={() => setWallet(1)}
-              className="md:w-[25%] bg-maincolor sm:w-[40%] flex flex-col w-full border p-2 rounded-2xl space-y-3 justify-center items-center"
+              className="md:w-[25%] bg-white dark:bg-[#0D0D0D] sm:w-[40%] flex flex-col w-full light:border p-2 rounded-2xl space-y-3 justify-center items-center"
             >
               <div>
                 <Image src={newWallet} width={80} height={80} alt="money" />
@@ -347,11 +347,11 @@ const Wallet = () => {
               className={`p-3 ${payhistory.length === 0 && " pn:max-sm:mb-[5rem]"
                 } `}
             >
-              <div className="flex justify-between bg-maincolor items-center w-full border md:hidden rounded-t-2xl py-5 px-3 sm:px-[4%]">
+              <div className="flex justify-between bg-white dark:bg-[#0D0D0D] items-center w-full border md:hidden rounded-t-2xl py-5 px-3 sm:px-[4%]">
                 <div className="sm:text-2xl text-lg font-semibold">
                   All Transaction Details
                 </div>
-                <div className="flex pn:max-sm:hidden justify-center items-center space-x-2 md:w-[30%]">
+                {/* <div className="flex pn:max-sm:hidden justify-center items-center space-x-2 md:w-[30%]">
                   <div className="w-full border px-3 rounded-full ">
                     <input
                       type="text"
@@ -362,9 +362,9 @@ const Wallet = () => {
                   <div className="bg-[#1A73E8] p-2 rounded-full">
                     <AiOutlineSearch className="text-2xl text-white" />
                   </div>
-                </div>
+                </div> */}
               </div>
-              <div className="flex flex-col w-full justify-center bg-maincolor p-2 mb-3 py-5 md:hidden items-center">
+              <div className="flex flex-col w-full justify-center bg-white dark:bg-[#0D0D0D] p-2 mb-3 py-5 md:hidden items-center">
                 <div>
                   <div className="flex justify-center items-center">
                     <Image src={nodataw} alt="nodataw" />
@@ -380,7 +380,7 @@ const Wallet = () => {
             </div>
           )}
 
-          <div className="h-full ">
+          <div>
             <FetchWallet data={postperData} length={payhistory.length} />
             <div className="px-4 ">
               {payhistory.length > postPerPage && <Pagination

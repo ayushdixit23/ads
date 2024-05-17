@@ -1,26 +1,14 @@
 "use client";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import koi from "../assests/koiimage.svg";
 import axios from "axios";
 import { API } from "@/Essentials";
-import circle from "../assests/Pic2.svg";
-import graph2 from "../assests/Graph.svg";
 import noads from "../assests/noads.svg";
 import d1 from "../assests/d1.png";
 import d2 from "../assests/d2.png";
 import d3 from "../assests/d3.png";
 import d4 from "../assests/d4.png";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import Link from "next/link"
-import dashp2 from "../assests/Pic1.svg";
 // import { formatDateToString, getData } from "../utils/useful";
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import useAdsFetching from "../useFetch/useAdFetching";

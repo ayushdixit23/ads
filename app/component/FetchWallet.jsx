@@ -15,13 +15,13 @@ import Image from 'next/image';
 const FetchWallet = ({ data, length }) => {
 	return (
 		<div
-			className={`p-3 max-h-[300px] overflow-y-scroll no-scrollbar ${length != 0 ? null : "pn:max-md:hidden"}`}
+			className={`p-3 h-full max-h-[340px] overflow-y-scroll no-scrollbar ${length != 0 ? null : "pn:max-md:hidden"}`}
 		>
-			<div className="flex justify-between bg-maincolor items-center w-full border rounded-t-2xl py-5 px-3 sm:px-[4%]">
+			<div className="flex justify-between bg-white dark:bg-[#0D0D0D] items-center w-full border rounded-t-2xl py-5 px-3 sm:px-[4%]">
 				<div className="sm:text-2xl text-lg font-semibold">
 					All Transaction Details
 				</div>
-				<div className="flex pn:max-sm:hidden justify-center items-center space-x-2 md:w-[30%]">
+				{/* <div className="flex pn:max-sm:hidden justify-center items-center space-x-2 md:w-[30%]">
 					<div className="w-full border px-3 rounded-full ">
 						<input
 							type="text"
@@ -32,10 +32,10 @@ const FetchWallet = ({ data, length }) => {
 					<div className="bg-[#1A73E8] p-2 rounded-full">
 						<AiOutlineSearch className="text-2xl text-white" />
 					</div>
-				</div>
+				</div> */}
 			</div>
 
-			<div className="h-full bg-maincolor border no-scrollbar overflow-x-auto ">
+			<div className="h-full bg-white dark:bg-[#0D0D0D] border no-scrollbar overflow-x-auto ">
 				<Table>
 
 					<TableHeader className="h-[70px]">
@@ -81,7 +81,7 @@ const FetchWallet = ({ data, length }) => {
 							<>
 								<TableRow>
 									<TableCell colSpan="7">
-										<div className="flex flex-col w-full justify-center bg-maincolor p-2 mb-3 py-5 pn:max-md:hidden items-center">
+										<div className="flex flex-col w-full justify-center bg-white dark:bg-[#0D0D0D] p-2 mb-3 py-5 pn:max-md:hidden items-center">
 											<div>
 												<div className="flex justify-center items-center">
 													<Image src={nodataw} alt="nodataw" />

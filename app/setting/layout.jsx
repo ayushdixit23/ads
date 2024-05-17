@@ -8,6 +8,7 @@ import Image from "next/image";
 // import { getData } from "../utils/useful";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "../utils/AuthWrapper";
+import Logo from "../assests/Logo.png";
 import OSidebar from "../component/OrganisationSidebar";
 
 export default function SettingLayout({ children }) {
@@ -158,7 +159,7 @@ export default function SettingLayout({ children }) {
   // );
 
   return (
-    < div className="flex w-screen h-screen" >
+    < div className="flex w-screen  h-screen" >
       <MobileNav />
       <div className="w-full flex flex-col dark:bg-[#1E1E1E]">
         <div>
@@ -197,7 +198,12 @@ export default function SettingLayout({ children }) {
                 className="w-[50px] h-[50px]"
                 alt="adspace"
               /> */}
-                <span className="hidden pp:block font-semibold ">Adspace</span>
+                <Image
+                  src={Logo}
+                  className="w-[50px] h-[50px]"
+                  alt="adspace"
+                />
+                <span className=" font-semibold ">Adspace</span>
               </div>
 
             </div>
@@ -209,22 +215,22 @@ export default function SettingLayout({ children }) {
             {children}
           </div> */}
 
-          <div className="bg-[#f8f8f8] max-h-screen dark:bg-[#181a20] grid grid-cols-1 w-full h-full overflow-y-scroll no-scrollbar p-[2%]">
-            <div className="grid md:grid-cols-3 sm:grid-cols-5 grid-cols-1 sm:gap-4 md:gap-8">
+          <div className="bg-[#f8f8f8] max-h-screen  dark:bg-[#1E1E1E] grid grid-cols-1 w-full h-full overflow-y-scroll no-scrollbar p-[2%]">
+            <div className="grid md:grid-cols-3  sm:grid-cols-5 grid-cols-1 sm:gap-4 md:gap-8">
               <div
-                className={`md:col-span-1  sm:col-span-2 h-[90%] rounded-2xl bg-maincolor max-h-screen sm:max-md:p-[2%] p-[3%] ${isChildrenHidden
+                className={`md:col-span-1  sm:col-span-2 h-[90%] rounded-2xl bg-white dark:bg-[#0D0D0D] max-h-screen sm:max-md:p-[2%] p-[3%] ${isChildrenHidden
                   ? "pn:max-sm:hidden"
                   : " pn:max-sm:w-full"
                   }`}
               >
                 <div className="flex flex-col">
-                  <div className="flex items-center gap-3 bg-[#f9f9f9] dark:bg-maincolor dark:border dark:border-border sm:max-md:p-2 p-4 rounded-xl">
+                  <div className="flex items-center gap-3 bg-[#f9f9f9] dark:bg-[#0D0D0D] dark:border dark:border-border sm:max-md:p-2 p-4 rounded-xl">
                     <div>
                       {user.image && <Image
                         src={user?.image}
                         width={60}
                         height={60}
-                        className="min-w-[50px] w-full h-full object-cover rounded-xl"
+                        className="min-w-[50px] max-w-[50px] max-h-[50px] min-h-[50px] w-full h-full object-cover rounded-xl"
                         alt="profile"
                       />}
                     </div>
@@ -272,7 +278,7 @@ export default function SettingLayout({ children }) {
                 </div>
               </div>
               <div
-                className={`bg-maincolor overflow-y-scroll no-scrollbar max-h-screen md:col-span-2 sm:col-span-3 rounded-xl ${isChildrenHidden ? "" : "pn:max-sm:hidden"
+                className={`dark:bg-[#0D0D0D] bg-white overflow-y-scroll no-scrollbar max-h-screen md:col-span-2 sm:col-span-3 rounded-xl ${isChildrenHidden ? "" : "pn:max-sm:hidden"
                   }`}
               >
                 {children}

@@ -50,7 +50,7 @@ export default function MainLayout({ children }) {
     <>
       <div className="flex w-screen h-screen">
         <MobileNav />
-        <div className="w-full flex   flex-col dark:bg-[#1E1E1E]">
+        <div className="w-full flex flex-col dark:bg-[#1E1E1E]">
           <div className="h-[10%]">
             <div className="h-full flex border-b dark:bg-[#0D0D0D] items-center w-full text-2xl font-semibold px-6">
               {/* {path.startsWith("/main/ads") && <div>Ads</div>}
@@ -115,7 +115,7 @@ export default function MainLayout({ children }) {
           </div>
           <div className="flex h-[90%]">
             {data?.type === "Individual" ? <Sidebar /> : <OSidebar />}
-            <div className={`h-full w-full overflow-y-scroll no-scrollbar ${path == "/main/wallet" ? "dark:bg-[#141414] bg-[#f7f7f7]" : null}`}>
+            <div className={`h-full w-full overflow-y-scroll no-scrollbar ${path == "/main/wallet" ? "dark:bg-[#1E1E1E] bg-[#f7f7f7]" : null}`}>
               {children}
             </div>
           </div>

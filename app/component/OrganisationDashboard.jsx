@@ -189,15 +189,15 @@ const OrganisationDashboard = () => {
       <div className="grid grid-cols-1 h-full overflow-y-scroll no-scrollbar w-[100%] bg-[#f7f7f7] dark:bg-[#141414] select-none p-2 sm:p-4">
         <div className=" flex flex-col gap-5">
           <div className=" w-full grid md:grid-cols-4 pn:max-md:gap-2 gap-10 grid-cols-2 rounded-xl">
-            <div className="bg-white dark:bg-[#0D0D0D] h-[100px]  rounded-2xl">
-              <div className="flex gap-2 items-center justify-start pl-6 h-full">
+            <div className="bg-white dark:bg-[#0D0D0D] h-[80px] pp:h-[100px]  rounded-2xl">
+              <div className="flex gap-2 items-center justify-start pl-4 md:pl-3 lg:pl-6 h-full">
                 <div>
                   {/* <Image src={d1} /> */}
-                  <img src={dp} alt="" className="min-w-[60px] min-h-[60px] max-w-[60px] max-h-[60px] dark:bg-[#181c24] rounded-3xl" />
+                  <img src={dp} alt="" className="min-w-[35px] max-h-[35px] max-w-[35px] min-h-[35px]  pp:min-w-[60px] pp:min-h-[60px] pp:max-w-[60px] pp:max-h-[60px] dark:bg-[#181c24] rounded-3xl" />
                 </div>
                 <div className="flex flex-col justify-center h-full gap-2 ">
-                  <div className="font-semibold">Accounts</div>
-                  <div className="flex flex-col w-full min-w-[130px] bg-[#f7f7f7] dark:bg-[#121212] rounded-xl">
+                  <div className="font-semibold text-xs pp:text-sm sm:text-base">Accounts</div>
+                  <div className="flex flex-col w-full pp:min-w-[130px] bg-[#f7f7f7] dark:bg-[#121212] rounded-xl">
                     <div
                       onClick={() => setToggle(!toggle)}
                       className="flex justify-between items-center relative p-1.5 cursor-pointer h-full gap-2 px-2 w-full text-sm"
@@ -226,7 +226,7 @@ const OrganisationDashboard = () => {
                         className={` ${toggle
                           ? "top-[45px]"
                           : "top-0 border-none text-[0px] w-[0px] h-[0px]"
-                          } absolute left-0 bg-[#f7f7f7] duration-100 dark:bg-[#121212] rounded-xl z-50 w-full`}
+                          } absolute left-0 bg-[#f7f7f7] duration-100 dark:bg-[#121212] rounded-xl z-50 w-[150px] pp:w-full`}
                       >
                         <div className="flex flex-col gap-3 px-2 py-1 max-h-[300px] overflow-y-scroll no-scrollbar">
                           {user?.manageusers?.map((d, i) => (
@@ -282,27 +282,16 @@ const OrganisationDashboard = () => {
               </div>
             </div>
 
-            {/* <div className="flex justify-center w-full max-h-[100px] items-center pn:max-sm:rounded-md sm:max-md:rounded-xl gap-2 sm:gap-5 p-2 sm:p-3  bg-maincolor md:border-r-2">
-								<div className="h-[50px] w-[50px] bg-blue-500 rounded-full flex justify-center items-center p-3" >
-									<FaWallet className="h-[35px] w-[35px]" />
-								</div>
 
-								<div className="flex flex-col text-xs w-full sm:w-auto justify-center">
-									<div>Current Balance</div>
-									<div className="sm:text-xl text-base font-semibold">
-										{data?.currentbalance ? "₹" + data?.currentbalance : "₹0"}
-									</div>
-								</div>
-							</div> */}
 
-            <div className="bg-white dark:bg-[#0D0D0D] h-[100px]  rounded-2xl">
-              <div className="flex gap-2 items-center justify-start pl-6 h-full">
+            <div className="bg-white dark:bg-[#0D0D0D] h-[80px] pp:h-[100px]  rounded-2xl">
+              <div className="flex gap-2 items-center justify-start pl-4 md:pl-3 lg:pl-6 h-full">
                 <div>
-                  <Image src={d3} className="w-[60px]" />
+                  <Image src={d3} className="w-[35px] pp:w-[60px]" />
                 </div>
                 <div className="flex flex-col justify-center h-full ">
-                  <div className="font-semibold">Total Spent</div>
-                  <div className="text-lg pt-[2px] font-semibold">
+                  <div className="font-semibold text-xs pp:text-sm sm:text-base">Total Spent</div>
+                  <div className="text-xs pp:text-sm sm:text-base pt-[3px] font-semibold">
                     {activeData.totalspent
                       ? "₹" + activeData.totalspent
                       : "₹0.00"}
@@ -311,14 +300,14 @@ const OrganisationDashboard = () => {
               </div>
             </div>
 
-            <div className="bg-white dark:bg-[#0D0D0D] h-[100px]  rounded-2xl">
-              <div className="flex gap-2 items-center justify-start pl-6 h-full">
+            <div className="bg-white dark:bg-[#0D0D0D] h-[80px] pp:h-[100px]  rounded-2xl">
+              <div className="flex gap-2 items-center justify-start pl-4 md:pl-3 lg:pl-6 h-full">
                 <div>
-                  <Image src={d2} className="w-[60px]" />
+                  <Image src={d2} className="w-[35px] pp:w-[60px]" />
                 </div>
                 <div className="flex flex-col justify-center h-full ">
-                  <div className="font-semibold">Current balance</div>
-                  <div className="text-lg pt-[3px] font-semibold">
+                  <div className="font-semibold  text-xs pp:text-sm sm:text-base">Current balance</div>
+                  <div className="text-xs pp:text-sm sm:text-base pt-[3px] font-semibold">
                     {currentbalance
                       ? "₹" + currentbalance
                       : "₹0.00"}
@@ -361,15 +350,15 @@ const OrganisationDashboard = () => {
 								</div>
 							</div> */}
 
-            <div className="bg-white dark:bg-[#0D0D0D] h-[100px] rounded-2xl">
-              <div className="flex gap-2 items-center justify-start pl-6 h-full">
+            <div className="bg-white dark:bg-[#0D0D0D] h-[80px] pp:h-[100px]  rounded-2xl">
+              <div className="flex gap-2 items-center justify-start pl-4 md:pl-3 lg:pl-6 h-full">
                 <div>
-                  <Image src={d4} className="w-[60px]" />
+                  <Image src={d4} className="w-[35px] pp:w-[60px]" />
                 </div>
                 <div className="flex flex-col justify-center h-full ">
-                  <div className="font-semibold">Total campaign</div>
-                  <div className="text-lg pt-[3px] font-semibold">
-                    {activeData.totalads}
+                  <div className="font-semibold text-xs pp:text-sm sm:text-base">Total campaign</div>
+                  <div className="text-xs pp:text-sm sm:text-base pt-[3px] font-semibold">
+                    {activeData.totalads ? activeData.totalads : 0}
                   </div>
                 </div>
               </div>
@@ -762,10 +751,10 @@ const OrganisationDashboard = () => {
             </div>
           ) : (
             <div
-              className="flex flex-col w-full justify-center
+              className="flex flex-col mb-[70px] sm:mb-0 w-full justify-center
 						items-center h-full font-semibold bg-white dark:bg-[#0D0D0D] select-none p-2 sm:p-4 "
             >
-              <Image src={noads} className="max-w-[350px]" />
+              <Image src={noads} className="max-w-[250px] sm:max-w-[350px]" />
               <div className="my-5 text-xl">Create Your First Ad!</div>
               <div>
                 <Link

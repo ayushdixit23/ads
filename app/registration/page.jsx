@@ -32,22 +32,22 @@ const Register = () => {
   const [load, setLoad] = useState(false)
   // const [change, setChange] = useState(3);
   const [details, setDetails] = useState({
-    firstName: "Shreyansh",
-    lastName: "Singh",
-    phoneNumber: "7318501865",
-    email: "shreyansh@gmail.com",
-    address: "a/19 shanti nagar",
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    email: "",
+    address: "",
     myImage: "",
-    city: "kanpur",
-    state: "up",
-    postalCode: "208004",
-    LandMark: "mall road",
-    PAN: "3456789",
-    type: "Individual",
+    city: "",
+    state: "",
+    postalCode: "",
+    LandMark: "",
+    PAN: "",
+    type: "",
     GST: "",
-    Organistaion: "Shreyansh The Singh",
-    password: "Ayush@123",
-    confirmPass: "Ayush@123",
+    Organistaion: "",
+    password: "",
+    confirmPass: "",
   });
 
 

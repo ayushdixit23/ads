@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { formatDateToString } from "../utils/useful";
 import { useAuthContext } from "../utils/AuthWrapper";
 import Cookies from "js-cookie";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export default function createAdLayout({ children }) {
   const { data } = useAuthContext();
@@ -23,6 +24,7 @@ export default function createAdLayout({ children }) {
   const dispatch = useDispatch();
   const router = useRouter();
   const [client, setClient] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   const stepRunner = () => {
     if (step === 0) {
@@ -91,7 +93,8 @@ export default function createAdLayout({ children }) {
   // }, [step, validateStep1, validateStep2])
 
   const sendData = async (e) => {
-    console.log("runde");
+
+    setLoading(true)
     e.preventDefault();
     try {
       const formDataToSend = new FormData();
@@ -146,6 +149,7 @@ export default function createAdLayout({ children }) {
       if (res?.data?.success) {
         Cookies.remove("postid");
         Cookies.remove("post");
+        setLoading(false)
         router.push("/main/dashboard");
         dispatch(
           setThree({
@@ -184,13 +188,29 @@ export default function createAdLayout({ children }) {
           })
         );
       }
+      setLoading(false)
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false)
     }
   };
 
   if (!client) {
     return null;
+  }
+
+
+  if (loading) {
+    return (
+      <>
+        <div className="fixed inset-0 w-screen z-50 bg-black/60 backdrop-blur-md h-screen flex justify-center items-center ">
+          <div className="animate-spin">
+            <AiOutlineLoading3Quarters className="text-2xl text-white" />
+          </div>
+        </div>
+      </>
+    )
   }
 
   if (step !== 2 && step !== 1 && step !== 0) {

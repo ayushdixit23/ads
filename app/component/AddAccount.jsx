@@ -12,11 +12,11 @@ import toast, { Toaster } from 'react-hot-toast'
 
 const AddAccount = ({ setLogin, setPop, login }) => {
 	const { data, f } = useAuthContext()
+	const [loading, setLoading] = useState(false)
 	const [details, setDetails] = useState({
 		fullname: "",
 		email: "",
 		phone: "",
-		// bio: "my bio my rule",
 		username: "",
 		image: ""
 	})
@@ -24,6 +24,7 @@ const AddAccount = ({ setLogin, setPop, login }) => {
 	const router = useRouter()
 
 	const submitter = async (e) => {
+		setLoading(true)
 		e.preventDefault()
 		if (!details.fullname || !details.username || !details.phone || !details.email || !details.image) {
 			toast.error("Enter All Details!")
@@ -39,7 +40,7 @@ const AddAccount = ({ setLogin, setPop, login }) => {
 			formDataToSend.append("username", username)
 
 			const res = await axios.post(`${API}/addAccount/${data?.userid}/${data?.advid}`, formDataToSend)
-			console.log(res.data)
+
 			if (res.data.success) {
 				const expirationDate = new Date();
 				expirationDate.setDate(expirationDate.getDate() + 7);
@@ -49,11 +50,13 @@ const AddAccount = ({ setLogin, setPop, login }) => {
 				const cookies = Cookies.get("axetkn")
 				await f(cookies)
 				setPop(false)
-
+				setLoading(false)
 				router.push("/main/dashboard")
 			}
 		} catch (error) {
 			console.log(error)
+		} finally {
+			setLoading(false)
 		}
 	}
 

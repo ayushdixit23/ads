@@ -6,10 +6,22 @@ import { useAuthContext } from "../utils/AuthWrapper";
 // import { getData } from "../utils/useful";
 import Logo from "../assests/Logo.png";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const Sidebar = () => {
   // const { image, firstname, lastname } = getData()
-  const { data } = useAuthContext();
+  const { data } = useAuthContext()
+
+  function generateRandomNumber() {
+    // Generate a random 10-digit number
+    const min = Math.pow(10, 9); // Minimum 10-digit number
+    const max = Math.pow(10, 10) - 1; // Maximum 10-digit number
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  const path = usePathname()
+
+
   return (
     <>
       {/* <aside className="flex flex-col pn:max-sm:hidden sm:w-24 md:w-64 h-[100%] px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-[#848484] dark:border-gray-700"> */}
@@ -37,7 +49,7 @@ const Sidebar = () => {
         <div className="flex flex-col justify-between flex-1 mt-16">
           <nav>
             <Link
-              className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
+              className={`flex items-center px-4 py-2 mt-5 ${path === "/main/dashboard" ? "bg-blue-600 text-white" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"} transition-colors duration-300 transform rounded-md `}
               href="/main/dashboard"
             >
               <svg
@@ -70,7 +82,7 @@ const Sidebar = () => {
 
             <Link
               href="/main/ads"
-              className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
+              className={`flex items-center px-4 py-2 mt-5 ${path === "/main/ads" ? "bg-blue-600 text-white" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"} transition-colors duration-300 transform rounded-md `}
             >
               <svg
                 className="w-5 h-5"
@@ -97,6 +109,36 @@ const Sidebar = () => {
               <span className="mx-4 sm:max-md:hidden font-medium">Ads</span>
             </Link>
 
+            {/* <Link
+
+              href={`/createAd?adid=${generateRandomNumber()}&step=1`}
+              className={`flex items-center px-4 py-2 mt-5 ${path.startsWith("/createAd") ? "bg-blue-600 text-white" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"} transition-colors duration-300 transform rounded-md `}
+            >
+              <svg
+                className="w-5 h-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+
+              <span className="mx-4 sm:max-md:hidden font-medium">Create Ad</span>
+            </Link> */}
+
             <hr className="my-6 border-gray-200 dark:border-gray-600" />
 
             {/* <div className="flex justify-center items-center gap-2 flex-col">
@@ -113,13 +155,15 @@ const Sidebar = () => {
             </div> */}
 
             <Link
-              className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
+              className={`flex items-center px-4 py-2 mt-5 ${path === "/main/wallet" ? "bg-blue-600 text-white" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"} transition-colors duration-300 transform rounded-md `}
               href="/main/wallet"
             >
               <LuWallet2 />
 
               <span className="mx-4 sm:max-md:hidden font-medium">Wallet</span>
             </Link>
+
+
 
             {/* <hr className="my-6 border-gray-200 dark:border-gray-600" /> */}
 
@@ -133,7 +177,7 @@ const Sidebar = () => {
 
             <Link
               href="/setting"
-              className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
+              className={`flex items-center px-4 py-2 mt-5 ${path.startsWith("/setting") ? "bg-blue-600 text-white" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"} transition-colors duration-300 transform rounded-md `}
             >
               <svg
                 className="w-5 h-5"
@@ -163,7 +207,7 @@ const Sidebar = () => {
             </Link>
           </nav>
 
-          <div className="flex gap-1 items-center px-4 -mx-2">
+          <div className="flex gap-1 items-center px-4 -mx-4">
             <img
               className="object-cover mx-2 rounded-full h-9 w-9"
               src={data?.image}

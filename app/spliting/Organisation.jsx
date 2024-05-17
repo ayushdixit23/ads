@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import React from 'react'
 import { GrFormAdd } from 'react-icons/gr';
+import Asterik from '../component/Asterik';
+import toast from 'react-hot-toast';
 
 const Organisation = ({
 	details,
@@ -93,7 +95,8 @@ const Organisation = ({
 							htmlFor="first"
 							className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
 						>
-							First Name
+							<Asterik text={"First Name"} />
+
 						</label>
 					</div>
 
@@ -116,7 +119,8 @@ const Organisation = ({
 							htmlFor="last"
 							className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
 						>
-							Last Name
+
+							<Asterik text={"Last Name"} />
 						</label>
 					</div>
 
@@ -140,7 +144,8 @@ const Organisation = ({
 						htmlFor="organisation"
 						className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
 					>
-						Organisation Name
+
+						<Asterik text={"Organisation Name"} />
 					</label>
 				</div>
 				{/* pan */}
@@ -163,7 +168,8 @@ const Organisation = ({
 						htmlFor="pan"
 						className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
 					>
-						Pan
+
+						<Asterik text={"Pan"} />
 					</label>
 				</div>
 				{/* gst */}
@@ -219,7 +225,8 @@ const Organisation = ({
 							htmlFor="numbers"
 							className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
 						>
-							Phone Number
+
+							<Asterik text={"Phone Number"} />
 						</label>
 					</div>
 					<div className=" relative w-full h-16">
@@ -240,7 +247,8 @@ const Organisation = ({
 							htmlFor="email"
 							className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
 						>
-							Email
+
+							<Asterik text={"Email"} />
 						</label>
 					</div>
 				</div>
@@ -264,7 +272,8 @@ const Organisation = ({
 							htmlFor="numberPass"
 							className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
 						>
-							Password
+
+							<Asterik text={"Password"} />
 						</label>
 					</div>
 					<div className="relative w-full h-16">
@@ -286,7 +295,8 @@ const Organisation = ({
 							htmlFor="mypass"
 							className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
 						>
-							Confirm Password
+
+							<Asterik text={"Confirm Password"} />
 						</label>
 					</div>
 				</div>
@@ -308,7 +318,8 @@ const Organisation = ({
 						htmlFor="address"
 						className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
 					>
-						Address
+
+						<Asterik text={"Address"} />
 					</label>
 				</div>
 				{/* city */}
@@ -331,7 +342,8 @@ const Organisation = ({
 							htmlFor="city"
 							className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
 						>
-							City
+
+							<Asterik text={"City"} />
 						</label>
 					</div>
 
@@ -354,7 +366,8 @@ const Organisation = ({
 							htmlFor="state"
 							className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
 						>
-							State
+
+							<Asterik text={"State"} />
 						</label>
 					</div>
 
@@ -380,7 +393,8 @@ const Organisation = ({
 							htmlFor="pcode"
 							className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
 						>
-							Postal Code
+
+							<Asterik text={"Postal Code"} />
 						</label>
 					</div>
 
@@ -402,7 +416,8 @@ const Organisation = ({
 							htmlFor="landmark"
 							className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
 						>
-							Famous Landmark
+
+							<Asterik text={"Famous Landmark"} />
 						</label>
 					</div>
 				</div>
@@ -433,13 +448,14 @@ const Organisation = ({
 						<button
 							onClick={() => {
 								{
-									// onSignup();
-									details.password === details.confirmPass
-										?
+									if (details.password === details.confirmPass) {
 										dispatch(setChange(3))
-										: // setToast(true),
-
+										onSignup()
+									} else {
+										toast.error("Password & Confirm Password Doesnt Match")
 										dispatch(setChange(2))
+									}
+
 								}
 							}}
 							className="w-full p-2 bg-black text-white font-semibold rounded-xl my-2"

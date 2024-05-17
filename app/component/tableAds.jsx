@@ -33,7 +33,7 @@ const TableAds = ({ d }) => {
 					{d?.a?.adname}
 				</TableCell>
 				<TableCell className="font-medium text-center">
-					{d?.a?.status}
+					{d?.a?.status === "review" ? "in review" : d?.a?.status}
 				</TableCell>
 				<TableCell className="font-medium text-center">
 					{d?.a?.impressions ? d?.a?.impressions : "No Data Yet"}

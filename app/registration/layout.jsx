@@ -19,15 +19,17 @@ export default function registerLayout({ children }) {
 							Log in
 						</Link>
 					</h1>
-					<div className="flex justify-center gap-3 rounded-lg sm:my-7 my-4 items-center sm:p-3 p-2 py-4 bg-maincolor border border-border bg-[#fafafa]">
-						<AiFillLock className="text-3xl" />
-						<div>
-							We take privacy issues seriously. You can be sure that your
-							personal data is securely protected.
+					<div className="px-4">
+						<div className="flex justify-center gap-3 rounded-lg sm:my-7 my-4 items-center sm:p-3 p-2 py-4 bg-maincolor border border-border bg-[#fafafa]">
+							<AiFillLock className="text-3xl" />
+							<div>
+								We take privacy issues seriously. You can be sure that your
+								personal data is securely protected.
+							</div>
 						</div>
 					</div>
 				</div>
-				<div className="mt-5 bg-maincolor">
+				<div className=" bg-maincolor">
 					<div className="after:mt-4 mb-7 after:block after:h-1 min-w-[83%] sm:min-w-[600px] after:w-full after:rounded-lg after:bg-gray-200">
 						<ol className="grid grid-cols-3 text-sm font-medium text-gray-500">
 							<li className="relative flex justify-start text-green-600">
@@ -36,7 +38,7 @@ export default function registerLayout({ children }) {
 									{change > 1 ? <BsCheckLg className="w-7 h-7 p-[5px]" /> : <div className="w-7 h-7 rounded-full bg-blue-600 text-sm flex justify-center items-center">1</div>
 									}
 								</span>
-								<span className={`${change > 1 ? "text-green-600" : "text-blue-600"} text-xs pp:text-base`}>Set up Ad</span>
+								<span className={`${change > 1 ? "text-green-600" : "text-blue-600"} text-xs pp:text-base`}>Select Your Type</span>
 							</li>
 
 							<li className="relative flex justify-center text-green-600">
@@ -46,7 +48,7 @@ export default function registerLayout({ children }) {
 									{change > 2 ? <BsCheckLg className="w-7 h-7 p-[5px]" /> : <div className="w-7 h-7 rounded-full bg-blue-600 text-sm flex justify-center items-center">2</div>}
 								</span>
 
-								<span className={`${change > 2 ? "text-green-600" : "text-blue-600"} text-xs pp:text-base`}>Select target</span>
+								<span className={`${change > 2 ? "text-green-600" : "text-blue-600"} text-xs pp:text-base`}>Provide your basic info</span>
 
 							</li>
 
@@ -57,7 +59,7 @@ export default function registerLayout({ children }) {
 									<div className="w-7 h-7 rounded-full bg-blue-600 text-sm flex justify-center items-center">3</div>
 									{/* } */}
 								</span>
-								<span className={`text-blue-600 text-xs pp:text-base`}>Preview & Launch</span>
+								<span className={`text-blue-600 text-xs pp:text-base`}>Verify your Details</span>
 							</li>
 						</ol>
 					</div>
@@ -65,7 +67,7 @@ export default function registerLayout({ children }) {
 				<div className={`w-full ${change ? " max-w-3xl" : "max-w-5xl"} z-50`}>
 					{children}
 				</div>
-			</div>
+			</div >
 
 		</>
 	)

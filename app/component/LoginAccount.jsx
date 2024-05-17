@@ -63,6 +63,7 @@ const LoginAccount = ({ setLogin, setPop, login }) => {
 				setLoading(false);
 				return;
 			}
+			console.log("runned")
 			const formatPh = "+91" + number;
 			signInWithPhoneNumber(auth, formatPh, appVerifier)
 				.then((confirmationResult) => {
@@ -80,16 +81,19 @@ const LoginAccount = ({ setLogin, setPop, login }) => {
 	async function onOTPVerify(e) {
 		e.preventDefault();
 		setLoading(true);
+		console.log(OTP, "otp")
 		window.confirmationResult
 			.confirm(OTP)
 			.then(async (ress) => {
-				setLoading(false);
 				const res = await axios.post(`${API}/loginagency/${data?.advid}`, {
 					phone: 91 + number,
 				});
 				if (res.data.success) {
 					const a = await cookieSetter(res.data)
 					if (a === true) {
+						setLoading(false)
+						setPop(false)
+						toast.success("Account logged in!")
 						router.push("/main/dashboard");
 					}
 				} else {
@@ -100,24 +104,22 @@ const LoginAccount = ({ setLogin, setPop, login }) => {
 				console.log(err);
 				setLoading(false);
 			});
+	}
 
-		// const res = await axios.post(`${API}/loginagency/${data?.advid}`, {
-		// 	phone: 91 + number,
-		// });
-		// if (res.data.success) {
-		// 	const a = await cookieSetter(res.data)
-		// 	if (a === true) {
-		// 		setPop(false)
-		// 		router.push("/main/dashboard");
-		// 	}
-		// } else {
-		// 	console.log("something went wrong");
-		// }
+	if (loading) {
+		return <>
+			<div className="fixed inset-0 w-screen z-50 bg-black/60 backdrop-blur-md h-screen flex justify-center items-center ">
+				<div className="animate-spin">
+					<AiOutlineLoading3Quarters className="text-2xl text-white" />
+				</div>
+			</div>
+		</>
 	}
 
 	return (
 		<>
 			<Toaster />
+
 			<div className='w-full flex flex-col gap-3 h-full  dark:text-white text-black p-5'>
 				<div className='flex justify-between items-center '>
 					<div className='text-2xl font-bold'>Add Account</div>
@@ -186,7 +188,7 @@ const LoginAccount = ({ setLogin, setPop, login }) => {
 
 					</>
 				}
-
+				<div id="recaptcha-container"></div>
 			</div>
 		</>
 

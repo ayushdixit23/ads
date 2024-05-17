@@ -308,7 +308,7 @@ const Wallet = () => {
         <div className="text-2xl font-semibold">Wallet</div>
 
       </div> */}
-      <div className="grid grid-cols-1 h-full overflow-y-scroll no-scrollbar w-[100%] bg-[#f7f7f7] dark:bg-black select-none p-2 sm:p-4">
+      <div className="grid grid-cols-1 w-[100%] h-[95%] bg-[#f7f7f7] dark:bg-[#141414] select-none p-2 sm:p-4">
         {/* <div className="grid sm:mt-0 grid-cols-1 w-full  dark:bg-red-800 z-10"> */}
         <div className="grid grid-cols-1 sm:m-5 w-full sm:w-[95%] ">
           <div className="flex p-3 sm:flex-row flex-col gap-4">
@@ -379,17 +379,19 @@ const Wallet = () => {
             </div>
           )}
 
-          <FetchWallet data={postperData} length={payhistory.length} />
-          <div className="px-4">
-            {payhistory.length > postPerPage && <Pagination
-              postPerPage={postPerPage}
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-              firstIndex={firstIndex}
-              lastindex={lastindex}
-              length={payhistory.length}
-            />
-            }
+          <div className="h-full ">
+            <FetchWallet data={postperData} length={payhistory.length} />
+            <div className="px-4 ">
+              {payhistory.length > postPerPage && <Pagination
+                postPerPage={postPerPage}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                firstIndex={firstIndex}
+                lastindex={lastindex}
+                length={payhistory.length}
+              />
+              }
+            </div>
           </div>
 
         </div>

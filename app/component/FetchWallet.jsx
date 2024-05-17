@@ -15,7 +15,7 @@ import Image from 'next/image';
 const FetchWallet = ({ data, length }) => {
 	return (
 		<div
-			className={`p-3 ${length != 0 ? null : "pn:max-md:hidden"}`}
+			className={`p-3 max-h-[300px] overflow-y-scroll no-scrollbar ${length != 0 ? null : "pn:max-md:hidden"}`}
 		>
 			<div className="flex justify-between bg-maincolor items-center w-full border rounded-t-2xl py-5 px-3 sm:px-[4%]">
 				<div className="sm:text-2xl text-lg font-semibold">

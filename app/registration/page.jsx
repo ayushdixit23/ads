@@ -1,24 +1,25 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
-import { AiFillLock } from "react-icons/ai";
-import { BiRadioCircleMarked } from "react-icons/bi";
+import React, { useEffect, useState } from "react";
 import { API } from "@/Essentials";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { auth } from "../../firebase.config";
-import Link from "next/link";
 import { BsArrowRight, BsCheckLg } from "react-icons/bs";
 import Individual from "../spliting/Individual";
+import indiv from "../assests/individ.png"
+import organis from "../assests/organis.png"
+import affic from "../assests/affit.png"
 import Organisation from "../spliting/Organisation";
 import { useDispatch, useSelector } from "react-redux";
 import { setChange } from "../redux/slice/registerSlice";
-import { storeInSessionStorage } from "../utils/TokenDataWrapper";
 import OTPInput from "react-otp-input";
 // import { getCookie } from "cookies-next";
 import { decryptaes } from "../utils/security";
 import Cookies from "js-cookie";
 import { useAuthContext } from "../utils/AuthWrapper";
+import Image from "next/image";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const Register = () => {
   const [radio, setRadio] = useState(1);
@@ -27,24 +28,26 @@ const Register = () => {
   const change = useSelector((state) => state.register.change)
   const [data, setData] = useState("")
   const cookie = Cookies.get("rigdta")
+  const [aff, setAff] = useState(false)
+  const [load, setLoad] = useState(false)
   // const [change, setChange] = useState(3);
   const [details, setDetails] = useState({
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
-    email: "",
-    address: "",
+    firstName: "Shreyansh",
+    lastName: "Singh",
+    phoneNumber: "7318501865",
+    email: "shreyansh@gmail.com",
+    address: "a/19 shanti nagar",
     myImage: "",
-    city: "",
-    state: "",
-    postalCode: "",
-    LandMark: "",
-    PAN: "",
-    type: "",
+    city: "kanpur",
+    state: "up",
+    postalCode: "208004",
+    LandMark: "mall road",
+    PAN: "3456789",
+    type: "Individual",
     GST: "",
-    Organistaion: "",
-    password: "",
-    confirmPass: "",
+    Organistaion: "Shreyansh The Singh",
+    password: "Ayush@123",
+    confirmPass: "Ayush@123",
   });
 
 
@@ -57,6 +60,8 @@ const Register = () => {
   }, [cookie])
 
 
+
+
   const [isActive, setIsActive] = useState(true);
   const [come, setCome] = useState(0);
   const [checked, setChecked] = useState(false);
@@ -65,6 +70,7 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const [showOTP, setShowOTP] = useState(false);
   const [OTP, setOTP] = useState("");
+  console.log(OTP, "otp")
 
   useEffect(() => {
     if (data) {
@@ -146,7 +152,7 @@ const Register = () => {
         details.state === "" ||
         details.postalCode === "" ||
         details.LandMark === "" ||
-        details.GST === "" ||
+
         details.Organistaion === "" ||
         details.PAN === "" ||
         details.myImage === "" ||
@@ -161,7 +167,10 @@ const Register = () => {
 
   const dataValid = validateData();
 
+  console.log(details.type, "type")
+
   const handleSave = async () => {
+    setLoad(true)
     try {
       const formDataToSend = new FormData();
       formDataToSend.append("lastname", details.lastName);
@@ -183,9 +192,14 @@ const Register = () => {
 
       const res = await axios.post(`${API}/createadvacc`, formDataToSend);
       if (res?.data?.success) {
+
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + 7);
+
         // storeInSessionStorage(res.data.sessionId)
-        Cookies.set(`axetkn`, res.data.access_token)
-        Cookies.set(`rvktkn`, res.data.refresh_token)
+        Cookies.set(`axetkn`, res.data.access_token, { expires: expirationDate })
+        Cookies.set(`rvktkn`, res.data.refresh_token, { expires: expirationDate })
+        setLoad(false)
         setAuth(true)
         // localStorage.setItem(`axetkn`, res.data.access_token)
         // localStorage.setItem(`rvktkn`, res.data.refresh_token)
@@ -193,15 +207,26 @@ const Register = () => {
       }
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoad(false)
     }
   };
 
   const hundle = () => {
     setRadio(1);
+    setAff(false)
     setDetails({ ...details, type: "Individual" });
   };
+
   const hundl = () => {
     setRadio(2);
+    setAff(false)
+    setDetails({ ...details, type: "Organization" });
+  };
+
+  const alagaff = () => {
+    setRadio(2);
+    setAff(true)
     setDetails({ ...details, type: "Organization" });
   };
 
@@ -271,16 +296,24 @@ const Register = () => {
       });
   }
 
+  if (load) {
+    return <>
+      <div className="fixed inset-0 w-screen z-50 bg-black/60 backdrop-blur-md h-screen flex justify-center items-center ">
+        <div className="animate-spin">
+          <AiOutlineLoading3Quarters className="text-2xl text-white" />
+        </div>
+      </div>
+    </>
+  }
+
   return (
     <>
-
-
       <div className=" w-full bg-maincolor text-text px-2">
         <div className=" px-[2%] ">
 
 
-          <div
-            className={`${change === 1 ? "flex border-2 rounded-xl flex-col px-3 mt-4" : "hidden"}`}
+          {/* <div
+            className={`${change === 1 ? "flex border-2 bg-red-800 rounded-xl flex-col px-3 mt-4" : "hidden"}`}
           >
 
             <div className="flex justify-center flex-col my-5 w-full">
@@ -288,36 +321,13 @@ const Register = () => {
               <div className="flex flex-col gap-3 my-4">
                 <div className="text-xl flex items-center font-semibold">
 
-                  <div
-                    onClick={hundle}
-                    className={`w-[20px] h-[20px] border border-black p-[2.8px] rounded-full ${radio === 1 ? "border-blue-800" : null
-                      }`}
-                  >
-                    <div
-                      className={`w-[13px] h-[13px]  rounded-full ${radio === 1 ? "bg-blue-800" : null
-                        }`}
-                    ></div>
-                  </div>
+                  <input checked={details.type === "Individual"} onClick={hundle} type="radio" className="w-[17px] h-[17px]" name="type" id="indiv" />
                   <div className="mx-1">Individual</div>
                 </div>
                 <div className="text-xl flex items-center font-semibold">
-                  {/* <BiRadioCircleMarked
-                    onClick={hundl}
-                    className={`text-4xl ${
-                      radio === 2 ? "text-blue-800 " : null
-                    }`}
-                  /> */}
-                  <div
-                    onClick={hundl}
-                    className={`w-[20px] h-[20px] border border-black p-[2.8px] rounded-full ${radio === 2 ? "border-blue-800" : null
-                      }`}
-                  >
-                    <div
-                      className={`w-[13px] h-[13px]  rounded-full ${radio === 2 ? "bg-blue-800" : null
-                        }`}
-                    ></div>
-                  </div>
-                  <div className="mx-1">Organisation</div>
+                 
+                  <input onClick={hundl} type="radio" className="w-[17px] h-[17px]" name="type" id="organ" />
+                  <div className="mx-1">Organisation/Affiliator</div>
                 </div>
               </div>
             </div>
@@ -332,8 +342,48 @@ const Register = () => {
                 <BsArrowRight />
               </div>
             </div>
-          </div>
+          </div> */}
 
+          <div className={` ${change === 1 ? "flex flex-col gap-3 w-full items-center" : "hidden"} `}>
+            <div onClick={hundle} className={`flex p-2 px-3 sm:px-5 ${details.type === "Individual" ? "border-2 border-blue-600 rounded-lg" : ""} sm:flex-row flex-col gap-2 sm:gap-4 w-full sm:items-center`}>
+              <div>
+                <Image src={indiv} />
+              </div>
+              <div className="flex flex-col gap-1">
+                <div className="text-lg font-semibold">Individual</div>
+                <div className="text-sm">Advertise your own app or service to gain traction within the Grovyo user base.</div>
+              </div>
+            </div>
+            <div onClick={hundl} className={`flex p-2 px-3 sm:px-5 ${(details.type === "Organization" && aff === false) ? "border-2 border-blue-600 rounded-lg" : ""} sm:flex-row flex-col gap-2 sm:gap-4 w-full sm:items-center`}>
+              <div>
+                <Image src={indiv} />
+              </div>
+              <div className="flex flex-col gap-1">
+                <div className="text-lg font-semibold">Organization</div>
+                <div className="text-sm">Promote your company's apps and services to a wider audience.</div>
+              </div>
+            </div>
+            <div onClick={alagaff} className={`flex p-2 px-3 sm:px-5 ${aff ? "border-2 border-blue-600 rounded-lg" : ""} sm:flex-row flex-col gap-2 sm:gap-4 w-full sm:items-center`}>
+              <div>
+                <Image src={indiv} />
+              </div>
+              <div className="flex flex-col gap-1">
+                <div className="text-lg font-semibold">Affiliater</div>
+                <div className="text-sm">Run ads for multiple accounts and earn cashback on your ad spend</div>
+              </div>
+            </div>
+          </div>
+          <div
+            onClick={() =>
+              radio == 1 || radio == 2 ? dispatch(setChange(2)) : dispatch(setChange(1))
+            }
+            className={`${change === 1 ? "p-2 flex justify-center items-center gap-2 my-5 rounded-xl max-w-[130px] px-5 border font-medium" : "hidden"} `}
+          >
+            <div>Go Next</div>
+            <div>
+              <BsArrowRight />
+            </div>
+          </div>
 
           <div className={`${change === 2 ? "" : "hidden"}`}>
             {radio === 1 && (<Individual

@@ -197,7 +197,7 @@ export default function SettingLayout({ children }) {
                 className="w-[50px] h-[50px]"
                 alt="adspace"
               /> */}
-                <span className="hidden pp:block font-medium">Settings</span>
+                <span className="hidden pp:block font-semibold ">Adspace</span>
               </div>
 
             </div>

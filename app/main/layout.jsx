@@ -12,6 +12,7 @@ import Logo from "../assests/Logo.png";
 import Image from "next/image";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
+import { MdNotificationsActive } from "react-icons/md";
 
 export default function MainLayout({ children }) {
   const { data } = useAuthContext();
@@ -89,6 +90,7 @@ export default function MainLayout({ children }) {
                   <span className="hidden pp:block font-medium">Adspace</span>
                 </div>
                 <div className="flex justify-center items-center gap-2">
+                  {/* <MdNotificationsActive /> */}
                   <ModeToggle />
                   <div>
                     <Link
@@ -103,7 +105,7 @@ export default function MainLayout({ children }) {
                         <AiOutlinePlus className="font-semibold" />
                       </div>
                       <div>
-                        <p className="pr-2 text-sm pp:text-base">Create Ad</p>
+                        <p className="pr-2 text-[14px] text-sm pp:text-base">Create Ad</p>
                       </div>
                     </Link>
                   </div>
@@ -113,7 +115,7 @@ export default function MainLayout({ children }) {
           </div>
           <div className="flex h-[90%]">
             {data?.type === "Individual" ? <Sidebar /> : <OSidebar />}
-            <div className="h-full w-full overflow-y-scroll no-scrollbar">
+            <div className={`h-full w-full overflow-y-scroll no-scrollbar ${path == "/main/wallet" ? "dark:bg-[#141414] bg-[#f7f7f7]" : null}`}>
               {children}
             </div>
           </div>

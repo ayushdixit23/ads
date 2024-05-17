@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React from 'react'
 import { GrFormAdd } from 'react-icons/gr';
+import Asterik from '../component/Asterik';
 
 const Individual = ({
 	details,
@@ -93,7 +94,8 @@ const Individual = ({
 							htmlFor="first"
 							className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
 						>
-							First Name
+							<Asterik text={"First Name"} />
+
 						</label>
 					</div>
 
@@ -116,7 +118,8 @@ const Individual = ({
 							htmlFor="last"
 							className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
 						>
-							Last Name
+
+							<Asterik text={"Last Name"} />
 						</label>
 					</div>
 
@@ -143,7 +146,8 @@ const Individual = ({
 							htmlFor="numbers"
 							className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
 						>
-							Phone Number
+
+							<Asterik text={"Phone Number"} />
 						</label>
 					</div>
 					<div className="relative w-full h-16">
@@ -164,7 +168,8 @@ const Individual = ({
 							htmlFor="email"
 							className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
 						>
-							Email
+
+							<Asterik text={"Email"} />
 						</label>
 					</div>
 				</div>
@@ -188,7 +193,8 @@ const Individual = ({
 							htmlFor="numberPass"
 							className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
 						>
-							Password
+
+							<Asterik text={"Password"} />
 						</label>
 					</div>
 					<div className="relative w-full h-16">
@@ -210,7 +216,8 @@ const Individual = ({
 							htmlFor="mypass"
 							className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
 						>
-							Confirm Password
+
+							<Asterik text={"Confirm Password"} />
 						</label>
 					</div>
 				</div>
@@ -232,7 +239,8 @@ const Individual = ({
 						htmlFor="address"
 						className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
 					>
-						Address
+
+						<Asterik text={"Address"} />
 					</label>
 				</div>
 				<div className="grid sm:grid-cols-2 my-2 gap-4">
@@ -254,7 +262,8 @@ const Individual = ({
 							htmlFor="city"
 							className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
 						>
-							City
+
+							<Asterik text={"City"} />
 						</label>
 					</div>
 
@@ -277,7 +286,8 @@ const Individual = ({
 							htmlFor="state"
 							className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
 						>
-							State
+
+							<Asterik text={"State"} />
 						</label>
 					</div>
 				</div>
@@ -301,7 +311,8 @@ const Individual = ({
 							htmlFor="pcode"
 							className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
 						>
-							Postal Code
+
+							<Asterik text={"Postal Code"} />
 						</label>
 					</div>
 
@@ -323,7 +334,8 @@ const Individual = ({
 							htmlFor="landmark"
 							className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
 						>
-							Famous Landmark
+
+							<Asterik text={"Famous Landmark"} />
 						</label>
 					</div>
 				</div>
@@ -356,12 +368,13 @@ const Individual = ({
 						<button
 							onClick={() => {
 								{
-									details.password === details.confirmPass
-										?
+									if (details.password === details.confirmPass) {
+										dispatch(setChange(3))
 										onSignup()
-										// handleSave()
-										: // setToast(true),
+									} else {
+										toast.error("Password & Confirm Password Doesnt Match")
 										dispatch(setChange(2))
+									}
 
 								}
 							}}

@@ -27,6 +27,8 @@ import useAdsFetching from "../useFetch/useAdFetching";
 import Loader from "./Loader";
 import { useAuthContext } from "../utils/AuthWrapper";
 import { FaWallet } from "react-icons/fa";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { formatDateToString } from "../utils/useful";
 
 const IndividaulDashboard = () => {
   const [data, setData] = useState();
@@ -34,7 +36,7 @@ const IndividaulDashboard = () => {
   const [graph, setGraph] = useState([])
   const [defaults, setDefaults] = useState("")
   const [loading, setLoading] = useState(true)
-  const { CampaignFetch } = useAdsFetching()
+  const { CampaignFetch, CampaignFetchforthirtyDays } = useAdsFetching()
   const { data: ads } = useAuthContext()
   const [check, setCheck] = useState({
     click: true,
@@ -42,9 +44,14 @@ const IndividaulDashboard = () => {
     cpc: false,
     views: false,
   })
-
-  console.log(ads, "mydara")
-
+  const [adD, setAdD] = useState({
+    name: "",
+    media: "",
+    type: ""
+  })
+  const [day7, setDay7] = useState(7)
+  const [dswic, setDswic] = useState(false)
+  const [swit, setSwit] = useState(false)
   const [adValues, setAdValues] = useState({
     totalspent: "",
     conversion: "",
@@ -74,7 +81,12 @@ const IndividaulDashboard = () => {
         setLoading(true)
         fetchData(ads?.advid);
         const data = await CampaignFetch(ads?.advid);
-        console.log(data)
+        setAdD({
+          ...adD,
+          name: data[0].a.adname,
+          media: data[0].a.url,
+          type: data[0].a.content[0].extension.startsWith("image") ? "image" : "video"
+        })
         setCampdata(data)
         setDefaults(data[0].a.adname)
         setGraph(data[0].analytics)
@@ -246,70 +258,184 @@ const IndividaulDashboard = () => {
             </div>
 
 
+            <div className="bg-white flex flex-col gap-5 p-3 px-5 justify-center rounded-xl dark:bg-[#0D0D0D]">
+              <div className="text-xl font-semibold">Overview</div>
+              <div className="flex items-center ">
+                <div
+                  onClick={async () => {
+                    setDay7(7)
+                    const data = await CampaignFetch(ads?.advid)
+                    setCampdata(data);
+                    setAdD({
+                      ...adD,
+                      name: data[0].a.adname,
+                      media: data[0].a.url,
+                      type: data[0].a.content[0].extension.startsWith("image") ? "image" : "video"
+                    })
+                    setDefaults(data[0].a.adname);
+                    setGraph(data[0].analytics);
+                    setValue({
+                      click: data[0].a.clicks,
+                      views: data[0].a.views,
+                      impressions: data[0].a.impressions,
+                      cpc: data[0].a.cpc,
+                    });
+                    setAdValues({
+                      ...adValues,
+                      totalspent: data[0].a.totalspent,
+                      conversion: data[0].conversion,
+                      popularity: data[0].popularity,
+                    });
+                  }}
+                  className={`p-1 px-4 rounded-l-lg text-sm border ${day7 == 7 ? "dark:bg-[#171717] bg-[#fafafa] " : null} border-[#ced3d9] dark:border-[#262c31] font-semibold`}>7 days</div>
+                <div
+                  onClick={async () => {
+                    setDay7(30)
+                    const data = await CampaignFetchforthirtyDays(ads?.advid)
+                    setCampdata(data);
+                    setAdD({
+                      ...adD,
+                      name: data[0].a.adname,
+                      media: data[0].a.url,
+                      type: data[0].a.content[0].extension.startsWith("image") ? "image" : "video"
+                    })
+                    setDefaults(data[0].a.adname);
+                    setGraph(data[0].analytics);
+                    setValue({
+                      click: data[0].a.clicks,
+                      views: data[0].a.views,
+                      impressions: data[0].a.impressions,
+                      cpc: data[0].a.cpc,
+                    });
+                    setAdValues({
+                      ...adValues,
+                      totalspent: data[0].a.totalspent,
+                      conversion: data[0].conversion,
+                      popularity: data[0].popularity,
+                    });
+                  }
+                  }
+                  className={`p-1 px-4 rounded-r-lg text-sm border ${day7 == 30 ? "dark:bg-[#171717] bg-[#fafafa] " : null} border-[#ced3d9] dark:border-[#262c31] font-semibold`}>30 Days</div>
+                {/* <div></div> */}
+              </div>
+            </div>
+
+
             <div className="w-full bg-white dark:bg-[#0D0D0D] rounded-xl pn:max-sm:mb-[100px] sm:min-h-[400px] sm:max-h-[450px]">
               <div className="flex mb-3 justify-between w-full flex-wrap">
                 <div className="flex justify-center items-center">
-                  <div className="p-2">
-                    <Select onValueChange={(selectValue) => {
+                  <div className="p-2 flex items-center gap-5 w-full">
+                    <div className="flex flex-col w-full min-w-[160px] bg-[#f7f7f7] dark:bg-[#121212] rounded-xl">
+                      <div
+                        onClick={() => setSwit(!swit)}
+                        className="flex justify-between items-center relative p-1.5 cursor-pointer h-full gap-2 px-2 w-full text-sm"
+                      >
+                        <div className="flex items-center gap-2">
+                          <div>
+                            {adD.type === "image" ? <img
+                              src={adD.media}
+                              className="max-w-[30px] bg-[#f8f8f8] dark:bg-[#181c24] rounded-lg min-h-[30px] min-w-[30px] max-h-[30px]"
+                            />
+                              :
+                              <video src={adD.media} className="max-w-[30px] bg-[#f8f8f8] dark:bg-[#181c24] rounded-lg min-h-[30px] min-w-[30px] max-h-[30px]" />
+                            }
+                          </div>
+                          <div className="text-[#0d0d0d] text-xs dark:text-white font-semibold">
+                            {adD.name}
+                          </div>
+                        </div>
 
-                      const data = campdata.find((va) => va.a._id === selectValue)
-                     
-                      setValue({
-                        click: data.a.clicks,
-                        views: data.a.views,
-                        impressions: data.a.impressions,
-                        cpc: data.a.cpc
-                      })
+                        <div className="text-lg ">
+                          {swit ? (
+                            <IoIosArrowUp onClick={() => setSwit(!swit)} />
+                          ) : (
+                            <IoIosArrowDown onClick={() => setSwit(!swit)} />
+                          )}
+                        </div>
+
+                        <div
+                          className={` ${swit
+                            ? "top-[45px]"
+                            : "top-0 border-none text-[0px] w-[0px] h-[0px]"
+                            } absolute left-0 bg-[#f7f7f7] duration-100 dark:bg-[#121212] rounded-xl z-50 w-full`}
+                        >
+                          <div className="flex flex-col gap-3 px-2 py-1 max-h-[300px] overflow-y-scroll no-scrollbar">
+                            {campdata?.map((d, i) => (
+                              <div
+                                onClick={() => {
+
+                                  setAdD({
+                                    name: d?.a?.adname,
+                                    media: d?.a?.url,
+                                    type: d?.a.content[0].extension.startsWith("image") ? "image" : "video"
+                                  })
+                                  setValue({
+                                    ...value,
+                                    click: d.a.clicks,
+                                    views: d.a.views,
+                                    impressions: d.a.impressions,
+                                    cpc: d.a.cpc,
+                                  });
+
+                                  setAdValues({
+                                    ...adValues,
+                                    totalspent: d.a.totalspent,
+                                    conversion: d.conversion,
+                                    popularity: d.popularity,
+                                  });
+                                  if (d) {
+                                    const adsGraph = d.analytics.map((d) => {
+                                      return {
+                                        ...d,
+                                        time: formatDateToString(d.creation),
+                                      };
+                                    });
+                                    setGraph(adsGraph);
+                                  }
+                                }}
+                                key={i}
+                                className="flex gap-2 py-1 items-center w-full rounded-lg light:hover:bg-[#ffffff]"
+                              >
+                                <div className="">
+                                  {d?.a.content[0].extension.startsWith("image") ? <img
+                                    src={d?.a?.url}
+                                    className={`${swit
+                                      ? "max-w-[30px] bg-[#f8f8f8] dark:bg-[#181c24] rounded-lg min-h-[30px] min-w-[30px] max-h-[30px]"
+                                      : "w-0 h-0"
+                                      } duration-100`}
+                                    alt="image"
+                                  />
+                                    :
+                                    <video src={d?.a?.url} className={`${swit
+                                      ? " bg-[#f8f8f8] dark:bg-[#181c24] rounded-lg h-[30px] w-[30px] "
+                                      : "w-0 h-0"
+                                      } duration-100`} />
+                                  }
+                                </div>
+                                <div className="flex flex-col">
+                                  <div
+                                    className={`text-xs ${swit ? "" : " hidden"
+                                      }`}
+                                  >
+                                    {d?.a?.adname}
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
 
-                      setAdValues({
-                        ...adValues, totalspent: data.a.totalspent, conversion: data.conversion, popularity: data.popularity
-                      })
-                      if (data) {
-                        const adsGraph = data.a.adsDetails.map((d) => {
-                          return {
-                            ...d,
-                            time: formatDateToString(d.time),
-                          }
-                        })
-                        setGraph(adsGraph)
-                      }
-                    }} className="bg-maincolor">
-                      <SelectTrigger className="pp:w-[180px]">
-
-                        <SelectValue placeholder={defaults} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          {campdata?.length > 0 &&
-                            campdata?.map((d, i) => (
-                              <SelectItem key={i} value={d?.a?._id}>{d?.a?.adname}</SelectItem>
-                            ))
-                          }
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
                   </div>
-                  {/* <div>
-                    <Select className="bg-maincolor">
-                      <SelectTrigger className="pp:w-[180px]">
-                        <SelectValue placeholder="1 day" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectItem value="1 day">1 day</SelectItem>
-                          <SelectItem value="7 days">7 days</SelectItem>
-                          <SelectItem value="30 days">30 days</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </div> */}
+
                 </div>
 
                 <div className="flex justify-center pn:max-sm:gap-2 pr-4 pt-3 sm:justify-between flex-wrap">
                   <div onClick={() => setCheck({
                     ...check, click: !check.click
-                  })} className={`flex justify-center ${check.click ? "bg-yellow-600" : ""} cursor-pointer pn:max-sm:rounded-xl sm:rounded-l-xl w-[150px] border border-l-none p-2 items-center`}>
+                  })} className={`flex justify-center ${check.click ? "bg-[#e3f5ff] text-[#000]" : ""} cursor-pointer pn:max-sm:rounded-xl sm:rounded-l-xl w-[150px] border border-l-none p-2 items-center`}>
                     <div className="flex  w-full p-2 gap-1 font-semibold flex-col">
                       <div>Click</div>
                       <div>{value.click}</div>
@@ -317,7 +443,7 @@ const IndividaulDashboard = () => {
                   </div>
                   <div onClick={() => setCheck({
                     ...check, impressions: !check.impressions
-                  })} className={`flex justify-center ${check.impressions ? "bg-red-600" : ""} cursor-pointer pn:max-sm:rounded-xl w-[150px] border border-l-none border-r-none p-2 items-center`}>
+                  })} className={`flex justify-center ${check.impressions ? "bg-[#00c7be]" : ""} cursor-pointer pn:max-sm:rounded-xl w-[150px] border border-l-none border-r-none p-2 items-center`}>
                     <div className="flex  w-full p-2 gap-1 font-semibold flex-col">
                       <div>Impressions</div>
                       <div>{value.impressions}</div>
@@ -326,7 +452,7 @@ const IndividaulDashboard = () => {
                   </div>
                   <div onClick={() => setCheck({
                     ...check, cpc: !check.cpc
-                  })} className={`flex justify-center ${check.cpc ? "bg-green-700" : ""} cursor-pointer pn:max-sm:rounded-xl w-[150px] border border-l-none border-r-none p-2 items-center`}>
+                  })} className={`flex justify-center ${check.cpc ? "bg-[#34c759]" : ""} cursor-pointer pn:max-sm:rounded-xl w-[150px] border border-l-none border-r-none p-2 items-center`}>
                     <div className="flex w-full p-2 gap-1 font-semibold flex-col">
                       <div>Cost</div>
 
@@ -335,7 +461,7 @@ const IndividaulDashboard = () => {
                   </div>
                   <div onClick={() => setCheck({
                     ...check, views: !check.views
-                  })} className={`flex justify-center ${check.views ? "bg-white text-black" : ""} cursor-pointer pn:max-sm:rounded-xl sm:rounded-r-xl w-[150px] border p-2 items-center`}>
+                  })} className={`flex justify-center ${check.views ? "bg-[#32ade6]" : ""} cursor-pointer pn:max-sm:rounded-xl sm:rounded-r-xl w-[150px] border p-2 items-center`}>
                     <div className="flex  w-full p-2 gap-1 font-semibold flex-col">
                       <div>Views</div>
 
@@ -347,7 +473,7 @@ const IndividaulDashboard = () => {
               </div>
               <div className="w-full bg-white dark:bg-[#0D0D0D] h-full pn:max-sm:h-[300px]">
                 <div className="relative h-full pn:max-sm:-left-8 top-0 w-full pn:max-sm:h-[300px]">
-                  {graph && graph?.length > 0 && < ResponsiveContainer className={``}>
+                  < ResponsiveContainer className={``}>
                     <LineChart width={730} height={250} data={graph}
                     // margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                     >
@@ -355,19 +481,14 @@ const IndividaulDashboard = () => {
                       <YAxis className="pn:max-sm:text-xs" />
                       <Tooltip />
                       {/* <Legend /> */}
-                      {check.click && < Line type="monotone" dataKey="click" stroke="#D97706" />}
-                      {check.views && <Line type="monotone" dataKey="views" stroke="#000" />}
-                      {check.impressions && <Line type="monotone" dataKey="impressions" stroke="#E53E3E" />}
-                      {check.cpc && <Line type="monotone" dataKey="cpc" stroke="#047857" />}
+                      {check.click && < Line type="monotone" dataKey="click" stroke="#e3f5ff" />}
+                      {check.views && <Line type="monotone" dataKey="views" stroke="#32ade6" />}
+                      {check.impressions && <Line type="monotone" dataKey="impressions" stroke="#00c7be" />}
+                      {check.cpc && <Line type="monotone" dataKey="cpc" stroke="#34c759" />}
                     </LineChart>
-                  </ResponsiveContainer>}
+                  </ResponsiveContainer>
                   {data?.currentbalance ?
-                    <>  {graph?.length === 0 &&
-
-                      <div className="w-full h-full flex justify-center items-center text-2xl font-semibold">No Data At The Moment</div>
-
-                    }
-                    </> : <>
+                    <></> : <>
                       <div className="w-full h-full flex flex-col gap-3 justify-center items-center font-semibold">
                         <div className="text-2xl">
                           Not Enough Money to run ad!

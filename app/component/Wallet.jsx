@@ -14,6 +14,7 @@ import Pagination from "./Pagination";
 import { useRouter } from "next/navigation";
 import Loader from "./Loader";
 import { useAuthContext } from "../utils/AuthWrapper";
+import toast, { Toaster } from "react-hot-toast";
 
 const Wallet = () => {
   const [wallet, setWallet] = useState(0);
@@ -63,17 +64,19 @@ const Wallet = () => {
   }, [data?.advid, fetchdata]);
 
   const handlePayment =
-    async (e, value) => {
+    async (e) => {
+      if (inp < 100) {
+        toast.error("Minimum 100 rupees required!")
+        return
+      }
       e.preventDefault();
-      const name = data?.firstname + " " + data?.lastname
+
+
 
       if (data?.advid) {
         try {
-          // const response = await axios.post(`${API}/addmoneytowallet/${data?.advid}`, {
-          //   amount: inp * 100,
-          // });
           const response = await axios.post(`${API}/addmoneytowallet/${data?.advid}`, {
-            amount: value * 100,
+            amount: inp * 100,
           });
 
           console.log(response.data)
@@ -95,7 +98,8 @@ const Wallet = () => {
 
   return (
     <>
-      {/* <div
+      <Toaster />
+      <div
         className={`${wallet === 1
           ? "fixed inset-0 z-40 bg-black opacity-50 backdrop-blur-2xl"
           : "hidden"
@@ -163,10 +167,10 @@ const Wallet = () => {
             </button>
           </div>
         </div>
-      </div> */}
+      </div>
 
 
-      {
+      {/* {
         wallet == 1 &&
         <div className="fixed inset-0 sm:h-screen w-full flex justify-center items-center h-full bg-black/70 z-20">
           <div className="bg-[#273142] p-6 rounded-xl">
@@ -177,7 +181,7 @@ const Wallet = () => {
 
               <div class="">
                 <div class="pt-24 flex flex-row">
-                  {/* <!-- Basic Card --> */}
+
                   <div class="w-96 p-8 bg-white text-center rounded-3xl pr-16 shadow-xl">
                     <h1 class="text-black font-semibold text-2xl">Basic</h1>
                     <p class="pt-2 tracking-wide">
@@ -216,7 +220,7 @@ const Wallet = () => {
                       </div>
                     </div>
                   </div>
-                  {/* <!-- StartUp Card --> */}
+
                   <div class="w-80 p-8 bg-gray-900 text-center rounded-3xl text-white border-4 shadow-xl border-white transform scale-125">
                     <h1 class="text-white font-semibold text-2xl">Startup</h1>
                     <p class="pt-2 tracking-wide">
@@ -258,7 +262,7 @@ const Wallet = () => {
                       <p class="bg-blue-700 font-semibold px-4 py-1 rounded-full uppercase text-xs">Popular</p>
                     </div>
                   </div>
-                  {/* <!-- Enterprise Card --> */}
+
                   <div class="w-96 p-8 bg-white text-center rounded-3xl pl-16 shadow-xl">
                     <h1 class="text-black font-semibold text-2xl">Enterprise</h1>
                     <p class="pt-2 tracking-wide">
@@ -302,12 +306,9 @@ const Wallet = () => {
           </div>
         </div>
 
-      }
+      } */}
 
-      {/* <div className="py-4 px-5 pn:max-sm:sticky pn:max-sm:top-0 pn:max-sm:left-0 bg-maincolor z-10 w-full">
-        <div className="text-2xl font-semibold">Wallet</div>
 
-      </div> */}
       <div className="grid grid-cols-1 w-[100%] h-[95%] bg-[#f7f7f7] dark:bg-[#141414] select-none p-2 sm:p-4">
         {/* <div className="grid sm:mt-0 grid-cols-1 w-full  dark:bg-red-800 z-10"> */}
         <div className="grid grid-cols-1 sm:m-5 w-full sm:w-[95%] ">

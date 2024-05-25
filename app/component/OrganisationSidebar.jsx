@@ -24,7 +24,19 @@ const OSidebar = () => {
 	const [pop, setPop] = useState(false)
 	const [login, setLogin] = useState(true)
 	const path = usePathname()
+	const [user, setUser] = useState({
+		image: "",
+		fullname: ""
+	})
 
+	useEffect(() => {
+		if (data?.firstname && data?.lastname && data?.image) {
+			setUser({
+				image: data?.image,
+				fullname: data?.firstname + " " + data?.lastname
+			})
+		}
+	}, [])
 
 	return (
 		<>
@@ -93,44 +105,44 @@ const OSidebar = () => {
 
 
 						<hr className="my-6 border-gray-200 dark:border-gray-600" />
-
-						<div onClick={() => setOpen(!open)} className="flex relative justify-between items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" >
-							{/* <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						{data &&
+							<div onClick={() => setOpen(!open)} className="flex relative justify-between items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" >
+								{/* <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
 								<path d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
 							</svg> */}
-							<div className="flex justify-center items-center gap-2">
-								<MdSupervisorAccount className="w-5 h-5" />
-								<span className="sm:max-md:hidden text-[14px] font-medium">Manage Acounts</span>
-							</div>
-							<IoChevronDown />
-							{open && <div className="absolute bg-white py-3 duration-500 dark:bg-maincolor shadow-lg w-full z-50 rounded-md top-10 left-0">
-								<div className="flex flex-col max-h-[230px] overflow-y-scroll no-scrollbar z-30 gap-2 rounded-md">
-									{data?.manageusers?.map((d, i) => (
-										<div
-											// href={`/createAd?brand=${d?.lastname ? d?.fullname : d?.firstname}&userid=${d?.userid}&advid=${d?.id}&image=${d?.image}&step=1`}
-											onClick={() => {
-												dispatch(setAdvertiserid(d?.id))
-												dispatch(setUserid(d?.userid))
-												dispatch(setFullname(d?.lastname ? d?.fullname : d?.firstname))
-												dispatch(setImage(d?.image))
-											}}
+								<div className="flex justify-center items-center gap-2">
+									<MdSupervisorAccount className="w-5 h-5" />
+									<span className="sm:max-md:hidden text-[14px] font-medium">Manage Acounts</span>
+								</div>
+								<IoChevronDown />
+								{open && <div className="absolute bg-white py-3 duration-500 dark:bg-maincolor shadow-lg w-full z-50 rounded-md top-10 left-0">
+									<div className="flex flex-col max-h-[230px] overflow-y-scroll no-scrollbar z-30 gap-2 rounded-md">
+										{data?.manageusers?.map((d, i) => (
+											<div
+												// href={`/createAd?brand=${d?.lastname ? d?.fullname : d?.firstname}&userid=${d?.userid}&advid=${d?.id}&image=${d?.image}&step=1`}
+												onClick={() => {
+													dispatch(setAdvertiserid(d?.id))
+													dispatch(setUserid(d?.userid))
+													dispatch(setFullname(d?.lastname ? d?.fullname : d?.firstname))
+													dispatch(setImage(d?.image))
+												}}
 
-											key={i} className="flex gap-2 px-4 dark:text-gray-400 hover:bg-gray-100 rounded-md dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 py-2 transition-colors duration-300 transform items-center">
-											<div>
-												<img src={d?.image} className="w-[24px] rounded-xl h-[24px]" />
+												key={i} className="flex gap-2 px-4 dark:text-gray-400 hover:bg-gray-100 rounded-md dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 py-2 transition-colors duration-300 transform items-center">
+												<div>
+													<img src={d?.image} className="w-[24px] rounded-xl h-[24px]" />
+												</div>
+												<div className="text-sm font-semibold">{d?.lastname ? d?.fullname : d?.firstname}</div>
 											</div>
-											<div className="text-sm font-semibold">{d?.lastname ? d?.fullname : d?.firstname}</div>
-										</div>
-									))}
-								</div>
-								<div onClick={() => setPop(true)} className="flex gap-2 px-4 text-xs py-2 dark:text-gray-400 hover:bg-gray-100 rounded-md dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 transition-colors duration-300 transform items-center">
-									<div><IoPersonAdd /></div>
-									<div>Add Account</div>
-								</div>
-							</div>}
+										))}
+									</div>
+									<div onClick={() => setPop(true)} className="flex gap-2 px-4 text-xs py-2 dark:text-gray-400 hover:bg-gray-100 rounded-md dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 transition-colors duration-300 transform items-center">
+										<div><IoPersonAdd /></div>
+										<div>Add Account</div>
+									</div>
+								</div>}
 
-						</div>
+							</div>}
 
 						{(fullname && image) && <div className={`flex items-center gap-1 px-4 py-2 mt-4 text-gray-600 ${open ? null : "transition-colors duration-300 transform"}  rounded-md dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700`} >
 							<img src={`${image}`} className="min-w-[32px] max-w-[32px] max-h-[32px] rounded-xl min-h-[32px]" alt="user" />
@@ -183,9 +195,13 @@ const OSidebar = () => {
 					</nav>
 
 					<div className="flex gap-1 items-center px-4 -mx-2">
+						<img className="object-cover mx-2 rounded-full h-9 w-9" src={user.image} alt="avatar" />
+						<span className="font-medium text-gray-800  sm:max-md:hidden dark:text-gray-200">{user.fullname}</span>
+					</div>
+					{/* <div className="flex gap-1 items-center px-4 -mx-2">
 						<img className="object-cover mx-2 rounded-full h-9 w-9" src={data?.image} alt="avatar" />
 						<span className="font-medium text-gray-800  sm:max-md:hidden dark:text-gray-200">{data?.firstname + " " + data?.lastname}</span>
-					</div>
+					</div> */}
 				</div>
 			</aside >
 		</>

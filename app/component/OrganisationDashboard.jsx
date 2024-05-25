@@ -40,7 +40,7 @@ import {
   setUserid,
 } from "@/app/redux/slice/dataSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { formatDateToString } from "../utils/useful";
+import { formatDateToString, returnDay } from "../utils/useful";
 
 const OrganisationDashboard = () => {
   const [data, setData] = useState();
@@ -49,6 +49,7 @@ const OrganisationDashboard = () => {
     media: "",
     type: ""
   })
+  const [idToCheck, setIdToCheck] = useState("")
   const { data: user } = useAuthContext();
   const [day7, setDay7] = useState(7)
   const [dswic, setDswic] = useState(false)
@@ -57,6 +58,7 @@ const OrganisationDashboard = () => {
   const fullname = useSelector((state) => state.data.fullname);
   const image = useSelector((state) => state.data.image);
   const [state, setState] = useState("");
+  const [months, setMonths] = useState(null)
   const [dp, setDp] = useState("");
   const [graph, setGraph] = useState([]);
   const [defaults, setDefaults] = useState("");
@@ -118,26 +120,38 @@ const OrganisationDashboard = () => {
         fetchData(advertiserid);
         const data = await CampaignFetch(advertiserid);
         console.log(data, "campdata");
+        setIdToCheck(data[0]?.a?._id)
         setCampdata(data);
         setAdD({
           ...adD,
-          name: data[0].a.adname,
-          media: data[0].a.url,
-          type: data[0].a.content[0].extension.startsWith("image") ? "image" : "video"
+          name: data[0]?.a?.adname,
+          media: data[0]?.a?.url,
+          type: data[0]?.a?.content[0].extension.startsWith("image") ? "image" : "video"
         })
-        setDefaults(data[0].a.adname);
-        setGraph(data[0].analytics);
+        setDefaults(data[0]?.a?.adname);
+        const adsGraph = data[0]?.analytics.map((d) => {
+          return {
+            ...d,
+            // time: formatDateToString(d?.creation),
+            time: returnDay(d?.creation),
+            cpc: parseFloat(d?.cpc.toFixed(1))
+          };
+        });
+        setGraph(adsGraph);
+        const adsMonths = data[0]?.analytics.map((d) => (returnMonth(d?.creation)))
+        const uniqueMonths = [...new Set(adsMonths)];
+        setMonths(uniqueMonths);
         setValue({
-          click: data[0].a.clicks,
-          views: data[0].a.views,
-          impressions: data[0].a.impressions,
-          cpc: data[0].a.cpc,
+          click: data[0]?.a?.clicks,
+          views: data[0]?.a?.views,
+          impressions: data[0]?.a?.impressions,
+          cpc: data[0]?.a?.cpc,
         });
         setAdValues({
           ...adValues,
-          totalspent: data[0].a.totalspent,
-          conversion: data[0].conversion,
-          popularity: data[0].popularity,
+          totalspent: data[0]?.a.totalspent,
+          conversion: data[0]?.conversion,
+          popularity: data[0]?.popularity,
         });
 
         setLoading(false);
@@ -372,57 +386,84 @@ const OrganisationDashboard = () => {
                 onClick={async () => {
                   setDay7(7)
                   const data = await CampaignFetch(advertiserid)
+                  const filteredData = data.filter(item => item.a?._id === idToCheck);
                   setCampdata(data);
                   setAdD({
                     ...adD,
-                    name: data[0].a.adname,
-                    media: data[0].a.url,
-                    type: data[0].a.content[0].extension.startsWith("image") ? "image" : "video"
+                    name: filteredData[0]?.a?.adname,
+                    media: filteredData[0]?.a?.url,
+                    type: filteredData[0]?.a?.content[0]?.extension.startsWith("image") ? "image" : "video"
                   })
-                  setDefaults(data[0].a.adname);
-                  setGraph(data[0].analytics);
+                  setDefaults(filteredData[0]?.a?.adname);
+                  const adsGraph = filteredData[0]?.analytics.map((d) => {
+                    return {
+                      ...d,
+                      // time: formatDateToString(d?.creation),
+                      time: returnDay(d?.creation),
+                      cpc: parseFloat(d?.cpc.toFixed(1))
+                    };
+                  });
+                  setGraph(adsGraph);
+                  const adsMonths = filteredData[0]?.analytics.map((df) => (returnMonth(df?.creation)))
+                  const uniqueMonths = [...new Set(adsMonths)];
+                  setMonths(uniqueMonths);
+
                   setValue({
-                    click: data[0].a.clicks,
-                    views: data[0].a.views,
-                    impressions: data[0].a.impressions,
-                    cpc: data[0].a.cpc,
+                    click: filteredData[0]?.a?.clicks,
+                    views: filteredData[0]?.a?.views,
+                    impressions: filteredData[0]?.a?.impressions,
+                    cpc: filteredData[0]?.a?.cpc,
                   });
                   setAdValues({
                     ...adValues,
-                    totalspent: data[0].a.totalspent,
-                    conversion: data[0].conversion,
-                    popularity: data[0].popularity,
+                    totalspent: filteredData[0]?.a.totalspent,
+                    conversion: filteredData[0]?.conversion,
+                    popularity: filteredData[0]?.popularity,
                   });
                 }}
-                className={`p-1 px-4 rounded-l-lg text-sm border ${day7 == 7 ? "dark:bg-[#171717] bg-[#fafafa] " : null} border-[#ced3d9] dark:border-[#262c31] font-semibold`}>7 days</div>
+                className={`p-1 px-4 rounded-l-lg text-sm border ${day7 == 7 ? "bg-[#2d9aff] text-white " : null} border-[#ced3d9] dark:border-[#262c31] font-semibold`}>7 days</div>
               <div
                 onClick={async () => {
                   setDay7(30)
                   const data = await CampaignFetchforthirtyDays(advertiserid)
+                  const filteredData = data.filter(item => item.a?._id === idToCheck);
                   setCampdata(data);
                   setAdD({
                     ...adD,
-                    name: data[0].a.adname,
-                    media: data[0].a.url,
-                    type: data[0].a.content[0].extension.startsWith("image") ? "image" : "video"
+                    name: filteredData[0]?.a?.adname,
+                    media: filteredData[0]?.a?.url,
+                    type: filteredData[0]?.a?.content[0]?.extension.startsWith("image") ? "image" : "video"
                   })
-                  setDefaults(data[0].a.adname);
-                  setGraph(data[0].analytics);
+                  setDefaults(filteredData[0]?.a?.adname);
+
+                  const adsGraph = filteredData[0]?.analytics.map((d) => {
+                    return {
+                      ...d,
+                      // time: formatDateToString(d?.creation),
+                      time: returnDay(d?.creation),
+                      cpc: parseFloat(d?.cpc.toFixed(1))
+                    };
+                  });
+                  setGraph(adsGraph);
+                  const adsMonths = filteredData[0]?.analytics.map((df) => (returnMonth(df?.creation)))
+                  const uniqueMonths = [...new Set(adsMonths)];
+                  setMonths(uniqueMonths);
+
                   setValue({
-                    click: data[0].a.clicks,
-                    views: data[0].a.views,
-                    impressions: data[0].a.impressions,
-                    cpc: data[0].a.cpc,
+                    click: filteredData[0]?.a?.clicks,
+                    views: filteredData[0]?.a?.views,
+                    impressions: filteredData[0]?.a?.impressions,
+                    cpc: filteredData[0]?.a?.cpc,
                   });
                   setAdValues({
                     ...adValues,
-                    totalspent: data[0].a.totalspent,
-                    conversion: data[0].conversion,
-                    popularity: data[0].popularity,
+                    totalspent: filteredData[0]?.a?.totalspent,
+                    conversion: filteredData[0]?.conversion,
+                    popularity: filteredData[0]?.popularity,
                   });
                 }
                 }
-                className={`p-1 px-4 rounded-r-lg text-sm border ${day7 == 30 ? "dark:bg-[#171717] bg-[#fafafa] " : null} border-[#ced3d9] dark:border-[#262c31] font-semibold`}>30 Days</div>
+                className={`p-1 px-4 rounded-r-lg text-sm border ${day7 == 30 ? "bg-[#2d9aff] text-white " : null} border-[#ced3d9] dark:border-[#262c31] font-semibold`}>30 Days</div>
               {/* <div></div> */}
             </div>
           </div>
@@ -473,41 +514,46 @@ const OrganisationDashboard = () => {
                                 {campdata?.map((d, i) => (
                                   <div
                                     onClick={() => {
-
+                                      setIdToCheck(d?.a?._id)
                                       setAdD({
                                         name: d?.a?.adname,
                                         media: d?.a?.url,
-                                        type: d?.a.content[0].extension.startsWith("image") ? "image" : "video"
+                                        type: d?.a?.content[0]?.extension.startsWith("image") ? "image" : "video"
                                       })
                                       setValue({
                                         ...value,
-                                        click: d.a.clicks,
-                                        views: d.a.views,
-                                        impressions: d.a.impressions,
-                                        cpc: d.a.cpc,
+                                        click: d?.a?.clicks,
+                                        views: d?.a?.views,
+                                        impressions: d?.a?.impressions,
+                                        cpc: d?.a?.cpc,
                                       });
 
                                       setAdValues({
                                         ...adValues,
-                                        totalspent: d.a.totalspent,
-                                        conversion: d.conversion,
-                                        popularity: d.popularity,
+                                        totalspent: d?.a?.totalspent,
+                                        conversion: d?.conversion,
+                                        popularity: d?.popularity,
                                       });
                                       if (d) {
-                                        const adsGraph = d.analytics.map((d) => {
+                                        const adsGraph = d?.analytics.map((d) => {
                                           return {
                                             ...d,
-                                            time: formatDateToString(d.creation),
+                                            // time: formatDateToString(d?.creation),
+                                            time: returnDay(d?.creation),
+                                            cpc: parseFloat(d?.cpc.toFixed(1))
                                           };
                                         });
                                         setGraph(adsGraph);
+                                        const adsMonths = d?.analytics.map((df) => (returnMonth(df?.creation)))
+                                        const uniqueMonths = [...new Set(adsMonths)];
+                                        setMonths(uniqueMonths);
                                       }
                                     }}
                                     key={i}
                                     className="flex gap-2 py-1 items-center w-full rounded-lg light:hover:bg-[#ffffff]"
                                   >
                                     <div className="">
-                                      {d?.a.content[0].extension.startsWith("image") ? <img
+                                      {d?.a?.content[0]?.extension.startsWith("image") ? <img
                                         src={d?.a?.url}
                                         className={`${swit
                                           ? "max-w-[30px] bg-[#f8f8f8] dark:bg-[#181c24] rounded-lg min-h-[30px] min-w-[30px] max-h-[30px]"
@@ -646,7 +692,7 @@ const OrganisationDashboard = () => {
                             click: !check.click,
                           })
                         }
-                        className={`flex justify-center ${check.click ? "bg-[#e3f5ff] text-[#000]" : ""
+                        className={`flex justify-center ${check.click ? "bg-[#ffa800] text-[#fff]" : ""
                           } cursor-pointer pn:max-sm:rounded-xl sm:rounded-l-xl w-[150px] border border-l-none p-2 items-center`}
                       >
                         <div className="flex  w-full p-2 gap-1 font-semibold flex-col">
@@ -661,7 +707,7 @@ const OrganisationDashboard = () => {
                             impressions: !check.impressions,
                           })
                         }
-                        className={`flex justify-center ${check.impressions ? "bg-[#00c7be]" : ""
+                        className={`flex justify-center ${check.impressions ? "bg-[#00c7be] text-[#fff]" : ""
                           } cursor-pointer pn:max-sm:rounded-xl w-[150px] border border-l-none border-r-none p-2 items-center`}
                       >
                         <div className="flex  w-full p-2 gap-1 font-semibold flex-col">
@@ -677,7 +723,7 @@ const OrganisationDashboard = () => {
                             cpc: !check.cpc,
                           })
                         }
-                        className={`flex justify-center ${check.cpc ? "bg-[#34c759]" : ""
+                        className={`flex justify-center ${check.cpc ? "bg-[#34c759] text-[#fff]" : ""
                           } cursor-pointer pn:max-sm:rounded-xl w-[150px] border border-l-none border-r-none p-2 items-center`}
                       >
                         <div className="flex w-full p-2 gap-1 font-semibold flex-col">
@@ -693,7 +739,7 @@ const OrganisationDashboard = () => {
                             views: !check.views,
                           })
                         }
-                        className={`flex justify-center ${check.views ? "bg-[#32ade6]" : ""
+                        className={`flex justify-center ${check.views ? "bg-[#32ade6] text-[#fff]" : ""
                           } cursor-pointer pn:max-sm:rounded-xl sm:rounded-r-xl w-[150px] border p-2 items-center`}
                       >
                         <div className="flex  w-full p-2 gap-1 font-semibold flex-col">
@@ -705,7 +751,7 @@ const OrganisationDashboard = () => {
                     </div>
                   </div>
                   <div className="w-full bg-white dark:bg-[#0D0D0D] rounded-xl  h-full pn:max-sm:h-[300px]">
-                    <div className="relative h-full pn:max-sm:-left-8 top-0 w-full pn:max-sm:h-[300px]">
+                    <div className="relative h-full pn:max-sm:-left-5 top-0 w-full pn:max-sm:h-[300px]">
 
                       <ResponsiveContainer className={``}>
                         <LineChart
@@ -715,11 +761,15 @@ const OrganisationDashboard = () => {
                         // margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                         >
                           <XAxis dataKey="time" />
-                          <YAxis className="pn:max-sm:text-xs" />
-                          <Tooltip />
+                          <YAxis className="pn:max-sm:text-xs" axisLine={false} allowDecimals={false} />
+                          <Tooltip contentStyle={{
+                            backgroundColor: theme === "dark" ? "#273142" : "#333333",
+                            borderRadius: "12px",
+                            border: "none"
+                          }} cursor={{ fill: theme === "light" ? "#f8f9fc" : '#1B2431' }} />
                           {/* <Legend /> */}
 
-                          {check.click && < Line type="monotone" dataKey="click" stroke="#e3f5ff" />}
+                          {check.click && < Line type="monotone" dataKey="click" stroke="#ffa800" />}
                           {check.views && <Line type="monotone" dataKey="views" stroke="#32ade6" />}
                           {check.impressions && <Line type="monotone" dataKey="impressions" stroke="#00c7be" />}
                           {check.cpc && <Line type="monotone" dataKey="cpc" stroke="#34c759" />}

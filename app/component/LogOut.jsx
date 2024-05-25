@@ -8,7 +8,7 @@ import { getData } from "../utils/useful";
 import Cookies from "js-cookie";
 import { useAuthContext } from "../utils/AuthWrapper";
 
-const LogoutModal = ({ isOpen, onClose, onLogout }) => {
+const LogoutModal = ({ isOpen, onClose }) => {
   const [id, setId] = useState();
   const { data, setAuth, setData } = useAuthContext()
   const router = useRouter();
@@ -46,7 +46,7 @@ const LogoutModal = ({ isOpen, onClose, onLogout }) => {
         {/* Background overlay with blur */}
         {isOpen && (
           <div
-            className="fixed inset-0 z-40 bg-black opacity-70 sm:opacity-50 backdrop-blur-2xl"
+            className="fixed inset-0 z-50 bg-black opacity-70 sm:opacity-50 backdrop-blur-2xl"
             onClick={onClose}
           ></div>
         )}

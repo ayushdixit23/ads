@@ -10,7 +10,6 @@ import { useAuthContext } from '@/app/utils/AuthWrapper';
 import d2 from "../assests/d2.png";
 import d3 from "../assests/d3.png";
 import d4 from "../assests/d4.png";
-import d1 from "../assests/d1.png";
 import { setAdvertiserid, setFullname, setImage, setUserid } from '@/app/redux/slice/dataSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
@@ -95,12 +94,12 @@ const AdsOrganisation = () => {
 
 	useEffect(() => {
 		if (data) {
-			setState(data?.manageusers[0].fullname)
-			setDp(data?.manageusers[0].image)
-			dispatch(setAdvertiserid(data?.manageusers[0].id))
-			dispatch(setFullname(data?.manageusers[0].fullname))
-			dispatch(setImage(data?.manageusers[0].image))
-			dispatch(setUserid(data?.manageusers[0].userid))
+			setState(data?.manageusers[0]?.fullname)
+			setDp(data?.manageusers[0]?.image)
+			dispatch(setAdvertiserid(data?.manageusers[0]?.id))
+			dispatch(setFullname(data?.manageusers[0]?.fullname))
+			dispatch(setImage(data?.manageusers[0]?.image))
+			dispatch(setUserid(data?.manageusers[0]?.userid))
 		}
 	}, [data])
 

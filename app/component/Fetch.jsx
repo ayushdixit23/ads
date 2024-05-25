@@ -19,8 +19,6 @@ const Fetch = ({ data, length, router }) => {
 	return (
 		<>
 			<div className=''>
-
-
 				<div
 					className={`p-3 ${length != 0
 						? "max-w-full my-3 rounded-2xl h-full overflow-x-scroll no-scrollbar"

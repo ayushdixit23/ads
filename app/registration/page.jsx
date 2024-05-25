@@ -128,11 +128,6 @@ const Register = () => {
         details.lastName === "" ||
         details.phoneNumber === "" ||
         details.email === "" ||
-        details.address === "" ||
-        details.city === "" ||
-        details.state === "" ||
-        details.postalCode === "" ||
-        details.LandMark === "" ||
         details.myImage === "" ||
         checked === false
       ) {
@@ -344,10 +339,10 @@ const Register = () => {
             </div>
           </div> */}
 
-          <div className={` ${change === 1 ? "flex flex-col gap-3 w-full items-center" : "hidden"} `}>
+          <div className={` ${change === 1 ? "flex flex-col gap-7 w-full items-center" : "hidden"} `}>
             <div onClick={hundle} className={`flex p-2 px-3 sm:px-5 ${details.type === "Individual" ? "border-2 border-blue-600 rounded-lg" : ""} sm:flex-row flex-col gap-2 sm:gap-4 w-full sm:items-center`}>
               <div>
-                <Image src={indiv} />
+                <Image src={indiv} className="w-[70px] h-[70px]" />
               </div>
               <div className="flex flex-col gap-1">
                 <div className="text-lg font-semibold">Individual</div>
@@ -356,7 +351,7 @@ const Register = () => {
             </div>
             <div onClick={hundl} className={`flex p-2 px-3 sm:px-5 ${(details.type === "Organization" && aff === false) ? "border-2 border-blue-600 rounded-lg" : ""} sm:flex-row flex-col gap-2 sm:gap-4 w-full sm:items-center`}>
               <div>
-                <Image src={organis} />
+                <Image src={organis} className="w-[70px] h-[70px]" />
               </div>
               <div className="flex flex-col gap-1">
                 <div className="text-lg font-semibold">Organization</div>
@@ -365,7 +360,7 @@ const Register = () => {
             </div>
             <div onClick={alagaff} className={`flex p-2 px-3 sm:px-5 ${aff ? "border-2 border-blue-600 rounded-lg" : ""} sm:flex-row flex-col gap-2 sm:gap-4 w-full sm:items-center`}>
               <div>
-                <Image src={affic} />
+                <Image src={affic} className="w-[70px] h-[70px]" />
               </div>
               <div className="flex flex-col gap-1">
                 <div className="text-lg font-semibold">Affiliater</div>
@@ -477,7 +472,7 @@ const Register = () => {
                   dispatch(setChange(2))
 
                 }}
-                className="w-full p-2 bg-[#f9f9f9] text-black font-semibold rounded-xl sm:my-2"
+                className="w-full p-2 border border-[#f9f9f9] text-white font-semibold rounded-xl sm:my-2"
               >
                 Back
               </button>
@@ -488,7 +483,7 @@ const Register = () => {
                   // handleSave();
                   // router.push("/login");
                 }}
-                className="w-full p-2 bg-black text-white font-semibold rounded-xl sm:my-2"
+                className="w-full p-2 bg-[#2D9AFF] text-white font-semibold rounded-xl sm:my-2"
               >
                 Save
               </button>

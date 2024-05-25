@@ -19,6 +19,19 @@ const Sidebar = () => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
+  const [user, setUser] = useState({
+    image: "",
+    fullname: ""
+  })
+
+  useEffect(() => {
+    if (data?.firstname && data?.lastname && data?.image) {
+      setUser({
+        image: data?.image,
+        fullname: data?.firstname + " " + data?.lastname
+      })
+    }
+  }, [])
   const path = usePathname()
 
 
@@ -210,13 +223,24 @@ const Sidebar = () => {
           <div className="flex gap-1 items-center px-4 -mx-4">
             <img
               className="object-cover mx-2 rounded-full h-9 w-9"
+              src={user?.image}
+              alt="avatar"
+            />
+            <span className="font-medium text-gray-800  sm:max-md:hidden dark:text-gray-200">
+              {user.fullname}
+            </span>
+          </div>
+
+          {/* <div className="flex gap-1 items-center px-4 -mx-4">
+            <img
+              className="object-cover mx-2 rounded-full h-9 w-9"
               src={data?.image}
               alt="avatar"
             />
             <span className="font-medium text-gray-800  sm:max-md:hidden dark:text-gray-200">
               {data?.firstname + " " + data?.lastname}
             </span>
-          </div>
+          </div> */}
         </div>
       </aside>
     </>

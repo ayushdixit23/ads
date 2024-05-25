@@ -221,7 +221,7 @@ const Individual = ({
 						</label>
 					</div>
 				</div>
-				<div className="relative h-16 my-2">
+				{/* <div className="relative h-16 my-2">
 					<input
 						placeholder="Your Address"
 						id="address"
@@ -267,7 +267,7 @@ const Individual = ({
 						</label>
 					</div>
 
-					{/* state */}
+				
 					<div className="relative h-16">
 						<input
 							placeholder="Uttar Pradesh"
@@ -338,7 +338,7 @@ const Individual = ({
 							<Asterik text={"Famous Landmark"} />
 						</label>
 					</div>
-				</div>
+				</div> */}
 				<div className="my-2">
 					<input
 						type="checkbox"
@@ -358,9 +358,8 @@ const Individual = ({
 					<button
 						onClick={() => {
 							dispatch(setChange(1))
-
 						}}
-						className="w-full p-2 bg-[#f9f9f9] text-black font-semibold rounded-xl my-2"
+						className="w-full p-2 border border-[#f9f9f9] text-white font-semibold rounded-xl my-2"
 					>
 						Back
 					</button>
@@ -378,14 +377,14 @@ const Individual = ({
 
 								}
 							}}
-							className="w-full p-2 bg-black text-white font-semibold rounded-xl my-2"
+							className="w-full p-2 bg-[#2D9AFF] text-white font-semibold rounded-xl my-2"
 						>
 							Save
 						</button>
 					) : (
 						<button
 							disabled
-							className="w-full p-2 bg-[#dacbcb9a] text-black font-semibold rounded-xl my-2"
+							className="w-full p-2 bg-[#ccc] text-black font-semibold rounded-xl my-2"
 						>
 							Save
 						</button>

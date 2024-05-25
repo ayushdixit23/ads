@@ -3,6 +3,7 @@ import React from 'react'
 import { GrFormAdd } from 'react-icons/gr';
 import Asterik from '../component/Asterik';
 import toast from 'react-hot-toast';
+import axios from 'axios';
 
 const Organisation = ({
 	details,
@@ -15,6 +16,40 @@ const Organisation = ({
 	onSignup,
 	dataValid
 }) => {
+
+	const handlePin = async (e) => {
+		try {
+			const i = e.target.value
+
+			setDetails({
+				...details, postalCode: i
+			})
+
+
+			if (i.length === 6) {
+				const res = await axios.get(`
+			  https://api.postalpincode.in/pincode/${i}
+			`);
+
+				if (res?.status === 200) {
+					setDetails({
+						...details,
+						city: res.data[0].PostOffice[0].District,
+						state: res.data[0].PostOffice[0].State,
+						postalCode: res.data[0].PostOffice[0].Pincode,
+					})
+					// setState(res.data[0].PostOffice[0].State);
+					// setCity(res.data[0].PostOffice[0].District);
+					// setCounty(res.data[0].PostOffice[0].Country);
+				}
+			}
+		} catch (e) {
+			// detecterror({ e });
+			console.log(e);
+		}
+	}
+
+
 	return (
 		<>
 			<div className="flex justify-center  px-[2%] flex-col">
@@ -300,91 +335,13 @@ const Organisation = ({
 						</label>
 					</div>
 				</div>
-				<div className="relative h-16 my-2">
-					<input
-						placeholder="Your Address"
-						id="address"
-						onChange={(e) =>
-							setDetails({
-								...details,
-								address: e.target.value,
-							})
-						}
-						value={details.address}
-						className="py-1 transition-colors bg-maincolor placeholder-transparent h-10 peer outline-none focus:border-[#5c73db] focus:border-b-2 absolute top-0 left-0 duration-300 border-b w-full"
-						type="text"
-					/>
-					<label
-						htmlFor="address"
-						className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
-					>
-
-						<Asterik text={"Address"} />
-					</label>
-				</div>
-				{/* city */}
-				<div className="grid sm:grid-cols-2 my-2 gap-4">
-					<div className="relative h-16">
-						<input
-							placeholder="Kanpur"
-							id="city"
-							onChange={(e) =>
-								setDetails({
-									...details,
-									city: e.target.value,
-								})
-							}
-							value={details.city}
-							className="py-1 transition-colors bg-maincolor placeholder-transparent h-10 peer outline-none focus:border-[#5c73db] focus:border-b-2 absolute top-0 left-0 duration-300 border-b w-full"
-							type="text"
-						/>
-						<label
-							htmlFor="city"
-							className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
-						>
-
-							<Asterik text={"City"} />
-						</label>
-					</div>
-
-					{/* state */}
-					<div className="relative h-16">
-						<input
-							placeholder="Uttar Pradesh"
-							id="state"
-							onChange={(e) =>
-								setDetails({
-									...details,
-									state: e.target.value,
-								})
-							}
-							value={details.state}
-							className="py-1 transition-colors bg-maincolor placeholder-transparent h-10 peer outline-none focus:border-[#5c73db] focus:border-b-2 absolute top-0 left-0 duration-300 border-b w-full"
-							type="text"
-						/>
-						<label
-							htmlFor="state"
-							className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
-						>
-
-							<Asterik text={"State"} />
-						</label>
-					</div>
-
-					{/* postal */}
-				</div>
 				<div className="grid sm:grid-cols-2 my-2 gap-4">
 					<div className="relative h-16 ">
 						<input
 							placeholder="300033"
 							id="pcode"
 							maxLength={6}
-							onChange={(e) =>
-								setDetails({
-									...details,
-									postalCode: e.target.value,
-								})
-							}
+							onChange={(e) => handlePin(e)}
 							value={details.postalCode}
 							className="py-1 transition-colors bg-maincolor placeholder-transparent h-10 peer outline-none focus:border-[#5c73db] focus:border-b-2 absolute top-0 left-0 duration-300 border-b w-full"
 							type="number"
@@ -421,6 +378,82 @@ const Organisation = ({
 						</label>
 					</div>
 				</div>
+				<div className="relative h-16 my-2">
+					<input
+						placeholder="Your Address"
+						id="address"
+						onChange={(e) =>
+							setDetails({
+								...details,
+								address: e.target.value,
+							})
+						}
+						value={details.address}
+						className="py-1 transition-colors bg-maincolor placeholder-transparent h-10 peer outline-none focus:border-[#5c73db] focus:border-b-2 absolute top-0 left-0 duration-300 border-b w-full"
+						type="text"
+					/>
+					<label
+						htmlFor="address"
+						className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
+					>
+
+						<Asterik text={"Address"} />
+					</label>
+				</div>
+				{/* city */}
+				<div className="grid sm:grid-cols-2 my-2 gap-4">
+					<div className="relative h-16">
+						<input
+							placeholder="Kanpur"
+							disabled
+							id="city"
+							onChange={(e) =>
+								setDetails({
+									...details,
+									city: e.target.value,
+								})
+							}
+							value={details.city}
+							className="py-1 transition-colors bg-maincolor placeholder-transparent h-10 peer outline-none focus:border-[#5c73db] focus:border-b-2 absolute top-0 left-0 duration-300 border-b w-full"
+							type="text"
+						/>
+						<label
+							htmlFor="city"
+							className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
+						>
+
+							<Asterik text={"City"} />
+						</label>
+					</div>
+
+					{/* state */}
+					<div className="relative h-16">
+						<input
+							placeholder="Uttar Pradesh"
+							id="state"
+							disabled
+							onChange={(e) =>
+								setDetails({
+									...details,
+									state: e.target.value,
+								})
+							}
+							value={details.state}
+							className="py-1 transition-colors bg-maincolor placeholder-transparent h-10 peer outline-none focus:border-[#5c73db] focus:border-b-2 absolute top-0 left-0 duration-300 border-b w-full"
+							type="text"
+						/>
+						<label
+							htmlFor="state"
+							className="peer-focus:text-sm peer-placeholder-shown:text-base peer-placeholder-shown:top-1 -top-4 left-0 text-sm  peer-focus:-top-4 absolute pb-2 transition-all duration-300 font-semibold"
+						>
+
+							<Asterik text={"State"} />
+						</label>
+					</div>
+
+				</div>
+				{/* postal */}
+
 				<div className="my-2">
 					<input
 						type="checkbox"
@@ -440,7 +473,7 @@ const Organisation = ({
 							dispatch(setChange(1))
 
 						}}
-						className="w-full p-2 bg-[#f9f9f9] text-black font-semibold rounded-xl my-2"
+						className="w-full p-2 border border-[#f9f9f9] text-white  font-semibold rounded-xl my-2"
 					>
 						Back
 					</button>
@@ -458,12 +491,12 @@ const Organisation = ({
 
 								}
 							}}
-							className="w-full p-2 bg-black text-white font-semibold rounded-xl my-2"
+							className="w-full p-2 bg-[#2D9AFF] text-white font-semibold rounded-xl my-2"
 						>
 							Save
 						</button>
 					) : (
-						<button className="w-full p-2 bg-[#dacbcb9a] text-black font-semibold rounded-xl my-2">
+						<button className="w-full p-2 bg-[#ccc] text-black font-semibold rounded-xl my-2">
 							Save
 						</button>
 					)}

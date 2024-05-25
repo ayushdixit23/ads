@@ -153,15 +153,15 @@ const page = () => {
           </div>
         </div>
       </div >
-      <div className="h-full w-full sm:p-[2%] p-3 md:p-[4%]">
-        <h1 className="text-xl font-semibold p-2 border-b-2">
+      <div className="h-full w-full sm:p-[2%] p-2 md:p-[4%]">
+        <h1 className="text-xl font-semibold p-2 ">
           Advertiser Verification
         </h1>
         <div>
           <h1 className="sm:my-5 my-3 font-semibold">
             Verify your identity to build trust with your audience
           </h1>
-          <div className="bg-[#FAFAFA] dark:border dark:border-border rounded-lg dark:bg-[#273142] flex justify-between items-center p-2 sm:p-3 sm:px-5">
+          <div className="bg-[#FAFAFA] rounded-lg dark:bg-[#111] flex justify-between items-center p-2 sm:p-3 sm:px-5">
             <div>Your Status</div>
             <div className="text-red-500">Unverified</div>
           </div>

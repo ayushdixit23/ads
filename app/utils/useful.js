@@ -90,3 +90,55 @@ export const formatDate = (dateString) => {
     const formattedDate = `${year}-${month}-${day}`; // Change the format to YYYY-MM-DD
     return formattedDate;
 }
+
+
+export const returnDay = (dateString) => {
+    const date = new Date(dateString); // Parse the ISO string
+    if (isNaN(date)) {
+        console.log("Invalid date string");
+    }
+    const day = date.getDate();
+    const month = date.toLocaleString("default", { month: "long" });
+    // const updated = month.slice(0, 3)
+    // const year = date.getFullYear();
+
+    // const formattedDate = `${day} ${updated} ${year}`;
+    return day;
+};
+
+
+export const returnMonth = (dateString) => {
+    const date = new Date(dateString); // Parse the ISO string
+    if (isNaN(date)) {
+        console.log("Invalid date string");
+    }
+    const day = date.getMonth();
+    const month = date.toLocaleString("default", { month: "long" });
+    // const updated = month.slice(0, 3)
+    // const year = date.getFullYear();
+
+    // const formattedDate = `${day} ${updated} ${year}`;
+    return month;
+};
+
+
+export function formatNumberToIndianSystem(number) {
+    // Convert the number to a string
+    const numberString = number.toString();
+
+    // Split the number into integer and fractional parts
+    const [integerPart, fractionalPart] = numberString.split('.');
+
+    // Regular expression to insert commas according to the Indian system
+    const indianNumberFormat = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+    // Combine the formatted integer part with the fractional part if it exists
+    return fractionalPart ? `${indianNumberFormat}.${fractionalPart}` : indianNumberFormat;
+}
+
+export function capitalizeFirstLetter(string) {
+    if (typeof string !== 'string' || string.length === 0) {
+        return string;
+    }
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}

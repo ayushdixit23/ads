@@ -71,6 +71,10 @@ const Login = () => {
           const a = await cookieSetter(res.data)
           if (a === true) {
             router.push("/main/dashboard");
+            setTimeout(() => {
+              setLoading(false)
+              dispatch(setLoad(false))
+            }, 5000)
           }
           await cookieSetter(res.data)
         } else {
@@ -87,10 +91,12 @@ const Login = () => {
     } catch (e) {
       console.log(e);
     } finally {
-      setLoading(false)
+      setTimeout(() => {
+        setLoading(false)
+        dispatch(setLoad(false))
+      }, 5000)
     }
   };
-
 
   // const cookieSetter = async (data) => {
   //   try {

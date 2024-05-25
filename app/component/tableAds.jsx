@@ -3,6 +3,7 @@ import { TableCell, TableRow } from '@/components/ui/table'
 import axios from 'axios'
 import React, { useState } from 'react'
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io'
+import { capitalizeFirstLetter, formatNumberToIndianSystem } from '../utils/useful'
 
 const TableAds = ({ d }) => {
 	const [state, setState] = useState("")
@@ -32,28 +33,32 @@ const TableAds = ({ d }) => {
 				<TableCell className="font-medium text-center">
 					{d?.a?.adname}
 				</TableCell>
-				<TableCell className="font-medium text-center">
-					{d?.a?.status === "review" ? "in review" : d?.a?.status}
+				<TableCell className="flex justify-center items-center text-center">
+					<div className={`text-center max-w-[130px] rounded-lg  px-4 py-2 ${d?.a?.status === "review" ? "text-[#F9943B] bg-[#F9943B]/10" : null
+						}
+							${d?.a?.status === "active" ? "text-[#03A65A] bg-[#03A65A]/10" : null}
+							${d?.a?.status === "stopped" ? "text-[#FC2E20] bg-[#FC2E20]/10" : null}`}>{d?.a?.status === "review" ? "In review" : capitalizeFirstLetter(d?.a?.status)}</div>
+
 				</TableCell>
-				<TableCell className="font-medium text-center">
-					{d?.a?.impressions ? d?.a?.impressions : "No Data Yet"}
+				<TableCell className=" text-center">
+					{d?.a?.impressions ? formatNumberToIndianSystem(d?.a?.impressions) : "No Data Yet"}
 				</TableCell>
-				<TableCell className="font-medium text-center">
+				<TableCell className=" text-center">
 					{d?.conversion ? parseFloat(d?.conversion).toFixed(1) : "No Data Yet"}
 				</TableCell>
-				<TableCell className="font-medium text-center">
+				<TableCell className=" text-center">
 					{d?.a?.cpc ? parseFloat(d?.a?.cpc).toFixed(1) : "No Data Yet"}
 				</TableCell>
-				<TableCell className="font-medium text-center">
+				<TableCell className=" text-center">
 					{d?.a?.startdate
 						? d?.a?.startdate
 						: "___"}
 
 				</TableCell>
-				<TableCell className="font-medium text-center">
+				<TableCell className=" text-center">
 					{d?.a?.enddate}
 				</TableCell>
-				{/* <TableCell className="font-medium text-center">
+				{/* <TableCell className=" text-center">
 
 					{d?.a.status === "review" ? < div className="flex flex-col w-full  bg-[#f7f7f7] dark:bg-[#c4c0c0] rounded-xl">
 						<div

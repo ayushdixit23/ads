@@ -30,36 +30,36 @@ export default function registerLayout({ children }) {
 					</div>
 				</div>
 				<div className=" bg-maincolor">
-					<div className="after:mt-4 mb-7 after:block after:h-1 min-w-[83%] sm:min-w-[600px] after:w-full after:rounded-lg after:bg-gray-200">
-						<ol className="grid grid-cols-3 text-sm font-medium text-gray-500">
-							<li className="relative flex justify-start text-green-600">
+					<div className="after:mt-4 mb-7 after:block after:h-[0.5px] min-w-[78%] sm:min-w-[600px] after:w-full after:rounded-lg after:bg-[#ccc]">
+						<ol className="grid grid-cols-3 font-medium text-sm text-gray-500">
+							<li className="relative flex justify-start ">
 
-								<span className="absolute -bottom-[1.90rem] -start-1 rounded-full bg-green-600 text-white">
-									{change > 1 ? <BsCheckLg className="w-7 h-7 p-[5px]" /> : <div className="w-7 h-7 rounded-full bg-blue-600 text-sm flex justify-center items-center">1</div>
+								<span className="absolute -bottom-[1.75rem] -start-1 rounded-full bg-green-600 text-white">
+									{change > 1 ? <BsCheckLg className="w-6 h-6 p-[5px]" /> : <div className="w-6 h-6 rounded-full bg-blue-600 text-sm flex justify-center items-center">1</div>
 									}
 								</span>
-								<span className={`${change > 1 ? "text-green-600" : "text-blue-600"} text-xs pp:text-base`}>Select Your Type</span>
+								<span className={`${change > 1 ? "text-green-600" : "text-blue-500 "}  text-xs pp:text-base`}>Select Your Type</span>
 							</li>
 
 							<li className="relative flex justify-center text-green-600">
 								<span
-									className="absolute -bottom-[1.90rem] left-1/2 -translate-x-1/2 rounded-full bg-green-600 text-white"
+									className="absolute -bottom-[1.75rem] left-1/2 -translate-x-1/2 rounded-full bg-green-600 text-white"
 								>
-									{change > 2 ? <BsCheckLg className="w-7 h-7 p-[5px]" /> : <div className="w-7 h-7 rounded-full bg-blue-600 text-sm flex justify-center items-center">2</div>}
+									{change > 2 ? <BsCheckLg className="w-6 h-6 p-[5px]" /> : change == 2 ? <div className="w-6 h-6 rounded-full bg-blue-600 text-sm flex justify-center items-center">2</div> : <div className="w-6 h-6 rounded-full bg-white text-black text-sm flex justify-center items-center">2</div>}
 								</span>
 
-								<span className={`${change > 2 ? "text-green-600" : "text-blue-600"} text-xs pp:text-base`}>Provide your basic info</span>
+								<span className={`${change > 2 ? "text-green-600" : change == 2 ? "text-blue-500" : "text-white"} text-xs pp:text-base`}>Provide your basic info</span>
 
 							</li>
 
 							<li className="relative flex justify-end">
-								<span className="absolute -bottom-[1.90rem] -end-1 rounded-full bg-gray-600 text-white">
-									{/* {a ? <BsCheckLg className="w-7 h-7 p-[5px]" />
+								<span className="absolute -bottom-[1.75rem] -end-1 rounded-full bg-gray-600 text-white">
+									{/* {a ? <BsCheckLg className="w-6 h-6 p-[5px]" />
 											: */}
-									<div className="w-7 h-7 rounded-full bg-blue-600 text-sm flex justify-center items-center">3</div>
+									{change == 3 ? <div className="w-6 h-6 rounded-full bg-blue-600 text-sm flex justify-center items-center">3</div> : <div className="w-6 h-6 rounded-full bg-white text-black text-sm flex justify-center items-center">3</div>}
 									{/* } */}
 								</span>
-								<span className={`text-blue-600 text-xs pp:text-base`}>Verify your Details</span>
+								<span className={`text-white text-xs pp:text-base`}>Verify your Details</span>
 							</li>
 						</ol>
 					</div>

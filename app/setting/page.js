@@ -4,7 +4,9 @@ import Page from './billing/page'
 
 const page = () => {
 	return (
-		<div><Page /></div>
+		<>
+			<div className='sm:block hidden'><Page /></div>
+		</>
 	)
 }
 

@@ -12,6 +12,7 @@ import { setValidateStep1, setValidateStep2, setThree, setStep, setAudience, set
 import { useGetCommunityQuery } from "../redux/slice/apiSlice";
 import { useAuthContext } from "../utils/AuthWrapper";
 import Ad4 from "../spliting/Ad4";
+import { formatDateToString } from "../utils/useful";
 
 function page() {
 	const { data: communityData } = useGetCommunityQuery()

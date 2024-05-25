@@ -10,6 +10,10 @@ import { useRouter } from "next/navigation";
 import { useAuthContext } from "../utils/AuthWrapper";
 import Logo from "../assests/Logo.png";
 import OSidebar from "../component/OrganisationSidebar";
+import { ModeToggle } from "../component/ModeToggle";
+import { MdFeedback, MdOutlineLogout, MdPayments } from "react-icons/md";
+import { FaUserCheck } from "react-icons/fa";
+
 
 export default function SettingLayout({ children }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -38,14 +42,6 @@ export default function SettingLayout({ children }) {
 
     // Add your logout logic here
   };
-
-  const deleteCookies = () => {
-    // deleteCookie(`axetkn${sessionId}`);
-    // deleteCookie(`rvktkn${sessionId}`);
-    localStorage.removeItem(`axetkn`)
-    localStorage.removeItem(`rvktkn`)
-    router.push("/login")
-  }
 
   (() => {
     if (
@@ -163,7 +159,7 @@ export default function SettingLayout({ children }) {
       <MobileNav />
       <div className="w-full flex flex-col dark:bg-[#1E1E1E]">
         <div>
-          <div className="h-[76px] flex border-b dark:bg-[#0D0D0D] items-center w-full text-2xl font-semibold px-6">
+          <div className="sm:h-[76px] h-[68px] flex border-b dark:bg-[#0D0D0D] items-center w-full text-2xl font-semibold  px-3 sm:px-6">
             {/* {path.startsWith("/main/ads") && <div>Ads</div>}
         {path.startsWith("/main/wallet") && <div>Wallet</div>}
         {path.startsWith("/main/dashboard") && (
@@ -191,7 +187,7 @@ export default function SettingLayout({ children }) {
             </div>
           </div>
         )} */}
-            <div className="flex justify-between  items-center w-full">
+            <div className="flex justify-between items-center w-full">
               <div className="flex items-center py-2 gap-2 text-2xl">
                 {/* <Image
                 src={user.image}
@@ -203,9 +199,9 @@ export default function SettingLayout({ children }) {
                   className="w-[50px] h-[50px]"
                   alt="adspace"
                 />
-                <span className=" font-semibold ">Adspace</span>
+                <span className="hidden sm:block font-semibold">Adspace</span>
               </div>
-
+              <ModeToggle />
             </div>
           </div>
         </div>
@@ -215,7 +211,7 @@ export default function SettingLayout({ children }) {
             {children}
           </div> */}
 
-          <div className="bg-[#f8f8f8] max-h-screen  dark:bg-[#1E1E1E] grid grid-cols-1 w-full h-full overflow-y-scroll no-scrollbar p-[2%]">
+          <div className="bg-[#f8f8f8] max-h-screen  dark:bg-black grid grid-cols-1 w-full h-full overflow-y-scroll no-scrollbar p-[2%]">
             <div className="grid md:grid-cols-3  sm:grid-cols-5 grid-cols-1 sm:gap-4 md:gap-8">
               <div
                 className={`md:col-span-1  sm:col-span-2 h-[90%] rounded-2xl bg-white dark:bg-[#0D0D0D] max-h-screen sm:max-md:p-[2%] p-[3%] ${isChildrenHidden
@@ -224,7 +220,7 @@ export default function SettingLayout({ children }) {
                   }`}
               >
                 <div className="flex flex-col">
-                  <div className="flex items-center gap-3 bg-[#f9f9f9] dark:bg-[#0D0D0D] dark:border dark:border-border sm:max-md:p-2 p-4 rounded-xl">
+                  <div className="flex items-center gap-3 bg-[#f9f9f9] dark:bg-[#0D0D0D]  sm:max-md:p-2 p-4 rounded-xl">
                     <div>
                       {user.image && <Image
                         src={user?.image}
@@ -236,7 +232,7 @@ export default function SettingLayout({ children }) {
                     </div>
                     <div>
                       <div className="text-lg sm:max-md:text-base font-semibold">
-                        {" "}
+
                         {user?.name}
                       </div>
                       <div className="font-medium ">{user?.accountid}</div>
@@ -245,35 +241,39 @@ export default function SettingLayout({ children }) {
                   <Link
                     onClick={() => setIsChildrenHidden(true)}
                     href="/setting/billing"
-                    className="text-base rounded-xl focus:bg-[#f9f9f9] dark:hover:bg-[#3d4654] dark:focus:bg-[#3d4654] hover:bg-[#f9f9f9] my-2 p-2 py-3  font-semibold"
-                  >
-                    Billing and Payments
+                    className="text-base rounded-xl focus:bg-[#f9f9f9] flex items-center gap-2  dark:focus:bg-[#3d4654] dark:hover:bg-[#222] hover:bg-[#f9f9f9] my-2 p-2 py-3 "
+                  ><div><MdPayments className="text-xl" /></div><div> Billing and Payments</div>
+
                   </Link>
                   <Link
                     onClick={() => setIsChildrenHidden(true)}
                     href="/setting/verfication"
-                    className="text-base p-2 py-3 my-2 rounded-xl dark:hover:bg-[#3d4654] dark:focus:bg-[#3d4654] focus:bg-[#f9f9f9] hover:bg-[#f9f9f9] font-semibold"
+                    className="text-base p-2 py-3 my-2 rounded-xl  dark:focus:bg-[#3d4654] flex items-center gap-2 focus:bg-[#f9f9f9] dark:hover:bg-[#222] hover:bg-[#f9f9f9] "
                   >
-                    Advertiser Verification
+                    <div><FaUserCheck className="text-xl" /></div><div> Advertiser Verification</div>
+
                   </Link>
 
                   <Link
                     href="/setting/feedback"
-                    className=" text-base p-2 py-3 dark:hover:bg-[#3d4654] dark:focus:bg-[#3d4654] my-2 rounded-xl focus:bg-[#f9f9f9] hover:bg-[#f9f9f9] font-semibold"
+                    onClick={() => setIsChildrenHidden(true)}
+                    className=" text-base p-2 py-3  dark:focus:bg-[#3d4654] my-2 rounded-xl flex items-center gap-2  focus:bg-[#f9f9f9] dark:hover:bg-[#222] hover:bg-[#f9f9f9] "
                   >
-                    Feedback
+                    <div><MdFeedback className="text-xl" /></div><div>Feedback</div>
+
                   </Link>
                   <div
                     onClick={() => setIsModalOpen(true)}
-                    className=" text-base p-2 py-3 dark:hover:bg-[#3d4654] dark:focus:bg-[#3d4654] my-1 rounded-xl focus:bg-[#f9f9f9] hover:bg-[#f9f9f9] font-semibold"
+                    className=" text-base p-2 py-3  dark:focus:bg-[#3d4654] my-1 flex items-center gap-2 rounded-xl focus:bg-[#f9f9f9] dark:hover:bg-[#222] hover:bg-[#f9f9f9] "
                   >
+                    <MdOutlineLogout className="text-xl" />
                     Log Out
                   </div>
                   <LogoutModal
                     isOpen={isModalOpen}
                     onClose={() => setIsModalOpen(false)}
-                    // onLogout={handleLogout}
-                    onLogout={deleteCookies}
+                  // onLogout={handleLogout}
+
                   />
                 </div>
               </div>

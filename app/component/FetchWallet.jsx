@@ -11,6 +11,7 @@ import moment from "moment";
 import nodataw from "../assests/nodataw.svg";
 import { AiOutlineSearch } from 'react-icons/ai';
 import Image from 'next/image';
+import { capitalizeFirstLetter } from '../utils/useful';
 
 const FetchWallet = ({ data, length }) => {
 	return (
@@ -64,12 +65,15 @@ const FetchWallet = ({ data, length }) => {
 												: "-"}
 										</TableCell>
 										<TableCell
-											className={`text-center font-medium px-4 py-2 ${p?.status === "Pending" ? "text-[#F9943B]" : null
-												}
-                          ${p?.status === "Success" ? "text-[#03A65A]" : null}
-                          ${p?.status === "Failed" ? "text-[#FC2E20]" : null}`}
+											className="flex justify-center items-center text-center"
 										>
-											{p?.status ? p?.status : "-"}
+											<div className={`text-center rounded-lg max-w-[135px] font-medium px-4 py-2 ${p?.status === "pending" ? "text-[#F9943B] bg-[#F9943B]/10" : null
+												}
+												${p?.status === "completed" ? "text-[#03A65A] bg-[#03A65A]/10" : null}
+												${p?.status === "failed" ? "text-[#FC2E20] bg-[#FC2E20]/10" : null}`}>
+
+												{p?.status ? capitalizeFirstLetter(p?.status) : "-"}
+											</div>
 										</TableCell>
 										<TableCell className=" text-center px-4 py-2">
 											₹{p?.amount ? p?.amount : "-"}

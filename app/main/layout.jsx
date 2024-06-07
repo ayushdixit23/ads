@@ -87,10 +87,10 @@ export default function MainLayout({ children }) {
                 </div>
                 <div className="flex justify-center items-center gap-2">
                   {/* <MdNotificationsActive /> */}
-                  <div className="hidden sm:block">
+                  {/* <div className="hidden sm:block">
 
                     <ModeToggle />
-                  </div>
+                  </div> */}
                   <div>
                     <Link
                       href={

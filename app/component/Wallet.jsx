@@ -329,7 +329,7 @@ const Wallet = () => {
       } */}
 
 
-      < div className="grid grid-cols-1 w-[100%] h-[95%] select-none sm:p-4" >
+      < div className="grid grid-cols-1 w-[100%] bg-black h-[95%] select-none sm:p-4" >
         {/* <div className="grid sm:mt-0 grid-cols-1 w-full  dark:bg-red-800 z-10"> */}
         < div className="grid grid-cols-1 sm:m-1  w-full sm:w-[95%] " >
           {/* <div className="flex p-3 sm:flex-row dark:bg-red-900 flex-col gap-4">
@@ -366,7 +366,7 @@ const Wallet = () => {
                 <div className="flex gap-5 flex-col">
                   <div>
                     <div className=" font-semibold text-lg">Available funds</div>
-                    <div className="font-medium sm:mt-0 mt-0.5 text-sm sm:text-base">Last Payment on: <span className="text-[#939AAD]">{formatDateToString(lastDate)}</span></div>
+                    {lastDate && <div className="font-medium sm:mt-0 mt-0.5 text-sm sm:text-base">Last Payment on: <span className="text-[#939AAD]">{formatDateToString(lastDate)}</span></div>}
                   </div>
                   <div className="flex items-center gap-12">
                     <div className="flex flex-col gap-1">
@@ -375,7 +375,7 @@ const Wallet = () => {
                         <div className="font-medium text-sm sm:text-base">Available Funds</div>
                       </div>
                       <div className="text-lg sm:text-xl flex items-center gap-2 font-semibold">
-                        <div className={`text-[#FC2E20] `}>₹{money}</div>
+                        <div className={`text-[#FC2E20] `}>₹{money ? money : 0}</div>
                         {Number(money) < 500 && < span className="text-[#FC2E20] sm:text-base sm:font-medium text-xs font-normal">Low funds</span>}
                       </div>
                     </div>
@@ -385,7 +385,7 @@ const Wallet = () => {
                         <div className="font-medium text-sm sm:text-base">Credits</div>
                         <div><IoInformationCircleOutline /></div>
                       </div>
-                      <div className="text-lg sm:text-xl font-semibold">₹{credits}</div>
+                      <div className="text-lg sm:text-xl font-semibold">₹{credits ? credits : 0}</div>
                     </div>
                   </div>
                   <div>
@@ -412,7 +412,7 @@ const Wallet = () => {
 
                       <div className="font-medium text-sm sm:text-base">Net Cost</div>
                     </div>
-                    <div className="text-lg sm:text-xl font-semibold">₹{netcost}</div>
+                    <div className="text-lg sm:text-xl font-semibold">₹{netcost ? netcost : 0}</div>
                   </div>
 
                   <div className="flex flex-col gap-1">
@@ -420,7 +420,7 @@ const Wallet = () => {
                       <div className="font-medium text-sm sm:text-base">Payments</div>
 
                     </div>
-                    <div className="text-lg sm:text-xl font-semibold">₹{payment}</div>
+                    <div className="text-lg sm:text-xl font-semibold">₹{payment ? payment : 0}</div>
                   </div>
 
                 </div>
@@ -432,7 +432,7 @@ const Wallet = () => {
           {
             payhistory.length === 0 && (
               <div
-                className={`p-3 bg-yellow-900 ${payhistory.length === 0 && " pn:max-sm:mb-[5rem]"
+                className={`p-3 ${payhistory.length === 0 && " pn:max-sm:mb-[5rem]"
                   } `}
               >
                 <div className="flex justify-between bg-white dark:bg-[#0D0D0D] items-center w-full border md:hidden rounded-t-2xl py-5 px-3 sm:px-[4%]">
@@ -469,7 +469,7 @@ const Wallet = () => {
             )
           }
 
-          < div >
+          <div>
             <FetchWallet data={postperData} length={payhistory.length} />
             <div className="px-4 ">
               {payhistory.length > postPerPage && <Pagination

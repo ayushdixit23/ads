@@ -16,7 +16,7 @@ import { capitalizeFirstLetter } from '../utils/useful';
 const FetchWallet = ({ data, length }) => {
 	return (
 		<div
-			className={`p-3 h-full max-h-[340px] overflow-y-scroll no-scrollbar ${length != 0 ? null : "pn:max-md:hidden"}`}
+			className={`p-3 h-full  max-h-[340px] overflow-y-scroll no-scrollbar ${length != 0 ? null : "pn:max-md:hidden"}`}
 		>
 			<div className="flex justify-between bg-white dark:bg-[#0D0D0D] items-center w-full border rounded-t-2xl py-5 px-3 sm:px-[4%]">
 				<div className="sm:text-2xl text-lg font-semibold">

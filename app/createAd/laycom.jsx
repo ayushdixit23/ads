@@ -17,6 +17,10 @@ export default function createAdLayout({ children }) {
   const [url, setUrl] = useState();
   const advid = params.get("advid");
   const userid = params.get("userid");
+  const adid = params?.get("adid")
+  const brand = params.get("brand")
+  const imageofparams = params.get("image")
+
   const step = useSelector((state) => state.data.step);
   const validateStep1 = useSelector((state) => state.data.validateStep1);
   const three = useSelector((state) => state.data.three);
@@ -103,7 +107,11 @@ export default function createAdLayout({ children }) {
     const isPageReloaded = window.performance.navigation.type === 1;
     if (isPageReloaded) {
       console.log('Page is reloaded');
-      router.push("/createAd?step=1")
+      if (advid && userid) {
+        router.push(`/createAd?brand=${brand}&userid=${userid}&advid=${advid}&image=${imageofparams}&step=1`)
+      } else {
+        router.push(`/createAd?adid=${adid}&step=1`)
+      }
     } else {
       console.log('Page is not reloaded');
     }
@@ -111,10 +119,19 @@ export default function createAdLayout({ children }) {
 
   useEffect(() => {
     if (step === 1 && !validateStep1) {
-      router.push("/createAd?step=1")
+      if (advid && userid) {
+        router.push(`/createAd?brand=${brand}&userid=${userid}&advid=${advid}&image=${imageofparams}&step=1`)
+      } else {
+        router.push(`/createAd?adid=${adid}&step=1`)
+      }
+
     }
     if (step === 2 && !validateStep2) {
-      router.push("/createAd?step=1")
+      if (advid && userid) {
+        router.push(`/createAd?brand=${brand}&userid=${userid}&advid=${advid}&image=${imageofparams}&step=1`)
+      } else {
+        router.push(`/createAd?adid=${adid}&step=1`)
+      }
     }
   }, [step, validateStep1, validateStep2])
 

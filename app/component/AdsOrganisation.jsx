@@ -42,8 +42,7 @@ const AdsOrganisation = () => {
 		totalspent: 0,
 		totalads: ""
 	})
-
-
+	
 	const fetchDataO = async (id) => {
 		try {
 			const res = await axios.get(`${API}/fetchdashboardO/${id}/${data.advid}`);

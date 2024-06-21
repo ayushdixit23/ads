@@ -11,10 +11,22 @@ import Image from 'next/image';
 import dsh from '../assests/dsh.svg';
 import { FaAngleDown } from 'react-icons/fa';
 import { AiOutlinePlus } from 'react-icons/ai';
-import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import TableAds from './tableAds';
+import { useSelector } from 'react-redux';
+import { useAuthContext } from '../utils/AuthWrapper';
 
 const Fetch = ({ data, length, router }) => {
+	const { data: user } = useAuthContext();
+	const advertiserid = useSelector((state) => state.data.advertiserid);
+	const userid = useSelector((state) => state.data.userid);
+	const fullname = useSelector((state) => state.data.fullname);
+	const image = useSelector((state) => state.data.image);
+
+	function generateRandomNumber() {
+		const min = Math.pow(10, 9);
+		const max = Math.pow(10, 10) - 1;
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
 
 	return (
 		<>
@@ -69,7 +81,13 @@ const Fetch = ({ data, length, router }) => {
 															</div>
 															<div
 																onClick={() => {
-																	router.push(`/createAd?step=1`);
+
+																	if (advertiserid && userid) {
+																		router.push(`/createAd?brand=${fullname}&userid=${userid}&advid=${advertiserid}&image=${image}&step=1`);
+																	} else {
+																		router.push(`/createAd?adid=${generateRandomNumber()}&step=1`);
+																	}
+
 																}}
 															>
 																Create Ad

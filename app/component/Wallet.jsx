@@ -331,7 +331,7 @@ const Wallet = () => {
 
       < div className="grid grid-cols-1 w-[100%] dark:bg-black h-[95%] select-none sm:p-4" >
         {/* <div className="grid sm:mt-0 grid-cols-1 w-full  dark:bg-red-800 z-10"> */}
-        < div className="grid grid-cols-1 sm:m-1  w-full sm:w-[95%] " >
+        < div className="flex flex-col sm:m-1  w-full sm:w-[95%] " >
           {/* <div className="flex p-3 sm:flex-row dark:bg-red-900 flex-col gap-4">
             <div className="md:w-[75%] bg-white dark:bg-[#0D0D0D] p-3 sm:px-6 pb-5 sm:w-[60%] light:border rounded-2xl">
               <div className="flex items-center space-x-2">
@@ -360,7 +360,7 @@ const Wallet = () => {
               <div className="font-semibold pb-4">Add Funds </div>
             </div>
           </div> */}
-          < div className="" >
+          < div className="flex " >
             <div className="grid sm:grid-cols-2 p-3  gap-5 w-full">
               <div className="w-full  dark:bg-[#0d0d0d] bg-white rounded-xl flex p-3 sm:px-6 items-center">
                 <div className="flex gap-5 flex-col">
@@ -435,7 +435,7 @@ const Wallet = () => {
                 className={`p-3 ${payhistory.length === 0 && " pn:max-sm:mb-[5rem]"
                   } `}
               >
-                <div className="flex justify-between bg-white dark:bg-[#0D0D0D] items-center w-full border md:hidden rounded-t-2xl py-5 px-3 sm:px-[4%]">
+                <div className="flex justify-between bg-red-900 dark:bg-[#0D0D0D] items-center w-full border md:hidden rounded-t-2xl  px-3 sm:px-[4%]">
                   <div className="sm:text-2xl text-lg font-semibold">
                     All Transaction Details
                   </div>
@@ -452,7 +452,7 @@ const Wallet = () => {
                   </div>
                 </div> */}
                 </div>
-                <div className="flex flex-col w-full justify-center bg-white dark:bg-[#0D0D0D] p-2 mb-3 py-5 md:hidden items-center">
+                <div className="flex flex-col w-full justify-center bg-green-300 dark:bg-[#0D0D0D] p-2 mb-3 py-5 md:hidden items-center">
                   <div>
                     <div className="flex justify-center items-center">
                       <Image src={nodataw} alt="nodataw" />
@@ -469,7 +469,7 @@ const Wallet = () => {
             )
           }
 
-          <div>
+          <div className="mt-4">
             <FetchWallet data={postperData} length={payhistory.length} />
             <div className="px-4 ">
               {payhistory.length > postPerPage && <Pagination

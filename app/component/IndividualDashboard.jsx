@@ -56,6 +56,12 @@ const IndividaulDashboard = () => {
     views: "",
   })
 
+  function generateRandomNumber() {
+    const min = Math.pow(10, 9);
+    const max = Math.pow(10, 10) - 1;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
   const fetchData = async (id) => {
     try {
       const res = await axios.get(`${API}/fetchdashboard/${id}`);
@@ -78,22 +84,23 @@ const IndividaulDashboard = () => {
           ...adD,
           name: data[0]?.a?.adname,
           media: data[0]?.a?.url,
-          type: data[0]?.a?.content[0].extension.startsWith("image") ? "image" : "video"
+          type: data[0]?.a?.content[0]?.extension.startsWith("image") ? "image" : "video"
         })
         setCampdata(data)
         setDefaults(data[0]?.a?.adname)
-        const adsGraph = data[0]?.analytics.map((d) => {
+        const adsGraph = data[0]?.analytics?.map((d) => {
           return {
             ...d,
             // time: formatDateToString(d?.creation),
             time: returnDay(d?.creation),
-            cpc: parseFloat(d?.cpc.toFixed(1))
+            cpc: parseFloat(d?.cpc?.toFixed(1))
           };
         });
         setGraph(adsGraph);
         const adsMonths = data[0]?.analytics.map((d) => (returnMonth(d?.creation)))
         const uniqueMonths = [...new Set(adsMonths)];
         setMonths(uniqueMonths);
+
         setValue({
           click: data[0]?.a?.clicks,
           views: data[0]?.a?.views,
@@ -133,7 +140,6 @@ const IndividaulDashboard = () => {
       {campdata?.length > 0 ?
         <div className="grid grid-cols-1 h-full overflow-y-scroll no-scrollbar w-[100%] bg-[#f7f7f7] dark:bg-black select-none p-2 sm:p-4">
           <div className=" flex flex-col gap-4">
-
 
             {/* <div className=" w-full grid   md:grid-cols-4 pn:max-md:gap-2  grid-cols-2 rounded-xl">
               <div className="flex bg-maincolor justify-center items-center max-h-[100px] p-2 gap-2 sm:gap-5 pn:max-sm:rounded-md sm:max-md:rounded-xl sm:p-3 md:rounded-tl-2xl md:rounded-bl-2xl md:border-r-2">
@@ -285,7 +291,7 @@ const IndividaulDashboard = () => {
                         ...d,
                         // time: formatDateToString(d?.creation),
                         time: returnDay(d?.creation),
-                        cpc: parseFloat(d?.cpc.toFixed(1))
+                        cpc: d?.cpc ? parseFloat(d?.cpc?.toFixed(1)) : 0
                       };
                     });
                     const adsMonths = filteredData[0]?.analytics.map((d) => (returnMonth(d?.creation)))
@@ -305,14 +311,13 @@ const IndividaulDashboard = () => {
                       popularity: filteredData[0]?.popularity,
                     });
                   }}
-                  className={`p-1 px-4 rounded-l-lg text-sm border ${day7 == 7 ? " bg-[#2d9aff] text-white" : null} border-[#ced3d9] dark:border-[#262c31] font-semibold`}>7 days</div>
+                  className={`p-1 px-4 rounded-l-lg z-30 text-sm border ${day7 == 7 ? " bg-[#2d9aff] text-white" : null} border-[#ced3d9] dark:border-[#262c31] font-semibold`}>7 days</div>
                 <div
                   onClick={async () => {
                     setDay7(30)
                     const data = await CampaignFetchforthirtyDays(ads?.advid)
                     const filteredData = data.filter(item => item.a?._id === idToCheck);
-                    console.log(filteredData, "fileter")
-                    console.log(idToCheck)
+
                     setCampdata(data);
                     setAdD({
                       ...adD,
@@ -326,7 +331,7 @@ const IndividaulDashboard = () => {
                         ...d,
                         // time: formatDateToString(d?.creation),
                         time: returnDay(d?.creation),
-                        cpc: parseFloat(d?.cpc.toFixed(1))
+                        cpc: d?.cpc ? parseFloat(d?.cpc?.toFixed(1)) : 0
                       };
                     });
                     const adsMonths = filteredData[0]?.analytics.map((d) => (returnMonth(d?.creation)))
@@ -347,7 +352,7 @@ const IndividaulDashboard = () => {
                     });
                   }
                   }
-                  className={`p-1 px-4 rounded-r-lg text-sm border ${day7 == 30 ? " bg-[#2d9aff] text-white" : null} border-[#ced3d9] dark:border-[#262c31] font-semibold`}>30 Days</div>
+                  className={`p-1 px-4 rounded-r-lg z-30  text-sm border ${day7 == 30 ? " bg-[#2d9aff] text-white" : null} border-[#ced3d9] dark:border-[#262c31] font-semibold`}>30 Days</div>
                 {/* <div></div> */}
               </div>
             </div>
@@ -411,17 +416,18 @@ const IndividaulDashboard = () => {
 
                                   setAdValues({
                                     ...adValues,
-                                    totalspent: d.a.totalspent,
-                                    conversion: d.conversion,
-                                    popularity: d.popularity,
+                                    totalspent: d?.a?.totalspent,
+                                    conversion: d?.conversion,
+                                    popularity: d?.popularity,
                                   });
                                   if (d) {
                                     const adsGraph = d.analytics.map((d) => {
+
                                       return {
                                         ...d,
                                         // time: formatDateToString(d.creation),
-                                        time: returnDay(d.creation),
-                                        cpc: parseFloat(d?.cpc.toFixed(1))
+                                        time: returnDay(d?.creation),
+                                        cpc: d?.cpc ? parseFloat(d?.cpc?.toFixed(1)) : 0
                                       };
                                     });
                                     setGraph(adsGraph);
@@ -464,15 +470,18 @@ const IndividaulDashboard = () => {
                       </div>
                     </div>
 
-
                   </div>
 
                 </div>
 
-                <div className="flex justify-center pn:max-sm:gap-2 pr-4 pt-3 sm:justify-between flex-wrap">
-                  <div onClick={() => setCheck({
-                    ...check, click: !check.click
-                  })} className={`flex justify-center ${check.click ? "bg-[#ffa800] text-[#fff]" : ""} cursor-pointer pn:max-sm:rounded-xl sm:rounded-l-xl w-[150px] border border-l-none p-2 items-center`}>
+                <div className="flex justify-center pn:max-sm:gap-2 z-30 pr-4 pt-3 sm:justify-between flex-wrap">
+                  <div onClick={() => {
+
+                    setCheck({
+                      ...check, click: !check.click
+                    })
+                  }
+                  } className={`flex justify-center ${check.click ? "bg-[#ffa800] text-[#fff]" : ""} cursor-pointer pn:max-sm:rounded-xl sm:rounded-l-xl w-[150px] border border-l-none p-2 items-center`}>
                     <div className="flex  w-full p-2 gap-1 font-semibold flex-col">
                       <div>Click</div>
                       <div>{value.click}</div>
@@ -510,9 +519,9 @@ const IndividaulDashboard = () => {
               </div>
               <div className="w-full bg-white dark:bg-[#0D0D0D] h-full pn:max-sm:h-[300px]">
                 <div className="relative h-full pn:max-sm:-left-5 top-0 w-full pn:max-sm:h-[300px]">
-                  < ResponsiveContainer className={``}>
+                  <ResponsiveContainer style={{ zIndex: 10 }}>
                     <LineChart width={730} height={250} data={graph}
-                    // margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+
                     >
                       <XAxis dataKey="time" className='text-xs' />
                       <YAxis className="pn:max-sm:text-xs" axisLine={false} allowDecimals={false} />
@@ -521,7 +530,7 @@ const IndividaulDashboard = () => {
                         borderRadius: "12px",
                         border: "none"
                       }} cursor={{ fill: theme === "light" ? "#f8f9fc" : '#1B2431' }} />
-                      {/* <Legend /> */}
+
                       {check.click && < Line type="monotone" dataKey="click" stroke="#ffa800" />}
                       {check.views && <Line type="monotone" dataKey="views" stroke="#32ade6" />}
                       {check.impressions && <Line type="monotone" dataKey="impressions" stroke="#00c7be" />}
@@ -542,7 +551,7 @@ const IndividaulDashboard = () => {
                     </>}
                 </div>
                 <div className="flex justify-center w-full font-semibold bg-white pb-3 dark:bg-[#0D0D0D]  gap-2 text-sm items-center">
-                  {months.map((month, index) => (
+                  {(months && months.length > 0) && months?.map((month, index) => (
                     <React.Fragment key={index}>
                       <div>{month}</div>
                       {index !== months.length - 1 && <div className="separator">-</div>}
@@ -554,14 +563,14 @@ const IndividaulDashboard = () => {
           </div >
         </div >
         :
-        <div className="flex flex-col w-full justify-center
+        <div className="flex flex-col  w-full justify-center
          items-center h-full font-semibold select-none p-2 sm:p-4 ">
           <Image src={noads} className="max-w-[350px]" />
           <div className="my-5 text-xl">
             Create Your First Ad!
           </div>
           <div>
-            <Link className="bg-blue-600 text-white p-2 px-7 rounded-xl font-semibold" href="/createAd?step=1">
+            <Link className="bg-blue-600 z-30 text-white p-2 px-7 rounded-xl font-semibold" href={`/createAd?adid=${generateRandomNumber()}&step=1`}>
               Create Ad !
             </Link>
           </div>

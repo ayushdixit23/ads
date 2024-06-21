@@ -38,7 +38,7 @@ const OSidebar = () => {
 				fullname: data?.firstname + " " + data?.lastname
 			})
 		}
-	}, [])
+	}, [data])
 
 	return (
 		<>

@@ -158,58 +158,9 @@ export default function SettingLayout({ children }) {
     < div className="flex w-screen  h-screen" >
       <MobileNav />
       <div className="w-full flex flex-col dark:bg-[#1E1E1E]">
-        <div>
-          <div className="sm:h-[76px] h-[68px] flex border-b dark:bg-[#0D0D0D] items-center w-full text-2xl font-semibold  px-3 sm:px-6">
-            {/* {path.startsWith("/main/ads") && <div>Ads</div>}
-        {path.startsWith("/main/wallet") && <div>Wallet</div>}
-        {path.startsWith("/main/dashboard") && (
-          <div className="flex justify-between items-center w-full">
-            <div>Dashboard</div>
-            <div className="flex justify-center items-center gap-2">
-              <ModeToggle />
-              <div>
-                <Link
-                  href={
-                    advertiserid && userid
-                      ? `/createAd?brand=${fullname}&userid=${userid}&advid=${advertiserid}&image=${image}&step=1`
-                      : `/createAd?adid=${generateRandomNumber()}&step=1`
-                  }
-                  className="flex justify-center cursor-pointer items-center bg-[#1A73E8] text-white p-2 sm:px-4 px-3 rounded-full space-x-1"
-                >
-                  <div>
-                    <AiOutlinePlus className="font-semibold" />
-                  </div>
-                  <div>
-                    <p className="pr-2 text-base">Create Ad</p>
-                  </div>
-                </Link>
-              </div>
-            </div>
-          </div>
-        )} */}
-            <div className="flex justify-between items-center w-full">
-              <div className="flex items-center py-2 gap-2 text-2xl">
-                {/* <Image
-                src={user.image}
-                className="w-[50px] h-[50px]"
-                alt="adspace"
-              /> */}
-                <Image
-                  src={Logo}
-                  className="w-[50px] h-[50px]"
-                  alt="adspace"
-                />
-                <span className="hidden sm:block font-semibold">Adspace</span>
-              </div>
-              <ModeToggle />
-            </div>
-          </div>
-        </div>
-        <div className="flex h-[90%] ">
+
+        <div className="flex h-[100%]">
           {data?.type === "Individual" ? <Sidebar /> : <OSidebar />}
-          {/* <div className="h-full w-full overflow-y-scroll no-scrollbar">
-            {children}
-          </div> */}
 
           <div className="bg-[#f8f8f8] max-h-screen  dark:bg-black grid grid-cols-1 w-full h-full overflow-y-scroll no-scrollbar p-[2%]">
             <div className="grid md:grid-cols-3  sm:grid-cols-5 grid-cols-1 sm:gap-4 md:gap-8">
@@ -292,3 +243,22 @@ export default function SettingLayout({ children }) {
 
 
 }
+
+
+// <div>
+//   <div className="sm:h-[76px] h-[68px] flex border-b dark:bg-[#0D0D0D] items-center w-full text-2xl font-semibold  px-3 sm:px-6">
+
+//     <div className="flex justify-between items-center w-full">
+//       <div className="flex items-center py-2 gap-2 text-2xl">
+
+//         <Image
+//           src={Logo}
+//           className="w-[50px] h-[50px]"
+//           alt="adspace"
+//         />
+//         <span className="hidden sm:block font-semibold">Adspace</span>
+//       </div>
+//       <ModeToggle />
+//     </div>
+//   </div>
+// </div>

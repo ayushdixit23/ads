@@ -400,22 +400,23 @@ const Register = () => {
 								<div className="text-sm">Individual: Advertise your own app or service to gain traction within the Grovyo user base.</div>
 							</div>
 						</div>
-						<div onClick={hundl} className={`flex p-2 px-3 sm:px-5 ${(details.type === "Organization" && aff === false) ? "border-2 border-blue-600 rounded-lg" : ""} sm:flex-row flex-col gap-2 sm:gap-4 w-full sm:items-center`}>
-							<div>
-								<Image src={organis} className="min-w-[70px] min-h-[70px] max-w-[70px] max-h-[70px]" />
-							</div>
-							<div className="flex flex-col gap-1">
-								<div className="text-lg font-semibold">Organization</div>
-								<div className="text-sm">Organization: Promote your company's apps and services to a wider audience. Run ads and receive up to 10% cashback on your ad spend directly in your bank account.</div>
-							</div>
-						</div>
+
 						<div onClick={alagaff} className={`flex p-2 px-3 sm:px-5 ${aff ? "border-2 border-blue-600 rounded-lg" : ""} sm:flex-row flex-col gap-2 sm:gap-4 w-full sm:items-center`}>
 							<div>
 								<Image src={affic} className="min-w-[70px] min-h-[70px] max-w-[70px] max-h-[70px]" />
 							</div>
 							<div className="flex flex-col gap-1">
 								<div className="text-lg font-semibold">Affiliater</div>
-								<div className="text-sm">Affiliater: Run ads for multiple accounts and earn cashback on your ad spend.  Run ads and receive up to 30% cashback on your ad spend directly in your bank account.</div>
+								<div className="text-sm">Affiliater: Run ads for multiple accounts and earn cashback on your ad spend.  Run ads and receive up to <span className="font-semibold text-green-600">30% cashback</span> on your ad spend directly in your bank account.</div>
+							</div>
+						</div>
+						<div onClick={hundl} className={`flex p-2 px-3 sm:px-5 ${(details.type === "Organization" && aff === false) ? "border-2 border-blue-600 rounded-lg" : ""} sm:flex-row flex-col gap-2 sm:gap-4 w-full sm:items-center`}>
+							<div>
+								<Image src={organis} className="min-w-[70px] min-h-[70px] max-w-[70px] max-h-[70px]" />
+							</div>
+							<div className="flex flex-col gap-1">
+								<div className="text-lg font-semibold">Organization</div>
+								<div className="text-sm">Organization: Promote your company's apps and services to a wider audience. Run ads and receive up to <span className="font-semibold text-green-600">10% cashback</span> on your ad spend directly in your bank account.</div>
 							</div>
 						</div>
 					</div>

@@ -55,6 +55,7 @@ const OrganisationDashboard = () => {
   const [dswic, setDswic] = useState(false)
   const [campdata, setCampdata] = useState([]);
   const advertiserid = useSelector((state) => state.data.advertiserid);
+  const userid = useSelector((state) => state.data.userid);
   const fullname = useSelector((state) => state.data.fullname);
   const image = useSelector((state) => state.data.image);
   const [state, setState] = useState("");
@@ -119,7 +120,7 @@ const OrganisationDashboard = () => {
         setLoading(true);
         fetchData(advertiserid);
         const data = await CampaignFetch(advertiserid);
-        console.log(data, "campdata");
+
         setIdToCheck(data[0]?.a?._id)
         setCampdata(data);
         setAdD({
@@ -134,7 +135,7 @@ const OrganisationDashboard = () => {
             ...d,
             // time: formatDateToString(d?.creation),
             time: returnDay(d?.creation),
-            cpc: parseFloat(d?.cpc.toFixed(1))
+            cpc: parseFloat(d?.cpc?.toFixed(1))
           };
         });
         setGraph(adsGraph);
@@ -686,7 +687,7 @@ const OrganisationDashboard = () => {
                   </div> */}
                     </div>
 
-                    <div className="flex justify-center pn:max-sm:gap-2 pr-4 pt-3 sm:justify-between flex-wrap">
+                    <div className="flex justify-center z-30 pn:max-sm:gap-2 pr-4 pt-3 sm:justify-between flex-wrap">
                       <div
                         onClick={() =>
                           setCheck({
@@ -755,7 +756,7 @@ const OrganisationDashboard = () => {
                   <div className="w-full bg-white dark:bg-[#0D0D0D] rounded-xl  h-full pn:max-sm:h-[300px]">
                     <div className="relative h-full pn:max-sm:-left-5 top-0 w-full pn:max-sm:h-[300px]">
 
-                      <ResponsiveContainer className={``}>
+                      <ResponsiveContainer style={{ zIndex: 10 }} className={``}>
                         <LineChart
                           width={730}
                           height={250}
@@ -803,15 +804,15 @@ const OrganisationDashboard = () => {
             </div>
           ) : (
             <div
-              className="flex flex-col mb-[70px] sm:mb-0 w-full justify-center
+              className="flex flex-col  mb-[70px] sm:mb-0 w-full justify-center
 						items-center h-full font-semibold bg-white dark:bg-[#0D0D0D] select-none p-2 sm:p-4 "
             >
               <Image src={noads} className="max-w-[250px] sm:max-w-[350px]" />
               <div className="my-5 text-xl">Create Your First Ad!</div>
               <div>
                 <Link
-                  className="bg-blue-600 text-white p-2 px-7 rounded-xl font-semibold"
-                  href="/createAd?step=1"
+                  className="bg-blue-600 z-30 text-white p-2 px-7 rounded-xl font-semibold"
+                  href={`/createAd?brand=${fullname}&userid=${userid}&advid=${advertiserid}&image=${image}&step=1`}
                 >
                   Create Ad !
                 </Link>

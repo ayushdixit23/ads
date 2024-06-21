@@ -7,8 +7,6 @@ import { AiOutlinePlus } from "react-icons/ai";
 import MobileNav from "../component/MobileNav";
 import { useAuthContext } from "../utils/AuthWrapper";
 import { useSelector } from "react-redux";
-import Logo from "../assests/Logo.png";
-import Image from "next/image";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
 
@@ -42,24 +40,21 @@ export default function MainLayout({ children }) {
 
   return (
     <>
-      <div className="fixed w-screen bottom-0 left-0  h-screen ">
-        <div className="absolute bottom-0 right-0 m-4 flex justify-center items-center text-white p-2 px-4">
+      <div className={`flex flex-col fixed justify-end ${path == "/main/dashboard" ? "z-20" : "z-0"}  items-end w-screen h-screen p-4`}>
+        <div className="flex justify-center items-center text-white">
           <div className="animate-bounce">
-
             <Link
               href={
                 advertiserid && userid
                   ? `/createAd?brand=${fullname}&userid=${userid}&advid=${advertiserid}&image=${image}&step=1`
                   : `/createAd?adid=${generateRandomNumber()}&step=1`
               }
-              className="flex justify-center cursor-pointer  items-center bg-[#1A73E8] text-white p-2 sm:p-4 px-3 rounded-full space-x-1"
+              className="flex justify-center cursor-pointer items-center z-50 bg-[#1A73E8] text-white p-2 sm:p-4 px-3 rounded-full space-x-1"
             >
               <div>
                 <AiOutlinePlus className="font-semibold text-sm sm:text-xl" />
               </div>
-              {/* <div>
-              <p className="pr-2 text-[14px] text-sm pp:text-base">Create Ad</p>
-            </div> */}
+
             </Link>
           </div>
         </div>
@@ -112,7 +107,7 @@ export default function MainLayout({ children }) {
         </div> */}
 
         <div className="w-full flex bg-[#f7f7f7] dark:bg-[#1E1E1E]">
-          <div>
+          <div className={`${path === "/main/dashboard" ? "z-40" : "z-0"}`}>
             {data?.type === "Individual" ? <Sidebar /> : <OSidebar />}
           </div>
           <div className={`h-screen w-full flex flex-col overflow-y-scroll dark:bg-black  no-scrollbar

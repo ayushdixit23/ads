@@ -2,15 +2,16 @@ import Image from 'next/image';
 import React from 'react'
 import { GrFormAdd } from 'react-icons/gr';
 import Asterik from '../component/Asterik';
+import toast from 'react-hot-toast';
 
 const Individual = ({
 	details,
 	handleChangePhotoClick,
 	setDetails,
 	dispatch,
+	router,
 	setChecked,
 	checked,
-	handleSave,
 	setChange,
 	onSignup,
 	dataValid
@@ -54,7 +55,8 @@ const Individual = ({
 
 					<input
 						id="image"
-						placeholder="abc@gmail.com"
+						placeholder=""
+						accept='image/*'
 						onChange={(e) =>
 							setDetails({
 								...details,
@@ -357,9 +359,10 @@ const Individual = ({
 				<div className="flex justify-between space-x-5 items-center">
 					<button
 						onClick={() => {
-							dispatch(setChange(1))
+							// dispatch(setChange(1))
+							router.push("/registration?step=1")
 						}}
-						className="w-full p-2 border border-[#f9f9f9] text-white font-semibold rounded-xl my-2"
+						className="w-full p-2 border border-[#f9f9f9] text-black dark:text-white font-semibold rounded-xl my-2"
 					>
 						Back
 					</button>
@@ -369,10 +372,12 @@ const Individual = ({
 								{
 									if (details.password === details.confirmPass) {
 										dispatch(setChange(3))
+										router.push("/registration?step=3")
 										onSignup()
 									} else {
 										toast.error("Password & Confirm Password Doesnt Match")
-										dispatch(setChange(2))
+										router.push("/registration?step=2")
+
 									}
 
 								}

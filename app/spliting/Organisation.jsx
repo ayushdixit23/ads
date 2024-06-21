@@ -11,7 +11,9 @@ const Organisation = ({
 	setDetails,
 	dispatch,
 	setChecked,
+	aff,
 	checked,
+	router,
 	setChange,
 	onSignup,
 	dataValid
@@ -89,7 +91,8 @@ const Organisation = ({
 
 					<input
 						id="image"
-						placeholder="abc@gmail.com"
+						placeholder=""
+						accept='image/*'
 						onChange={(e) =>
 							setDetails({
 								...details,
@@ -335,7 +338,7 @@ const Organisation = ({
 						</label>
 					</div>
 				</div>
-				<div className="grid sm:grid-cols-2 my-2 gap-4">
+				{aff == false && <div className="grid sm:grid-cols-2 my-2 gap-4">
 					<div className="relative h-16 ">
 						<input
 							placeholder="300033"
@@ -377,8 +380,8 @@ const Organisation = ({
 							<Asterik text={"Famous Landmark"} />
 						</label>
 					</div>
-				</div>
-				<div className="relative h-16 my-2">
+				</div>}
+				{aff == false && <div className="relative h-16 my-2">
 					<input
 						placeholder="Your Address"
 						id="address"
@@ -399,9 +402,9 @@ const Organisation = ({
 
 						<Asterik text={"Address"} />
 					</label>
-				</div>
+				</div>}
 				{/* city */}
-				<div className="grid sm:grid-cols-2 my-2 gap-4">
+				{aff == false && <div className="grid sm:grid-cols-2 my-2 gap-4">
 					<div className="relative h-16">
 						<input
 							placeholder="Kanpur"
@@ -451,7 +454,7 @@ const Organisation = ({
 						</label>
 					</div>
 
-				</div>
+				</div>}
 				{/* postal */}
 
 				<div className="my-2">
@@ -462,7 +465,7 @@ const Organisation = ({
 					/>
 					<label className="mx-2">
 						I have read and agreed to the{" "}
-						<span className="text-[#0075FF]">Terms & Conditions</span>{" "}
+						<span className="text-[#0075FF]">{" "}Terms & Conditions</span>{" "}
 						and
 						<span className="text-[#0075FF]"> Privacy policy</span>
 					</label>
@@ -470,10 +473,11 @@ const Organisation = ({
 				<div className="flex justify-between space-x-5 items-center">
 					<button
 						onClick={() => {
-							dispatch(setChange(1))
+							// dispatch(setChange(1))
+							router.push("/registration?step=1")
 
 						}}
-						className="w-full p-2 border border-[#f9f9f9] text-white  font-semibold rounded-xl my-2"
+						className="w-full p-2 border border-[#f9f9f9] text-black dark:text-white  font-semibold rounded-xl my-2"
 					>
 						Back
 					</button>
@@ -482,7 +486,8 @@ const Organisation = ({
 							onClick={() => {
 								{
 									if (details.password === details.confirmPass) {
-										dispatch(setChange(3))
+										// dispatch(setChange(3))
+										router.push("/registration?step=3")
 										onSignup()
 									} else {
 										toast.error("Password & Confirm Password Doesnt Match")

@@ -175,19 +175,21 @@ const OrganisationDashboard = () => {
 
   useEffect(() => {
     if (user) {
-      setState(user.manageusers[0]?.fullname);
-      setDp(user.manageusers[0]?.image);
-      dispatch(setAdvertiserid(user.manageusers[0]?.id));
-      dispatch(setFullname(user.manageusers[0]?.fullname));
-      dispatch(setImage(user.manageusers[0]?.image));
-      dispatch(setUserid(user.manageusers[0]?.userid));
+      setState(user?.manageusers?.[0]?.fullname);
+      setDp(user?.manageusers?.[0]?.image);
+      dispatch(setAdvertiserid(user?.manageusers?.[0]?.id));
+      dispatch(setFullname(user?.manageusers?.[0]?.fullname));
+      dispatch(setImage(user?.manageusers?.[0]?.image));
+      dispatch(setUserid(user?.manageusers?.[0]?.userid));
       adsData.map((f) => {
-        if (f?.id === user.manageusers[0]?.id) {
+        if (f?.id === user?.manageusers?.[0]?.id) {
           setActiveData({ ...activeData, totalads: f?.totalads, totalspent: f?.totalSpent })
         }
       })
     }
   }, [user]);
+
+  console.log(user, "sue")
 
   useEffect(() => {
     setState(fullname)

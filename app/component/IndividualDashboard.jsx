@@ -76,12 +76,12 @@ const IndividaulDashboard = () => {
         setIdToCheck(data[0]?.a?._id)
         setAdD({
           ...adD,
-          name: data[0].a.adname,
-          media: data[0].a.url,
-          type: data[0].a.content[0].extension.startsWith("image") ? "image" : "video"
+          name: data[0]?.a?.adname,
+          media: data[0]?.a?.url,
+          type: data[0]?.a?.content[0].extension.startsWith("image") ? "image" : "video"
         })
         setCampdata(data)
-        setDefaults(data[0].a.adname)
+        setDefaults(data[0]?.a?.adname)
         const adsGraph = data[0]?.analytics.map((d) => {
           return {
             ...d,
@@ -95,14 +95,14 @@ const IndividaulDashboard = () => {
         const uniqueMonths = [...new Set(adsMonths)];
         setMonths(uniqueMonths);
         setValue({
-          click: data[0].a.clicks,
-          views: data[0].a.views,
-          impressions: data[0].a.impressions,
-          cpc: data[0].a.cpc
+          click: data[0]?.a?.clicks,
+          views: data[0]?.a?.views,
+          impressions: data[0]?.a?.impressions,
+          cpc: data[0]?.a?.cpc
         })
         setAdValues({
-          ...adValues, totalspent: data[0].a.totalspent, conversion: data[0].conversion,
-          popularity: data[0].popularity
+          ...adValues, totalspent: data[0]?.a?.totalspent, conversion: data[0]?.conversion,
+          popularity: data[0]?.popularity
         })
         setLoading(false)
       }

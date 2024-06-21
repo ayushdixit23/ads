@@ -329,7 +329,7 @@ const Wallet = () => {
       } */}
 
 
-      < div className="grid grid-cols-1 w-[100%] bg-black h-[95%] select-none sm:p-4" >
+      < div className="grid grid-cols-1 w-[100%] dark:bg-black h-[95%] select-none sm:p-4" >
         {/* <div className="grid sm:mt-0 grid-cols-1 w-full  dark:bg-red-800 z-10"> */}
         < div className="grid grid-cols-1 sm:m-1  w-full sm:w-[95%] " >
           {/* <div className="flex p-3 sm:flex-row dark:bg-red-900 flex-col gap-4">
@@ -375,7 +375,7 @@ const Wallet = () => {
                         <div className="font-medium text-sm sm:text-base">Available Funds</div>
                       </div>
                       <div className="text-lg sm:text-xl flex items-center gap-2 font-semibold">
-                        <div className={`text-[#FC2E20] `}>₹{money ? money : 0}</div>
+                        <div className={`${Number(money) < 500 && "text-[#FC2E20]"} `}>₹{money ? money : 0}</div>
                         {Number(money) < 500 && < span className="text-[#FC2E20] sm:text-base sm:font-medium text-xs font-normal">Low funds</span>}
                       </div>
                     </div>

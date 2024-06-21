@@ -35,30 +35,57 @@ export default function createAdLayout({ children }) {
     }
   };
 
+  // useEffect(() => {
+  //   // Your URL string
+  //   const url = window.location.href;
+
+  //   // Regular expression to extract the desired URL
+  //   const regex = /\/createAd\?([^&]*(?!step=1)(?:&[^&]+)*)/;
+
+  //   // Extracting the URL using the regular expression
+  //   const match = url.match(regex);
+  //   console.log(match);
+
+  //   if (match) {
+  //     let extractedUrl = match[0]; // Use index 0 to get the entire matched URL
+  //     // Remove "&step=1" from the extracted URL
+  //     extractedUrl = extractedUrl.replace(/&step=1(?:&|$)/, "");
+  //     // Remove the last '&' character, if it exists
+  //     extractedUrl = extractedUrl.replace(/&$/, "");
+  //     // Log the extracted URL
+  //     console.log(extractedUrl);
+  //     setUrl(extractedUrl);
+  //   } else {
+  //     console.log("No matching URL found");
+  //   }
+  // }, []);  
+
+
   useEffect(() => {
     // Your URL string
     const url = window.location.href;
 
-    // Regular expression to extract the desired URL
-    const regex = /\/createAd\?([^&]*(?!step=1)(?:&[^&]+)*)/;
+    // Regular expression to remove any "step" parameter
+    const regex = /\/createAd\?([^#]+)/;
 
     // Extracting the URL using the regular expression
     const match = url.match(regex);
-    console.log(match);
 
     if (match) {
-      let extractedUrl = match[0]; // Use index 0 to get the entire matched URL
-      // Remove "&step=1" from the extracted URL
-      extractedUrl = extractedUrl.replace(/&step=1(?:&|$)/, "");
-      // Remove the last '&' character, if it exists
-      extractedUrl = extractedUrl.replace(/&$/, "");
-      // Log the extracted URL
-      console.log(extractedUrl);
-      setUrl(extractedUrl);
+      let extractedUrl = match[1]; // Use index 1 to get the query string part
+      // Remove any existing "step" parameter
+      extractedUrl = extractedUrl.replace(/&?step=\d+/g, "");
+      // Reconstruct the URL without the "step" parameter
+      const newUrl = `/createAd?${extractedUrl}`;
+
+      console.log(newUrl, "newUrl")
+
+      setUrl(newUrl);
     } else {
       console.log("No matching URL found");
     }
-  }, []);
+  }, [step]);
+
 
   const stepBacker = () => {
     if (step === 2) {
@@ -72,28 +99,26 @@ export default function createAdLayout({ children }) {
     setClient(true);
   }, []);
 
-  // useEffect(() => {
-  // 	const isPageReloaded = window.performance.navigation.type === 1;
+  useEffect(() => {
+    const isPageReloaded = window.performance.navigation.type === 1;
+    if (isPageReloaded) {
+      console.log('Page is reloaded');
+      router.push("/createAd?step=1")
+    } else {
+      console.log('Page is not reloaded');
+    }
+  }, []);
 
-  // 	if (isPageReloaded) {
-  // 		console.log('Page is reloaded');
-  // 		router.push("/createAd?step=1")
-  // 	} else {
-  // 		console.log('Page is not reloaded');
-  // 	}
-  // }, []);
-
-  // useEffect(() => {
-  // 	if (step === 1 && !validateStep1) {
-  // 		router.push("/createAd?step=1")
-  // 	}
-  // 	if (step === 2 && !validateStep2) {
-  // 		router.push("/createAd?step=1")
-  // 	}
-  // }, [step, validateStep1, validateStep2])
+  useEffect(() => {
+    if (step === 1 && !validateStep1) {
+      router.push("/createAd?step=1")
+    }
+    if (step === 2 && !validateStep2) {
+      router.push("/createAd?step=1")
+    }
+  }, [step, validateStep1, validateStep2])
 
   const sendData = async (e) => {
-
     setLoading(true)
     e.preventDefault();
     try {
@@ -298,6 +323,7 @@ export default function createAdLayout({ children }) {
               {step === 2 && (
                 <Link
                   href={`${url}&step=2`}
+
                   onClick={stepBacker}
                   className="border-b cursor-pointer pn:max-sm:hidden border-black"
                 >

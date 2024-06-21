@@ -32,11 +32,8 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [showOTP, setShowOTP] = useState(false);
   const dispatch = useDispatch()
-  // const [grovyo, setGrovyo] = useState({
-  //   email: "",
-  //   phone: "",
-  //   otp: ""
-  // })
+
+
   function onCaptchaVerify() {
     if (typeof window !== "undefined" && !window.recaptchaVerifier) {
       window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
@@ -98,19 +95,6 @@ const Login = () => {
     }
   };
 
-  // const cookieSetter = async (data) => {
-  //   try {
-  //     Cookies.set(`axetkn`, data.access_token)
-  //     Cookies.set(`rvktkn`, data.refresh_token)
-  //     // localStorage.setItem(`axetkn`, data.access_token)
-  //     setAuth(true)
-  //     // localStorage.setItem(`rvktkn`, data.refresh_token)
-  //     return true
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-
   const cookieSetter = async (data) => {
     try {
       // Calculate the expiration time for 7 days from now
@@ -133,54 +117,24 @@ const Login = () => {
     }
   }
 
-  //signup
-  // function onSignup(e) {
-  //   e.preventDefault();
-  //   setLoading(true);
-  //   if (!number.trim()) {
-  //     console.log("no number");
-  //     setLoading(false);
-  //     setPop(5);
-  //   } else if (number.length < 10) {
-  //     setLoading(false);
-  //     setPop(6);
-  //   } else {
-  //     setPop(0);
-  //     const appVerifier = window.recaptchaVerifier;
-  //     onCaptchaVerify();
-  //     const formatPh = "+91" + number;
-  //     signInWithPhoneNumber(auth, formatPh, appVerifier)
-  //       .then((confirmationResult) => {
-  //         window.confirmationResult = confirmationResult;
-  //         setLoading(false);
-  //         setShowOTP(true);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //         setLoading(false);
-  //       });
-  //   }
-  // }
-
   function onSignup(e) {
     e.preventDefault();
     setLoading(true);
     if (!number.trim() || number.length !== 10) {
       toast.error("Please Enter A 10 digit Number!")
       setLoading(false);
-      // setPop(5);
     } else {
       const appVerifier = window.recaptchaVerifier;
       if (!appVerifier) {
         onCaptchaVerify();
-        setLoading(false); // Move setLoading inside onCaptchaVerify
-        return; // Return early as onCaptchaVerify will set loading state accordingly
+        setLoading(false);
+        return;
       }
       const formatPh = "+91" + number;
       signInWithPhoneNumber(auth, formatPh, appVerifier)
         .then((confirmationResult) => {
           window.confirmationResult = confirmationResult;
-          setShowOTP(true); // Move setShowOTP here
+          setShowOTP(true);
         })
         .catch((error) => {
           console.log(error);
@@ -191,6 +145,7 @@ const Login = () => {
   }
 
   async function onOTPVerify(e) {
+    console.log("data", number)
     e.preventDefault();
     setLoading(true);
     window.confirmationResult
@@ -205,6 +160,10 @@ const Login = () => {
           const a = await cookieSetter(res.data)
           if (a === true) {
             router.push("/main/dashboard");
+            setTimeout(() => {
+              setLoading(false)
+              dispatch(setLoad(false))
+            }, 5000)
           }
         } else {
           console.log("something went wrong");
@@ -216,64 +175,6 @@ const Login = () => {
       });
 
   }
-
-
-  // const loginwithGrovyo = async () => {
-  //   if (!grovyo.email && !grovyo.phone) {
-  //     toast.error("Please enter atleast one field!")
-  //     return
-  //   }
-  //   try {
-  //     setLoad(true)
-  //     const res = await axios.post(`${API}/loginwithgrovyo`, {
-  //       email: grovyo.email,
-  //       phone: grovyo.phone
-  //     })
-
-  //     if (res.data.success) {
-  //       sessionStorage.setItem("type", res.data.logwithidentity)
-  //       sessionStorage.setItem("value", res.data.value)
-  //       setChange(true)
-  //     }
-  //     setLoad(false)
-  //   } catch (error) {
-  //   } finally {
-  //     setLoad(false)
-  //   }
-  // }
-
-  // const verifyGrovyo = async () => {
-  //   try {
-  //     setLoad(true)
-  //     const type = sessionStorage.getItem("type")
-  //     const value = sessionStorage.getItem("value")
-  //     const res = await axios.post(`${API}/verifyotp`, {
-  //       otp: grovyo.otp,
-  //       type, value
-  //     })
-  //     console.log(res.data)
-  //     if (res.data.success) {
-  //       if (res.data.accountexist) {
-  //         const a = await cookieSetter(res.data)
-  //         if (a === true) {
-  //           router.push("/main/dashboard");
-  //           sessionStorage.removeItem("type")
-  //           sessionStorage.removeItem("value")
-  //         }
-  //       } else {
-  //         router.push("/registration")
-  //         setCookie("rigdta", encryptaes(JSON.stringify(res.data.data)))
-  //       }
-  //     }
-  //     setLoad(false)
-  //   } catch (error) {
-  //     console.log(error)
-  //   } finally {
-  //     setLoad(false)
-  //   }
-  // }
-
-
 
   return (
     <div className="w-full">
@@ -316,7 +217,7 @@ const Login = () => {
                 <div className="font-semibold text-sm">
                   Don't have an account yet?
                   <span className="text-[#3451f7] mx-1">
-                    <Link href="/registration"> Sign up now</Link>
+                    <Link href="/registration?step=1">Sign up now</Link>
                   </span>
                 </div>
               </div>
@@ -471,15 +372,15 @@ const Login = () => {
                       <>
                         {loading ? (
                           <button
-                            onClick={onSignup}
+                            disabled
                             className="w-full bg-gradient-to-r from-[#5645fe] to-[#7940ef] opacity-90 hover:opacity-100 flex justify-center items-center p-2 rounded-lg text-white font-semibold text-lg"
                           >
                             <AiOutlineLoading3Quarters className="animate-spin" />
                           </button>
                         ) : (
                           <button
-                            // onClick={onSignup}
-                            onClick={onOTPVerify}
+                            onClick={onSignup}
+                            // onClick={onOTPVerify}
                             className="w-full bg-gradient-to-r from-[#5645fe] to-[#7940ef] opacity-90 hover:opacity-100 p-2 rounded-lg text-white font-semibold text-lg"
                           >
                             Send OTP

@@ -5,7 +5,7 @@ import Loading from "../assests/loading.json"
 
 const Loader = () => {
 	return (
-		<div className='fixed inset-0 w-screen flex justify-center items-center dark:bg-[#0d0d0d] bg-white h-screen'>
+		<div className='fixed inset-0 w-screen flex justify-center z-50 items-center dark:bg-[#0d0d0d] bg-white h-screen'>
 			<div>
 				<Lottie animationData={Loading} loop size={250} />
 			</div>

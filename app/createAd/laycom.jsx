@@ -16,6 +16,7 @@ export default function createAdLayout({ children }) {
   const params = useSearchParams();
   const [url, setUrl] = useState();
   const advid = params.get("advid");
+  const [hasNavigated, setHasNavigated] = useState(false);
   const userid = params.get("userid");
   const adid = params?.get("adid")
   const brand = params.get("brand")
@@ -103,37 +104,39 @@ export default function createAdLayout({ children }) {
     setClient(true);
   }, []);
 
+
   useEffect(() => {
     const isPageReloaded = window.performance.navigation.type === 1;
-    if (isPageReloaded) {
+    if (!hasNavigated && isPageReloaded) {
       console.log('Page is reloaded');
       if (advid && userid) {
-        router.push(`/createAd?brand=${brand}&userid=${userid}&advid=${advid}&image=${imageofparams}&step=1`)
+        router.push(`/createAd?brand=${brand}&userid=${userid}&advid=${advid}&image=${imageofparams}&step=1`);
       } else {
-        router.push(`/createAd?adid=${adid}&step=1`)
+        router.push(`/createAd?adid=${adid}&step=1`);
       }
     } else {
       console.log('Page is not reloaded');
     }
-  }, []);
+  }, [hasNavigated, advid, userid, brand, imageofparams, adid, router]);
+
 
   useEffect(() => {
-    if (step === 1 && !validateStep1) {
-      if (advid && userid) {
-        router.push(`/createAd?brand=${brand}&userid=${userid}&advid=${advid}&image=${imageofparams}&step=1`)
-      } else {
-        router.push(`/createAd?adid=${adid}&step=1`)
+    if (!hasNavigated) {
+      if (step === 1 && !validateStep1) {
+        if (advid && userid) {
+          router.push(`/createAd?brand=${brand}&userid=${userid}&advid=${advid}&image=${imageofparams}&step=1`);
+        } else {
+          router.push(`/createAd?adid=${adid}&step=1`);
+        }
+      } else if (step === 2 && !validateStep2) {
+        if (advid && userid) {
+          router.push(`/createAd?brand=${brand}&userid=${userid}&advid=${advid}&image=${imageofparams}&step=1`);
+        } else {
+          router.push(`/createAd?adid=${adid}&step=1`);
+        }
       }
-
     }
-    if (step === 2 && !validateStep2) {
-      if (advid && userid) {
-        router.push(`/createAd?brand=${brand}&userid=${userid}&advid=${advid}&image=${imageofparams}&step=1`)
-      } else {
-        router.push(`/createAd?adid=${adid}&step=1`)
-      }
-    }
-  }, [step, validateStep1, validateStep2])
+  }, [step, validateStep1, validateStep2, hasNavigated])
 
   const sendData = async (e) => {
     setLoading(true)
@@ -192,6 +195,7 @@ export default function createAdLayout({ children }) {
         Cookies.remove("postid");
         Cookies.remove("post");
         setLoading(false)
+        setHasNavigated(true);
         router.push("/main/dashboard");
         dispatch(
           setThree({

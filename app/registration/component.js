@@ -426,10 +426,10 @@ const Register = () => {
 							radio == 1 || radio == 2 ?
 								(
 									router.push("/registration?step=2")
-									// dispatch(setChange(2))
+
 								)
 								: (router.push("/registration?step=1")
-									// , dispatch(setChange(1))
+
 								)
 
 						}

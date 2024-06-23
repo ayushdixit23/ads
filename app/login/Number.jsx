@@ -91,7 +91,7 @@ const Login = () => {
       setTimeout(() => {
         setLoading(false)
         dispatch(setLoad(false))
-      }, 5000)
+      }, 35000)
     }
   };
 
@@ -163,7 +163,7 @@ const Login = () => {
             setTimeout(() => {
               setLoading(false)
               dispatch(setLoad(false))
-            }, 5000)
+            }, 35000)
           }
         } else {
           console.log("something went wrong");

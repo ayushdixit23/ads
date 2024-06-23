@@ -64,7 +64,7 @@ const Sidebar = () => {
             <div className="flex items-center py-2 gap-2 text-2xl">
               <Image
                 src={Logo}
-                className="sm:w-[50px] w-[40px] h-[40px] sm:h-[50px]"
+                className=" w-[35px] h-[35px] "
                 alt="adspace"
               />
               <span className="hidden pp:block font-medium">Adspace</span>
@@ -231,9 +231,9 @@ const Sidebar = () => {
             </nav>
           </div>
 
-          <div className="flex gap-1 items-center px-4 -mx-4">
+          <div className="flex items-center px-4 -mx-4">
             <img
-              className="object-cover mx-2 rounded-full h-9 w-9"
+              className="object-cover mx-2 rounded-[13px] h-9 w-9"
               src={user?.image}
               alt="avatar"
             />

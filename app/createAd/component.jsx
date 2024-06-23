@@ -38,6 +38,16 @@ function page() {
 	const imageofparams = params.get("image")
 
 	useEffect(() => {
+		const handleButtonClick = () => {
+			window.alert("Get ready to create your first ad..");
+			sessionStorage.removeItem("firstTimeUser");
+		};
+		if (sessionStorage.getItem("firstTimeUser")) {
+			handleButtonClick()
+		}
+	}, [])
+
+	useEffect(() => {
 		if ((advid && useridofparams && brand)) {
 			dispatch(setAdvertiserid(advid))
 			dispatch(setUserid(useridofparams))

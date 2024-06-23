@@ -9,6 +9,7 @@ import { useAuthContext } from "../utils/AuthWrapper";
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
+import { ModeToggle } from "../component/ModeToggle";
 
 export default function MainLayout({ children }) {
   const { data } = useAuthContext();
@@ -40,7 +41,7 @@ export default function MainLayout({ children }) {
 
   return (
     <>
-      <div className={`flex flex-col fixed justify-end ${path == "/main/dashboard" ? "z-20" : "z-0"}  items-end w-screen h-screen p-4`}>
+      <div className={`sm:flex flex-col hidden fixed justify-end  ${path == "/main/dashboard" ? "z-20" : "z-0"} items-end w-screen h-screen p-4`}>
         <div className="flex justify-center items-center text-white">
           <div className="animate-bounce">
             <Link
@@ -59,8 +60,32 @@ export default function MainLayout({ children }) {
           </div>
         </div>
       </div>
+
+      <div className={`bottom-0 sm:hidden fixed right-3 z-0 w-screen h-screen p-4`}>
+        <div className="absolute bottom-[60px] right-2 text-white">
+          <div className="animate-bounce">
+            <Link
+              href={
+                advertiserid && userid
+                  ? `/createAd?brand=${fullname}&userid=${userid}&advid=${advertiserid}&image=${image}&step=1`
+                  : `/createAd?adid=${generateRandomNumber()}&step=1`
+              }
+              className="flex justify-center cursor-pointer items-center z-50 bg-[#1A73E8] text-white p-4 rounded-full space-x-1"
+            >
+              <div>
+                <AiOutlinePlus className="font-semibold text-sm sm:text-xl" />
+              </div>
+
+            </Link>
+          </div>
+        </div>
+      </div>
+
       <div className="flex w-screen h-screen">
-        <MobileNav />
+        <div className="z-30">
+          <MobileNav />
+        </div>
+
         {/* <div className="w-full flex flex-col bg-red-800 dark:bg-[#1E1E1E]">
           <div className="sm:h-[10%] h-[8%]">
             <div className="h-full flex border-b dark:bg-[#0D0D0D] items-center w-full text-2xl font-semibold px-2 sm:px-6">

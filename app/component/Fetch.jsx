@@ -15,7 +15,7 @@ import TableAds from './tableAds';
 import { useSelector } from 'react-redux';
 import { useAuthContext } from '../utils/AuthWrapper';
 
-const Fetch = ({ data, length, router }) => {
+const Fetch = ({ data, length, router, setCampdata }) => {
 	const { data: user } = useAuthContext();
 	const advertiserid = useSelector((state) => state.data.advertiserid);
 	const userid = useSelector((state) => state.data.userid);
@@ -38,7 +38,7 @@ const Fetch = ({ data, length, router }) => {
 						}`}
 				>
 
-					<Table className="w-full border h-full no-scrollbar bg-white dark:bg-[#0D0D0D] min-w-[900px] border-border">
+					<Table className="w-full border h-full   no-scrollbar bg-white dark:bg-[#0D0D0D] min-w-[900px] border-border">
 						<TableHeader className="h-[70px] ">
 							<TableRow>
 								<TableHead className="text-center">NAME</TableHead>
@@ -48,6 +48,7 @@ const Fetch = ({ data, length, router }) => {
 								<TableHead className="text-center">CPC</TableHead>
 								<TableHead className="text-center">START DATE</TableHead>
 								<TableHead className="text-center">END Date</TableHead>
+								<TableHead className="text-center">ACTIONS</TableHead>
 								{/* <TableHead className="">Actions</TableHead> */}
 							</TableRow>
 						</TableHeader>
@@ -56,7 +57,7 @@ const Fetch = ({ data, length, router }) => {
 							{length > 0 ?
 								<>
 									{data?.map((d, i) => (
-										<TableAds key={i} d={d} />
+										<TableAds adData={data} setCampdata={setCampdata} key={i} d={d} />
 									))}
 								</>
 								: (

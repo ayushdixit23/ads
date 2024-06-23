@@ -349,7 +349,7 @@ const Individual = ({
 					/>
 					<label className="mx-2">
 						I have read and agreed to the
-						<span className="text-[#0075FF]">
+						<span className="text-[#0075FF]">{" "}
 							Terms & Conditions
 						</span>{" "}
 						and

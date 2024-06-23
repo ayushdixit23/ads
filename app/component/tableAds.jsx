@@ -4,15 +4,36 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io'
 import { capitalizeFirstLetter, formatNumberToIndianSystem } from '../utils/useful'
+import { BsThreeDotsVertical } from 'react-icons/bs'
+import { useAuthContext } from '../utils/AuthWrapper'
+import toast, { Toaster } from 'react-hot-toast'
+import { useSelector } from 'react-redux'
 
-const TableAds = ({ d }) => {
-	const [state, setState] = useState("")
-	const [toggle, setToggle] = useState("")
+const TableAds = ({ d, adData, setCampdata }) => {
+	const [popup, setPopup] = useState()
+	const { data } = useAuthContext()
+	const advertiserid = useSelector((state) => state.data.advertiserid)
 
 	const pauseAd = async (id) => {
 		try {
 			const res = await axios.post(`${API}/pausead/${id}`)
-			console.log(res.data)
+			if (res.data.success) {
+				const myData = adData?.map((d) => {
+					if (d?.a._id === id) {
+						return {
+							...d,
+							a: {
+								...d.a,
+								status: "paused"
+							}
+						};
+					} else {
+						return d;
+					}
+				});
+				setCampdata(myData)
+				toast.success("Ad Paused!")
+			}
 		} catch (error) {
 			console.log(error)
 		}
@@ -22,6 +43,38 @@ const TableAds = ({ d }) => {
 		try {
 			const res = await axios.post(`${API}/runad/${id}`)
 			console.log(res.data)
+
+			if (res.data.success) {
+				const myData = adData?.map((d) => {
+					if (d?.a._id === id) {
+						return {
+							...d,
+							a: {
+								...d.a,
+								status: "active"
+							}
+						};
+					} else {
+						return d;
+					}
+				});
+				setCampdata(myData)
+				toast.success("Your Ad is now Active!")
+			}
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	const deleteAd = async (adid) => {
+		try {
+			const aid = data?.type === "Individual" ? data?.advid : advertiserid
+			const res = await axios.post(`${API}/deleteAd/${aid}/${adid}`)
+			if (res.data.success) {
+				const myData = adData?.filter((d) => d?.a?._id !== adid)
+				setCampdata(myData)
+				toast.success("Ad Deleted!")
+			}
 		} catch (error) {
 			console.log(error)
 		}
@@ -29,6 +82,8 @@ const TableAds = ({ d }) => {
 
 	return (
 		<>
+			<Toaster />
+			{/* <div onClick={() => { setPopup(false) }} className={`fixed inset-0 w-screen h-screen ${popup ? "z-40" : "-z-20"} `}></div> */}
 			<TableRow className="h-[70px] ">
 				<TableCell className="font-medium text-center">
 					{d?.a?.adname}
@@ -37,7 +92,7 @@ const TableAds = ({ d }) => {
 					<div className={`text-center max-w-[130px] rounded-lg  px-4 py-2 ${d?.a?.status === "review" ? "text-[#F9943B] bg-[#F9943B]/10" : null
 						}
 							${d?.a?.status === "active" ? "text-[#03A65A] bg-[#03A65A]/10" : null}
-							${d?.a?.status === "stopped" ? "text-[#FC2E20] bg-[#FC2E20]/10" : null}`}>{d?.a?.status === "review" ? "In review" : capitalizeFirstLetter(d?.a?.status)}</div>
+							${(d?.a?.status === "stopped" || d?.a?.status === "paused") ? "text-[#FC2E20] bg-[#FC2E20]/10" : null}`}>{d?.a?.status === "review" ? "In review" : capitalizeFirstLetter(d?.a?.status)}</div>
 
 				</TableCell>
 				<TableCell className=" text-center">
@@ -58,70 +113,22 @@ const TableAds = ({ d }) => {
 				<TableCell className=" text-center">
 					{d?.a?.enddate}
 				</TableCell>
-				{/* <TableCell className=" text-center">
-
-					{d?.a.status === "review" ? < div className="flex flex-col w-full  bg-[#f7f7f7] dark:bg-[#c4c0c0] rounded-xl">
-						<div
-
-							className="flex justify-between items-center relative p-1.5 cursor-pointer h-full gap-2 px-2 w-full text-sm"
-						>
-							<div className="flex items-center gap-2">
-
-								<div className="text-[#0d0d0d] text-xs dark:text-white font-semibold">
-									pending
-								</div>
+				<TableCell className="flex justify-center items-center w-full text-center">
+					<div className='relative'>
+						<BsThreeDotsVertical onClick={() => setPopup(true)} />
+						<div className={`duration-100 ${popup ? "absolute bg-white rounded-xl shadow-md w-auto h-auto top-[20px] p-3 z-40 -left-[80px]" : "w-0 h-0 text-[0px]"} `}>
+							<div className={`flex flex-col gap-2 justify-center h-full`}>
+								{(d?.a?.status == "stopped" || d?.a?.status == "paused") && <div onClick={() => runAd(d?.a?._id)}>Run</div>}
+								{d?.a?.status == "active" && <div onClick={() => pauseAd(d?.a._id)}>Pause</div>}
+								<div onClick={() => deleteAd(d?.a._id)}>Delete</div>
 							</div>
-
-							<div className="text-lg ">
-								{toggle ? (
-									<IoIosArrowUp />
-								) : (
-									<IoIosArrowDown />
-								)}
-							</div>
-
-							
 						</div>
 					</div>
 
-						:
-						< div className="flex flex-col w-full  bg-[#f7f7f7] dark:bg-[#121212]  rounded-xl">
-							<div
-								onClick={() => setToggle(!toggle)}
-								className="flex justify-between items-center relative p-1.5 cursor-pointer h-full gap-2 px-2 w-full text-sm"
-							>
-								<div className="flex items-center gap-2">
 
-									<div className="text-[#0d0d0d] text-xs dark:text-white font-semibold">
-										{state ? state : d?.a?.status}
-									</div>
-								</div>
 
-								<div className="text-lg ">
-									{toggle ? (
-										<IoIosArrowUp onClick={() => setToggle(!toggle)} />
-									) : (
-										<IoIosArrowDown onClick={() => setToggle(!toggle)} />
-									)}
-								</div>
+				</TableCell>
 
-								<div
-									className={` ${toggle
-										? "top-[45px]"
-										: "top-0 border-none text-[0px] w-[0px] h-[0px]"
-										} absolute left-0 bg-[#f7f7f7] duration-100 dark:bg-[#121212] rounded-xl z-50 w-full`}
-								>
-									<div className="flex flex-col gap-3 px-2 py-3">
-
-										<div onClick={() => { setState("Pause"); pauseAd(d?.a?._id) }}>Pause</div>
-										<div onClick={() => { setState("Run"); runAd(d?.a?._id) }}>Run</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					}
-
-				</TableCell> */}
 			</TableRow >
 		</>
 	)

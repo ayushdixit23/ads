@@ -11,6 +11,7 @@ import React, { useEffect, useState } from 'react'
 const page = () => {
 	const { data, f } = useAuthContext()
 	const router = useRouter()
+
 	const [loading, setLoading] = useState(true)
 
 	useEffect(() => {

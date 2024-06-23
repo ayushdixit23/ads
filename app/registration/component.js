@@ -230,6 +230,9 @@ const Register = () => {
 				} else {
 					router.push("/main/dashboard");
 				}
+
+				sessionStorage.setItem("firstTimeUser", true)
+
 				setTimeout(() => {
 					dispatch(setChange(1))
 				}, 2000)

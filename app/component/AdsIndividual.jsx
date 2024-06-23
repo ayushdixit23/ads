@@ -43,7 +43,7 @@ const AdsIndividual = () => {
 	return (
 		<>
 
-			<Fetch data={postperData} length={campdata.length} router={router} />
+			<Fetch data={postperData} setCampdata={setCampdata} length={campdata.length} router={router} />
 			{campdata?.length > postPerPage && <Pagination
 				postPerPage={postPerPage}
 				setCurrentPage={setCurrentPage}

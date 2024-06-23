@@ -335,7 +335,7 @@ const Wallet = () => {
 
       } */}
 
-      <div className="flex flex-col w-[100%]  dark:bg-black h-auto select-none sm:p-2">
+      <div className="flex flex-col w-[100%]  h-auto select-none sm:p-2">
         {/* <div className="grid sm:mt-0 grid-cols-1 w-full  dark:bg-red-800 z-10"> */}
         <div className="flex flex-col h-full sm:m-1  w-full  ">
           <div className="flex ">
@@ -447,7 +447,7 @@ const Wallet = () => {
 
           {payhistory.length === 0 && (
             <div
-              className={`bg-black p-3 ${
+              className={` p-3 ${
                 payhistory.length === 0 && " pn:max-sm:mb-[5rem]"
               } `}
             >

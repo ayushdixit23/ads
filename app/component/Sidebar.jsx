@@ -7,10 +7,11 @@ import { useAuthContext } from "../utils/AuthWrapper";
 import Logo from "../assests/Logo.png";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { ModeToggle } from "./ModeToggle";
 
 const Sidebar = () => {
   // const { image, firstname, lastname } = getData()
-  const { data } = useAuthContext()
+  const { data } = useAuthContext();
 
   function generateRandomNumber() {
     // Generate a random 10-digit number
@@ -21,25 +22,26 @@ const Sidebar = () => {
 
   const [user, setUser] = useState({
     image: "",
-    fullname: ""
-  })
+    fullname: "",
+  });
 
   useEffect(() => {
     if (data?.firstname && data?.lastname && data?.image) {
       setUser({
         image: data?.image,
-        fullname: data?.firstname + " " + data?.lastname
-      })
+        fullname: data?.firstname + " " + data?.lastname,
+      });
     }
-  }, [])
-  const path = usePathname()
-
+  }, []);
+  const path = usePathname();
 
   return (
     <>
       {/* <aside className="flex flex-col pn:max-sm:hidden sm:w-24 md:w-64 h-[100%] px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-[#848484] dark:border-gray-700"> */}
 
-      <aside className={`flex flex-col pn:max-sm:hidden  sm:w-24  md:w-64 h-[100%] px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-[#0D0D0D] dark:border-gray-700`}>
+      <aside
+        className={`flex flex-col pn:max-sm:hidden  sm:w-24  md:w-64 h-[100%] px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-[#0D0D0D] dark:border-gray-700`}
+      >
         {/* <a href="#">
           <img className="w-auto h-6 sm:h-7" src="https://merakiui.com/images/logo.svg" alt="" />
         </a> */}
@@ -61,18 +63,22 @@ const Sidebar = () => {
 
         <div className="flex flex-col justify-between flex-1">
           <div>
-            <div className="flex items-center py-2 gap-2 text-2xl">
+            <div className="flex items-center md:justify-start justify-center py-2 gap-2 text-2xl">
               <Image
                 src={Logo}
-                className=" w-[35px] h-[35px] "
+                className="flex justify-center items-center w-[35px] h-[35px] "
                 alt="adspace"
               />
-              <span className="hidden pp:block font-medium">Adspace</span>
+              <span className="md:block hidden font-medium">Adspace</span>
             </div>
 
             <nav className=" mt-16">
               <Link
-                className={`flex items-center px-4 py-2 mt-5 ${path === "/main/dashboard" ? "bg-blue-600 text-white" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"} transition-colors duration-300 transform rounded-md `}
+                className={`flex items-center px-4 py-2 mt-5 ${
+                  path === "/main/dashboard"
+                    ? "bg-blue-600 text-white"
+                    : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
+                } transition-colors duration-300 transform rounded-md `}
                 href="/main/dashboard"
               >
                 <svg
@@ -105,7 +111,11 @@ const Sidebar = () => {
 
               <Link
                 href="/main/ads"
-                className={`flex items-center px-4 py-2 mt-5 ${path === "/main/ads" ? "bg-blue-600 text-white" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"} transition-colors duration-300 transform rounded-md `}
+                className={`flex items-center px-4 py-2 mt-5 ${
+                  path === "/main/ads"
+                    ? "bg-blue-600 text-white"
+                    : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
+                } transition-colors duration-300 transform rounded-md `}
               >
                 <svg
                   className="w-5 h-5"
@@ -178,15 +188,19 @@ const Sidebar = () => {
             </div> */}
 
               <Link
-                className={`flex items-center px-4 py-2 mt-5 ${path === "/main/wallet" ? "bg-blue-600 text-white" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"} transition-colors duration-300 transform rounded-md `}
+                className={`flex items-center px-4 py-2 mt-5 ${
+                  path === "/main/wallet"
+                    ? "bg-blue-600 text-white"
+                    : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
+                } transition-colors duration-300 transform rounded-md `}
                 href="/main/wallet"
               >
                 <LuWallet2 />
 
-                <span className="mx-4 sm:max-md:hidden font-medium">Wallet</span>
+                <span className="mx-4 sm:max-md:hidden font-medium">
+                  Wallet
+                </span>
               </Link>
-
-
 
               {/* <hr className="my-6 border-gray-200 dark:border-gray-600" /> */}
 
@@ -200,7 +214,11 @@ const Sidebar = () => {
 
               <Link
                 href="/setting"
-                className={`flex items-center px-4 py-2 mt-5 ${path.startsWith("/setting") ? "bg-blue-600 text-white" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"} transition-colors duration-300 transform rounded-md `}
+                className={`flex items-center px-4 py-2 mt-5 ${
+                  path.startsWith("/setting")
+                    ? "bg-blue-600 text-white"
+                    : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
+                } transition-colors duration-300 transform rounded-md `}
               >
                 <svg
                   className="w-5 h-5"

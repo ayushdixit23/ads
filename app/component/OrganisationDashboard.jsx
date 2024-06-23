@@ -904,7 +904,7 @@ const OrganisationDashboard = () => {
                 </>
               ) : (
                 <>
-                  <div className="w-full h-full flex flex-col gap-3 justify-center items-center font-semibold">
+                  <div className="w-full h-full flex flex-col gap-3 bg-white dark:bg-[#0D0D0D] justify-center items-center font-semibold">
                     <div className="text-2xl">Not Enough Money to run ad!</div>
                     <div className="text-xl">Add Money to Wallet</div>
                     <div className="z-30">

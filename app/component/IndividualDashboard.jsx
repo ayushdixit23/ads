@@ -722,7 +722,7 @@ const IndividaulDashboard = () => {
                   </div>
                 </div>
 
-                <div className="w-full h-full flex rounded-xl bg-white flex-col gap-3 justify-center items-center font-semibold">
+                <div className="w-full h-full flex rounded-xl dark:bg-[#0D0D0D] bg-white flex-col gap-3 justify-center items-center font-semibold">
                   <div className="text-2xl">Not Enough Money to run ad!</div>
                   <div className="text-xl">Add Money to Wallet</div>
                   <div className="z-30">

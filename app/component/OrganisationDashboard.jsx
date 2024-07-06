@@ -41,6 +41,7 @@ import {
 } from "@/app/redux/slice/dataSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { formatDateToString, returnDay } from "../utils/useful";
+import { useTheme } from "next-themes";
 
 const OrganisationDashboard = () => {
   const [data, setData] = useState();
@@ -69,6 +70,7 @@ const OrganisationDashboard = () => {
   const dispatch = useDispatch();
   const [adsData, setAdsData] = useState([]);
   const [currentbalance, setCurrentBalance] = useState(null);
+  const { theme } = useTheme();
   const [activeData, setActiveData] = useState({
     totalspent: 0,
     totalads: "",

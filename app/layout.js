@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
           id="otpless-sdk"
           type="text/javascript"
           src="https://otpless.com/v2/headless.js"
-          data-appid="cjpd2ercbflljxvrbrp9zcblt155uul1"
+          data-appid="CZ0C3TQLX7LM7L3R4D7D"
         ></script>
 
       </Head>

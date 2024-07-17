@@ -24,15 +24,15 @@ const useOTPLessSignin = () => {
       // Implement your custom logic here.
     };
 
-    const OTPlessSignin = new window.OTPless(callback);
-    console.log(window.OTPless, OTPlessSignin);
-    setOTPlessSignin(OTPlessSignin);
+    // const OTPlessSignin = new window.OTPless(callback);
+    // console.log(window.OTPless, OTPlessSignin);
+    // setOTPlessSignin(OTPlessSignin);
 
-    // if (window.OTPless) {
-    //   const OTPlessSignin = new window.OTPless(callback);
-    //   console.log(window.OTPless);
-    //   setOTPlessSignin(OTPlessSignin);
-    // }
+    if (window.OTPless) {
+      const OTPlessSignin = new window.OTPless(callback);
+      console.log(window.OTPless, OTPlessSignin);
+      setOTPlessSignin(OTPlessSignin);
+    }
   }, []);
 
   return OTPlessSignin;

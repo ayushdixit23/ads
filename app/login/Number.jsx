@@ -35,18 +35,21 @@ const Login = () => {
   const OTPlessSignin = useOTPLessSignin();
   const dispatch = useDispatch();
 
-  // function onCaptchaVerify() {
-  //   if (typeof window !== "undefined" && !window.recaptchaVerifier) {
-  //     window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-  //       'size': 'normal',
-  //       'callback': (response) => {
-  //         onSignup();
-  //       },
-  //       'expired-callback': () => {
-  //       }
-  //     });
-  //   }
-  // }
+  function onCaptchaVerify() {
+    if (typeof window !== "undefined" && !window.recaptchaVerifier) {
+      window.recaptchaVerifier = new RecaptchaVerifier(
+        auth,
+        "recaptcha-container",
+        {
+          size: "normal",
+          callback: (response) => {
+            onSignup();
+          },
+          "expired-callback": () => {},
+        }
+      );
+    }
+  }
 
   const handleCreate = async (e) => {
     e.preventDefault();
@@ -118,64 +121,63 @@ const Login = () => {
     }
   };
 
-  // function onSignup(e) {
-  //   e.preventDefault();
-  //   setLoading(true);
-  //   if (!number.trim() || number.length !== 10) {
-  //     toast.error("Please Enter A 10 digit Number!")
-  //     setLoading(false);
-  //   } else {
-  //     const appVerifier = window.recaptchaVerifier;
-  //     if (!appVerifier) {
-  //       onCaptchaVerify();
-  //       setLoading(false);
-  //       return;
-  //     }
-  //     const formatPh = "+91" + number;
-  //     signInWithPhoneNumber(auth, formatPh, appVerifier)
-  //       .then((confirmationResult) => {
-  //         window.confirmationResult = confirmationResult;
-  //         setShowOTP(true);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //         setLoading(false);
-  //       })
-  //       .finally(() => setLoading(false));
-  //   }
-  // }
+  function onSignup(e) {
+    e.preventDefault();
+    setLoading(true);
+    if (!number.trim() || number.length !== 10) {
+      toast.error("Please Enter A 10 digit Number!");
+      setLoading(false);
+    } else {
+      const appVerifier = window.recaptchaVerifier;
+      if (!appVerifier) {
+        onCaptchaVerify();
+        setLoading(false);
+        return;
+      }
+      const formatPh = "+91" + number;
+      signInWithPhoneNumber(auth, formatPh, appVerifier)
+        .then((confirmationResult) => {
+          window.confirmationResult = confirmationResult;
+          setShowOTP(true);
+        })
+        .catch((error) => {
+          console.log(error);
+          setLoading(false);
+        })
+        .finally(() => setLoading(false));
+    }
+  }
 
-  // async function onOTPVerify(e) {
-  //   console.log("data", number)
-  //   e.preventDefault();
-  //   setLoading(true);
-  //   window.confirmationResult
-  //     .confirm(OTP)
-  //     .then(async (ress) => {
-  //       setLoading(false);
-  //       const res = await axios.post(`${API}/checkadvaccount`, {
-  //         phone: number,
-  //       });
-  //       if (res.data.success) {
-  //         dispatch(setLoad(true))
-  //         const a = await cookieSetter(res.data)
-  //         if (a === true) {
-  //           router.push("/main/dashboard");
-  //           setTimeout(() => {
-  //             setLoading(false)
-  //             dispatch(setLoad(false))
-  //           }, 35000)
-  //         }
-  //       } else {
-  //         console.log("something went wrong");
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       setLoading(false);
-  //     });
-
-  // }
+  async function onOTPVerify(e) {
+    console.log("data", number);
+    e.preventDefault();
+    setLoading(true);
+    window.confirmationResult
+      .confirm(OTP)
+      .then(async (ress) => {
+        setLoading(false);
+        const res = await axios.post(`${API}/checkadvaccount`, {
+          phone: number,
+        });
+        if (res.data.success) {
+          dispatch(setLoad(true));
+          const a = await cookieSetter(res.data);
+          if (a === true) {
+            router.push("/main/dashboard");
+            setTimeout(() => {
+              setLoading(false);
+              dispatch(setLoad(false));
+            }, 35000);
+          }
+        } else {
+          console.log("something went wrong");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  }
 
   const phoneAuth = () => {
     setLoading(true);
@@ -401,8 +403,8 @@ const Login = () => {
                     {showOTP ? (
                       <>
                         <button
-                          onClick={verifyOTP}
-                          // onClick={onOTPVerify}
+                          // onClick={verifyOTP}
+                          onClick={onOTPVerify}
                           className="w-full bg-gradient-to-r from-[#5645fe] to-[#7940ef] opacity-90 hover:opacity-100 p-2 rounded-lg text-white font-semibold text-lg"
                         >
                           Continue
@@ -419,8 +421,8 @@ const Login = () => {
                           </button>
                         ) : (
                           <button
-                            // onClick={onSignup}
-                            onClick={phoneAuth}
+                            onClick={onSignup}
+                            // onClick={phoneAuth}
                             // onClick={onOTPVerify}
                             className="w-full bg-gradient-to-r from-[#5645fe] to-[#7940ef] opacity-90 hover:opacity-100 p-2 rounded-lg text-white font-semibold text-lg"
                           >

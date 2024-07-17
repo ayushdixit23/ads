@@ -4,6 +4,8 @@
 
 @layer base {
   :root {
+    --scrollbar-track-color-light: #f6f6f6;
+    --scrollbar-thumb-color-light: #dfdfdf;
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
 
@@ -37,6 +39,8 @@
   }
 
   .dark {
+    --scrollbar-track-color-dark: #0d0d0d;
+    --scrollbar-thumb-color-dark: #2c2c2c;
     --maincolor: 224, 15%, 14%;
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;

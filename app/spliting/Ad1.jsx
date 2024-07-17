@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/select";
 import Cookies from "js-cookie";
 import { useAuthContext } from "../utils/AuthWrapper";
+import Hover from "../component/Hover";
 
 const Ad1 = ({
   three,
@@ -263,7 +264,12 @@ const Ad1 = ({
           <div className="my-2 rounded-xl bg-maincolor pn:max-sm:px-2">
             <div className="flex  py-2 px-[2%] flex-col w-full">
               <label htmlFor="adname" className="text-lg font-semibold py-2">
-                Ad Name<span className="text-[#FF4444]"> *</span>
+                <Hover
+                  text={"Ad Name"}
+                  para={
+                    "Choose a unique and catchy name for your ad to make it stand out.Choose a unique and catchy name for your ad to make it stand out."
+                  }
+                />
               </label>
               <input
                 name="myForm"
@@ -283,16 +289,18 @@ const Ad1 = ({
                 <div
                   onClick={() => dispatch(setThree({ goal: "Sales" }))}
                   // onClick={() => setThree({ ...three, goal: "Sales" })}
-                  className={`p-1 border-2 inline-block  text-text w-full sm:w-[220px] rounded-xl ${three.goal === "Sales"
-                    ? "border-2 border-[#2D9AFF]"
-                    : " sm:hover:text-black"
-                    } `}
+                  className={`p-1 border-2 inline-block  text-text w-full sm:w-[220px] rounded-xl ${
+                    three.goal === "Sales"
+                      ? "border-2 border-[#2D9AFF]"
+                      : " sm:hover:text-black"
+                  } `}
                 >
                   <div
-                    className={`p-2 h-full rounded-lg ${three.goal === "Sales"
-                      ? "bg-[#2D9AFF]/30"
-                      : "bg-maincolor sm:hover:bg-[#3e3e3e]/80 sm:hover:text-white"
-                      }  `}
+                    className={`p-2 h-full rounded-lg ${
+                      three.goal === "Sales"
+                        ? "bg-[#2D9AFF]/30"
+                        : "bg-maincolor sm:hover:bg-[#3e3e3e]/80 sm:hover:text-white"
+                    }  `}
                   >
                     {" "}
                     <h1 className="sm:text-2xl text-lg  font-robot font-bold py-1">
@@ -305,16 +313,18 @@ const Ad1 = ({
                 </div>
                 <div
                   onClick={() => dispatch(setThree({ goal: "Awareness" }))}
-                  className={`p-1 border-2 inline-block w-full sm:w-[220px] rounded-xl ${three.goal === "Awareness"
-                    ? "border-2 border-[#2D9AFF]"
-                    : " sm:hover:text-black"
-                    } `}
+                  className={`p-1 border-2 inline-block w-full sm:w-[220px] rounded-xl ${
+                    three.goal === "Awareness"
+                      ? "border-2 border-[#2D9AFF]"
+                      : " sm:hover:text-black"
+                  } `}
                 >
                   <div
-                    className={`p-2 h-full rounded-lg ${three.goal === "Awareness"
-                      ? "bg-[#2D9AFF]/30"
-                      : "bg-maincolor sm:hover:bg-[#3e3e3e]/80 sm:hover:text-white"
-                      }  `}
+                    className={`p-2 h-full rounded-lg ${
+                      three.goal === "Awareness"
+                        ? "bg-[#2D9AFF]/30"
+                        : "bg-maincolor sm:hover:bg-[#3e3e3e]/80 sm:hover:text-white"
+                    }  `}
                   >
                     <h1 className="sm:text-2xl text-lg  font-robot font-bold py-1">
                       Awareness
@@ -326,16 +336,18 @@ const Ad1 = ({
                 </div>
                 <div
                   onClick={() => dispatch(setThree({ goal: "Clicks" }))}
-                  className={` p-1 border-2 inline-block w-full sm:w-[220px] rounded-xl ${three.goal === "Clicks"
-                    ? "border-2 border-[#2D9AFF]"
-                    : " sm:hover:text-black"
-                    } `}
+                  className={` p-1 border-2 inline-block w-full sm:w-[220px] rounded-xl ${
+                    three.goal === "Clicks"
+                      ? "border-2 border-[#2D9AFF]"
+                      : " sm:hover:text-black"
+                  } `}
                 >
                   <div
-                    className={`p-2 h-full rounded-lg ${three.goal === "Clicks"
-                      ? "bg-[#2D9AFF]/30"
-                      : "bg-maincolor sm:hover:bg-[#3e3e3e]/80 sm:hover:text-white"
-                      }  `}
+                    className={`p-2 h-full rounded-lg ${
+                      three.goal === "Clicks"
+                        ? "bg-[#2D9AFF]/30"
+                        : "bg-maincolor sm:hover:bg-[#3e3e3e]/80 sm:hover:text-white"
+                    }  `}
                   >
                     <h1 className="sm:text-2xl text-lg  font-robot font-bold py-1">
                       Clicks
@@ -347,16 +359,18 @@ const Ad1 = ({
                 </div>
                 <div
                   onClick={() => dispatch(setThree({ goal: "Downloads" }))}
-                  className={` p-1 border-2 inline-block w-full sm:w-[220px] rounded-xl ${three.goal === "Downloads"
-                    ? "border-2 border-[#2D9AFF]"
-                    : " sm:hover:text-black"
-                    } `}
+                  className={` p-1 border-2 inline-block w-full sm:w-[220px] rounded-xl ${
+                    three.goal === "Downloads"
+                      ? "border-2 border-[#2D9AFF]"
+                      : " sm:hover:text-black"
+                  } `}
                 >
                   <div
-                    className={`p-2 h-full rounded-lg ${three.goal === "Downloads"
-                      ? "bg-[#2D9AFF]/30"
-                      : "bg-maincolor sm:hover:bg-[#3e3e3e]/80 sm:hover:text-white"
-                      }  `}
+                    className={`p-2 h-full rounded-lg ${
+                      three.goal === "Downloads"
+                        ? "bg-[#2D9AFF]/30"
+                        : "bg-maincolor sm:hover:bg-[#3e3e3e]/80 sm:hover:text-white"
+                    }  `}
                   >
                     {" "}
                     <h1 className="sm:text-2xl text-lg  font-robot font-bold py-1">
@@ -369,16 +383,18 @@ const Ad1 = ({
                 </div>
                 <div
                   onClick={() => dispatch(setThree({ goal: "Views" }))}
-                  className={` p-1 border-2 inline-block w-full sm:w-[220px] rounded-xl ${three.goal === "Views"
-                    ? "border-2 border-[#2D9AFF]"
-                    : " sm:hover:text-black"
-                    } `}
+                  className={` p-1 border-2 inline-block w-full sm:w-[220px] rounded-xl ${
+                    three.goal === "Views"
+                      ? "border-2 border-[#2D9AFF]"
+                      : " sm:hover:text-black"
+                  } `}
                 >
                   <div
-                    className={`p-2 h-full rounded-lg ${three.goal === "Views"
-                      ? "bg-[#2D9AFF]/30"
-                      : "bg-maincolor sm:hover:bg-[#3e3e3e]/80 sm:hover:text-white"
-                      }  `}
+                    className={`p-2 h-full rounded-lg ${
+                      three.goal === "Views"
+                        ? "bg-[#2D9AFF]/30"
+                        : "bg-maincolor sm:hover:bg-[#3e3e3e]/80 sm:hover:text-white"
+                    }  `}
                   >
                     {" "}
                     <h1 className="sm:text-2xl text-lg  font-robot font-bold py-1">
@@ -400,7 +416,12 @@ const Ad1 = ({
                   htmlFor="headline"
                   className="text-lg font-semibold py-2"
                 >
-                  Headline
+                  <Hover
+                    text={"Headline"}
+                    para={
+                      "Write a compelling headline that draws in your audience."
+                    }
+                  />
                 </label>
               </div>
               <input
@@ -419,7 +440,12 @@ const Ad1 = ({
             <div className="flex flex-col  py-2 px-[2%] w-full">
               <div className="flex items-center gap-1">
                 <label htmlFor="des" className="text-lg font-semibold py-2">
-                  Description
+                  <Hover
+                    text={"Description"}
+                    para={
+                      "Craft a compelling description that explains your ads and captivates your audience."
+                    }
+                  />
                 </label>
               </div>
               <input
@@ -442,7 +468,12 @@ const Ad1 = ({
                     htmlFor="action"
                     className="text-lg w-full font-semibold py-2"
                   >
-                    Select Call To Action
+                    <Hover
+                      text={"Select Call To Action"}
+                      para={
+                        "Pick an action you want your audience to take, like Shop Now or Learn More."
+                      }
+                    />
                   </label>
                 </div>
 
@@ -474,7 +505,12 @@ const Ad1 = ({
                     htmlFor="link"
                     className="text-lg w-full min-w-[230px] font-semibold py-2"
                   >
-                    Paste Link To Call To Action
+                    <Hover
+                      text={"Paste Link To Call To Action"}
+                      para={
+                        "Add a URL to direct users to your product or website"
+                      }
+                    />
                   </label>
                 </div>
                 <div className="flex justify-center  rounded-xl items-center border">
@@ -496,7 +532,14 @@ const Ad1 = ({
 
             {three.isDisabled === false && (
               <div className="my-3 mb-4 flex py-2 px-[2%] flex-col space-y-2">
-                <h1 className="text-lg font-semibold">Ad images</h1>
+                <h1 className="text-lg font-semibold">
+                  <Hover
+                    text={"Ad images"}
+                    para={
+                      "Upload high-quality images to capture attention and showcase your product."
+                    }
+                  />
+                </h1>
                 {/* <div>
                   Create up to 5 ads by Selecting multiple images from the
                   library or by uploading directly.
@@ -525,51 +568,36 @@ const Ad1 = ({
                 </div>
               </div>
             )}
-            {/* <div className="py-2 px-[2%]">
-                  <div className="bg-[#F3F6F8] dark:bg-[#1e2129] dark:border dark:border-border py-2 px-[2%]  flex justify-between rounded-2xl items-center w-full">
-                    <div className="flex justify-center overflow-hidden space-x-4 items-center">
-                      <div>
 
-                        {three.pic === "" && (
-                          <Image
-                            src={three.pic ? three.pic : adss}
-                            alt={three.picname}
-                            width={350}
-                            height={200}
-                            className="w-[60px] h-[60px] object-cover"
-                          />
-                        )}
-                        {three.pic && (
-                          <img
-                            className="w-[60px] h-[60px]"
-                            src={three.pic}
-                            alt={three.picname}
-                          />
-                        )}
-                    
-
-                        {three.picsend &&
-                          ["mp4", "avi", "mov"].includes(
-                            three.picname.split(".").pop().toLowerCase()
-                          ) && <div>Video</div>}
-                      </div>
-                      <div>
-                        {three?.picname ? (
-                          <>
-                            {three?.picname.slice(0, 35)}
-                            {three.picname.length > 35 && <>...</>}
-                          </>
-                        ) : (
-                          "File Name"
-                        )}
-                      </div>
-                    </div>
-
-                    <div>
-                      <AiOutlineClose className="text-2xl text-blue-600" />
-                    </div>
-                  </div>
-                </div> */}
+            <div className=" px-[2%]">
+              <h1 className="text-lg font-semibold">Media Preview Typee</h1>
+              <div className="flex gap-4 mt-2 items-center">
+                <div className="flex justify-center items-center space-x-1">
+                  <input
+                    onClick={() => {
+                      dispatch(setThree({ objectType: "object-cover" }));
+                    }}
+                    type="radio"
+                    checked={three.objectType == "object-cover" ? true : false}
+                    name="objectType"
+                  />
+                  <div className="font-semibold ">Cover</div>
+                </div>
+                <div className="flex justify-center items-center space-x-1">
+                  <input
+                    type="radio"
+                    onClick={() => {
+                      dispatch(setThree({ objectType: "object-contain" }));
+                    }}
+                    checked={
+                      three.objectType == "object-contain" ? true : false
+                    }
+                    name="objectType"
+                  />
+                  <div className="font-semibold">Contain</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -635,7 +663,7 @@ const Ad1 = ({
                     alt={"image"}
                     width={350}
                     height={200}
-                    className="w-full h-[300px] min-w-full  rounded-lg object-cover"
+                    className={`w-full h-[300px] min-w-full bg-black  rounded-lg ${three?.objectType}`}
                   />
                 )}
                 {three.isImage && three.media && (
@@ -648,7 +676,7 @@ const Ad1 = ({
                     alt={three.media?.name}
                     width={350}
                     height={200}
-                    className="w-full h-[300px] max-w-[300px] max-h-[300px] min-w-full min-h-[250px] rounded-lg object-cover"
+                    className={`w-full h-[300px] max-w-[300px] bg-black max-h-[300px] min-w-full min-h-[250px] rounded-lg ${three?.objectType}`}
                   />
                 )}
 
@@ -659,7 +687,7 @@ const Ad1 = ({
                         ? three.media
                         : URL.createObjectURL(three.media)
                     }
-                    className="w-full h-[300px] min-w-full rounded-2xl object-cover"
+                    className={`w-full h-[300px] min-w-full bg-black  rounded-2xl ${three?.objectType}`}
                     width="350"
                     height="200"
                     controls

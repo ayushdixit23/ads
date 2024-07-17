@@ -547,8 +547,8 @@ const Register = () => {
 							<button
 								onClick={() => {
 									router.push("/registration?step=3")
-									onOTPVerify();
-									// handleSave();
+									// onOTPVerify();
+									handleSave();
 									// router.push("/login");
 								}}
 								className="w-full p-2 bg-[#2D9AFF] text-white font-semibold rounded-xl sm:my-2"

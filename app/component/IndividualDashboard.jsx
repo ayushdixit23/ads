@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { API } from "@/Essentials";
+import styles from "../CustomScrollbarComponent.module.css";
 import noads from "../assests/noads.svg";
 import d1 from "../assests/d1.png";
 import d2 from "../assests/d2.png";
@@ -152,7 +153,9 @@ const IndividaulDashboard = () => {
       {campdata?.length > 0 ? (
         <>
           {data?.currentbalance ? (
-            <div className="grid grid-cols-1 h-full overflow-y-scroll no-scrollbar w-[100%] bg-[#f7f7f7] dark:bg-black select-none p-2 sm:p-4">
+            <div
+              className={`grid grid-cols-1 h-full overflow-y-scroll ${styles.customScrollbar} w-[100%] bg-[#f7f7f7] dark:bg-black select-none p-2 sm:p-4`}
+            >
               <div className=" flex flex-col gap-4">
                 <div className=" w-full grid md:grid-cols-4 pn:max-md:gap-2 gap-4 lg:gap-10 grid-cols-2 rounded-xl">
                   <div className="bg-white dark:bg-[#0D0D0D] h-[80px] pp:h-[100px]  rounded-2xl">
@@ -278,7 +281,7 @@ const IndividaulDashboard = () => {
                           popularity: filteredData[0]?.popularity,
                         });
                       }}
-                      className={`p-1 px-4 rounded-l-lg z-30 text-sm border ${
+                      className={`p-1 px-4 rounded-l-lg  text-sm border ${
                         day7 == 7 ? " bg-[#2d9aff] text-white" : null
                       } border-[#ced3d9] dark:border-[#262c31] font-semibold`}
                     >
@@ -333,7 +336,7 @@ const IndividaulDashboard = () => {
                           popularity: filteredData[0].popularity,
                         });
                       }}
-                      className={`p-1 px-4 rounded-r-lg z-30  text-sm border ${
+                      className={`p-1 px-4 rounded-r-lg   text-sm border ${
                         day7 == 30 ? " bg-[#2d9aff] text-white" : null
                       } border-[#ced3d9] dark:border-[#262c31] font-semibold`}
                     >
@@ -484,7 +487,7 @@ const IndividaulDashboard = () => {
                       </div>
                     </div>
 
-                    <div className="flex justify-center pn:max-sm:gap-2 z-30 pr-4 pt-3 sm:justify-between flex-wrap">
+                    <div className="flex justify-center pn:max-sm:gap-2  pr-4 pt-3 sm:justify-between flex-wrap">
                       <div
                         onClick={() => {
                           setCheck({
@@ -556,7 +559,7 @@ const IndividaulDashboard = () => {
                   </div>
                   <div className="w-full bg-white dark:bg-[#0D0D0D] h-full pn:max-sm:h-[300px]">
                     <div className="relative h-full pn:max-sm:-left-5 top-0 w-full pn:max-sm:h-[300px]">
-                      <ResponsiveContainer style={{ zIndex: 10 }}>
+                      <ResponsiveContainer style={{ zIndex: 0 }}>
                         <LineChart width={730} height={250} data={graph}>
                           <XAxis dataKey="time" className="text-xs" />
                           <YAxis
@@ -725,7 +728,7 @@ const IndividaulDashboard = () => {
                 <div className="w-full h-full flex rounded-xl dark:bg-[#0D0D0D] bg-white flex-col gap-3 justify-center items-center font-semibold">
                   <div className="text-2xl">Not Enough Money to run ad!</div>
                   <div className="text-xl">Add Money to Wallet</div>
-                  <div className="z-30">
+                  <div className="">
                     <Link
                       href={"/main/wallet"}
                       className="flex justify-center gap-2 bg-blue-500 text-white p-2 px-5 rounded-xl items-center"
@@ -746,7 +749,7 @@ const IndividaulDashboard = () => {
         >
           <Image src={noads} className="max-w-[350px]" />
           <div className="my-5 text-xl">Create Your First Ad!</div>
-          <div className="z-30">
+          <div className="">
             <Link
               className="bg-blue-600  text-white p-2 px-7 rounded-xl font-semibold"
               href={`/createAd?adid=${generateRandomNumber()}&step=1`}

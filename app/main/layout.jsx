@@ -24,24 +24,24 @@ export default function MainLayout({ children }) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  const path = usePathname("")
+  const path = usePathname("");
 
   useEffect(() => {
     if (!path.startsWith("/createAd")) {
-      const c1 = Cookies.get("post")
-      const c2 = Cookies.get("postid")
+      const c1 = Cookies.get("post");
+      const c2 = Cookies.get("postid");
       if (c1) {
-        Cookies.remove("post")
+        Cookies.remove("post");
       }
       if (c2) {
-        Cookies.remove("postid")
+        Cookies.remove("postid");
       }
     }
-  }, [path])
+  }, [path]);
 
   return (
     <>
-      <div className={`sm:flex flex-col hidden fixed justify-end  ${path == "/main/dashboard" ? "z-20" : "z-0"} items-end w-screen h-screen p-4`}>
+      {/* <div className={`sm:flex flex-col hidden fixed justify-end  ${path == "/main/dashboard" ? "z-20" : "z-0"} items-end w-screen h-screen p-4`}>
         <div className="flex justify-center items-center text-white">
           <div className="animate-bounce">
             <Link
@@ -59,9 +59,9 @@ export default function MainLayout({ children }) {
             </Link>
           </div>
         </div>
-      </div>
+      </div> */}
 
-      <div className={`bottom-0 sm:hidden fixed right-3 z-0 w-screen h-screen p-4`}>
+      {/* <div className={`bottom-0 sm:hidden fixed right-3 z-0 w-screen h-screen p-4`}>
         <div className="absolute bottom-[60px] right-2 text-white">
           <div className="animate-bounce">
             <Link
@@ -79,7 +79,7 @@ export default function MainLayout({ children }) {
             </Link>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="flex w-screen h-screen">
         <div className="z-30">
@@ -135,9 +135,10 @@ export default function MainLayout({ children }) {
           <div className={`${path === "/main/dashboard" ? "z-40" : "z-0"}`}>
             {data?.type === "Individual" ? <Sidebar /> : <OSidebar />}
           </div>
-          <div className={`h-screen w-full flex flex-col overflow-y-scroll dark:bg-black  no-scrollbar
-            `
-          }>
+          <div
+            className={`h-screen w-full flex flex-col overflow-y-scroll dark:bg-black  no-scrollbar
+            `}
+          >
             {/* <div className="h-[10%] flex border-b dark:bg-[#0D0D0D] items-center w-full text-2xl font-semibold px-2 sm:px-6">
               <div className="flex justify-between  items-center w-full">
 

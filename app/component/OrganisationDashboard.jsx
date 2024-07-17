@@ -6,6 +6,7 @@ import axios from "axios";
 import { API } from "@/Essentials";
 import graph2 from "../assests/Graph.svg";
 import d1 from "../assests/d1.png";
+import styles from "../CustomScrollbarComponent.module.css";
 import d2 from "../assests/d2.png";
 import d3 from "../assests/d3.png";
 import d4 from "../assests/d4.png";
@@ -218,7 +219,9 @@ const OrganisationDashboard = () => {
 
   return (
     <>
-      <div className="grid grid-cols-1 h-full overflow-y-scroll no-scrollbar w-[100%] bg-[#f7f7f7] dark:bg-[#141414] select-none p-2 sm:p-4">
+      <div
+        className={`grid grid-cols-1 h-full overflow-y-scroll ${styles.customScrollbar} w-[100%] bg-[#f7f7f7] dark:bg-[#141414] select-none p-2 sm:p-4`}
+      >
         <div className="flex flex-col gap-5">
           <div className=" w-full grid md:grid-cols-4 pn:max-md:gap-2 gap-10 grid-cols-2 rounded-xl">
             <div className="bg-white dark:bg-[#0D0D0D] h-[80px] pp:h-[100px]  rounded-2xl">

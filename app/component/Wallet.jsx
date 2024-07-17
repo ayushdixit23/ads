@@ -44,6 +44,11 @@ const Wallet = () => {
   // const { advid, firstname, lastname } = getData()
   const { data } = useAuthContext();
 
+  const getCurrentMonthName = () => {
+    const date = new Date();
+    return date.toLocaleString("default", { month: "long" });
+  };
+
   const fetchdata = useCallback(async () => {
     try {
       setLoad(true);
@@ -407,16 +412,18 @@ const Wallet = () => {
               </div>
               <div className="w-full flex flex-col gap-5 dark:bg-[#0d0d0d] bg-white rounded-xl  p-3 sm:px-6">
                 <div className="flex items-center mt-4 gap-2">
-                  <div className="font-medium text-sm sm:text-base">
+                  {/* <div className="font-medium text-sm sm:text-base">
                     <FaChevronLeft />
+                  </div> */}
+                  <div className="font-medium text-sm sm:text-lg">
+                    Current Month
                   </div>
-                  <div className="font-medium text-sm sm:text-lg">May</div>
-                  <div className="font-medium text-sm sm:text-base">
+                  {/* <div className="font-medium text-sm sm:text-base">
                     <FaChevronRight />
-                  </div>
+                  </div> */}
                 </div>
                 <div className="-mt-3 font-medium text-sm sm:text-base">
-                  Current Month
+                  {getCurrentMonthName()}
                 </div>
                 <div className="flex items-center mt-2 gap-12">
                   <div className="flex flex-col gap-1">

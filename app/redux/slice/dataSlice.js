@@ -72,6 +72,8 @@ export const dataSlice = createSlice({
 			audience: "",
 			isImage: false,
 			postid: "",
+			objectType: "object-cover",
+			cpa: "",
 			isDisabled: false
 		},
 		advertiserid: "",
@@ -107,7 +109,6 @@ export const dataSlice = createSlice({
 		setFullname: (state, action) => {
 			state.fullname = action.payload
 		},
-
 	}
 })
 

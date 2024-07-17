@@ -10,6 +10,7 @@ import { formatDateToString } from "../utils/useful";
 import { useAuthContext } from "../utils/AuthWrapper";
 import Cookies from "js-cookie";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import toast from "react-hot-toast";
 
 export default function createAdLayout({ children }) {
   const { data } = useAuthContext();
@@ -18,9 +19,9 @@ export default function createAdLayout({ children }) {
   const advid = params.get("advid");
   const [hasNavigated, setHasNavigated] = useState(false);
   const userid = params.get("userid");
-  const adid = params?.get("adid")
-  const brand = params.get("brand")
-  const imageofparams = params.get("image")
+  const adid = params?.get("adid");
+  const brand = params.get("brand");
+  const imageofparams = params.get("image");
 
   const step = useSelector((state) => state.data.step);
   const validateStep1 = useSelector((state) => state.data.validateStep1);
@@ -29,42 +30,46 @@ export default function createAdLayout({ children }) {
   const dispatch = useDispatch();
   const router = useRouter();
   const [client, setClient] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const stepRunner = () => {
-    if (step === 0) {
-      dispatch(setStep(1));
-    } else if (step === 1) {
-      dispatch(setStep(2));
+    if (Number(three.TotalBudget) < 500) {
+      toast.error("Minimum Rs 500 needed!");
+      return;
     } else {
+      if (step === 0) {
+        dispatch(setStep(1));
+      } else if (step === 1) {
+        dispatch(setStep(2));
+      } else {
+      }
     }
   };
 
-  // useEffect(() => {
-  //   // Your URL string
-  //   const url = window.location.href;
+  useEffect(() => {
+    // Your URL string
+    const url = window.location.href;
 
-  //   // Regular expression to extract the desired URL
-  //   const regex = /\/createAd\?([^&]*(?!step=1)(?:&[^&]+)*)/;
+    // Regular expression to extract the desired URL
+    const regex = /\/createAd\?([^&]*(?!step=1)(?:&[^&]+)*)/;
 
-  //   // Extracting the URL using the regular expression
-  //   const match = url.match(regex);
-  //   console.log(match);
+    // Extracting the URL using the regular expression
+    const match = url.match(regex);
+    console.log(match);
 
-  //   if (match) {
-  //     let extractedUrl = match[0]; // Use index 0 to get the entire matched URL
-  //     // Remove "&step=1" from the extracted URL
-  //     extractedUrl = extractedUrl.replace(/&step=1(?:&|$)/, "");
-  //     // Remove the last '&' character, if it exists
-  //     extractedUrl = extractedUrl.replace(/&$/, "");
-  //     // Log the extracted URL
-  //     console.log(extractedUrl);
-  //     setUrl(extractedUrl);
-  //   } else {
-  //     console.log("No matching URL found");
-  //   }
-  // }, []);  
-
+    if (match) {
+      let extractedUrl = match[0]; // Use index 0 to get the entire matched URL
+      // Remove "&step=1" from the extracted URL
+      extractedUrl = extractedUrl.replace(/&step=1(?:&|$)/, "");
+      // Remove the last '&' character, if it exists
+      extractedUrl = extractedUrl.replace(/&$/, "");
+      // Log the extracted URL
+      console.log(extractedUrl);
+      setUrl(extractedUrl);
+    } else {
+      console.log("No matching URL found");
+    }
+  }, []);
 
   useEffect(() => {
     // Your URL string
@@ -83,14 +88,11 @@ export default function createAdLayout({ children }) {
       // Reconstruct the URL without the "step" parameter
       const newUrl = `/createAd?${extractedUrl}`;
 
-      console.log(newUrl, "newUrl")
-
       setUrl(newUrl);
     } else {
       console.log("No matching URL found");
     }
   }, [step]);
-
 
   const stepBacker = () => {
     if (step === 2) {
@@ -104,42 +106,46 @@ export default function createAdLayout({ children }) {
     setClient(true);
   }, []);
 
-
   useEffect(() => {
     const isPageReloaded = window.performance.navigation.type === 1;
     if (!hasNavigated && isPageReloaded) {
-      console.log('Page is reloaded');
+      console.log("Page is reloaded");
       if (advid && userid) {
-        router.push(`/createAd?brand=${brand}&userid=${userid}&advid=${advid}&image=${imageofparams}&step=1`);
+        router.push(
+          `/createAd?brand=${brand}&userid=${userid}&advid=${advid}&image=${imageofparams}&step=1`
+        );
       } else {
         router.push(`/createAd?adid=${adid}&step=1`);
       }
     } else {
-      console.log('Page is not reloaded');
+      console.log("Page is not reloaded");
     }
   }, [hasNavigated, advid, userid, brand, imageofparams, adid, router]);
-
 
   useEffect(() => {
     if (!hasNavigated) {
       if (step === 1 && !validateStep1) {
         if (advid && userid) {
-          router.push(`/createAd?brand=${brand}&userid=${userid}&advid=${advid}&image=${imageofparams}&step=1`);
+          router.push(
+            `/createAd?brand=${brand}&userid=${userid}&advid=${advid}&image=${imageofparams}&step=1`
+          );
         } else {
           router.push(`/createAd?adid=${adid}&step=1`);
         }
       } else if (step === 2 && !validateStep2) {
         if (advid && userid) {
-          router.push(`/createAd?brand=${brand}&userid=${userid}&advid=${advid}&image=${imageofparams}&step=1`);
+          router.push(
+            `/createAd?brand=${brand}&userid=${userid}&advid=${advid}&image=${imageofparams}&step=1`
+          );
         } else {
           router.push(`/createAd?adid=${adid}&step=1`);
         }
       }
     }
-  }, [step, validateStep1, validateStep2, hasNavigated])
+  }, [step, validateStep1, validateStep2, hasNavigated]);
 
   const sendData = async (e) => {
-    setLoading(true)
+    setLoading(true);
     e.preventDefault();
     try {
       const formDataToSend = new FormData();
@@ -165,6 +171,8 @@ export default function createAdLayout({ children }) {
       formDataToSend.append("agerange", three.selectedAgeRange);
       formDataToSend.append("comid", three.comid);
       formDataToSend.append("minage", three.minage);
+      formDataToSend.append("objectType", three.objectType);
+      formDataToSend.append("cpa", three.cpa);
       formDataToSend.append("type", three.type);
       formDataToSend.append("maxage", three.maxage);
       formDataToSend.append("startdate", formatDateToString(three.startDate));
@@ -186,7 +194,8 @@ export default function createAdLayout({ children }) {
         );
       } else {
         res = await axios.post(
-          `${API}/newad/${advid ? advid : data?.advid}/${userid ? userid : data?.userid
+          `${API}/newad/${advid ? advid : data?.advid}/${
+            userid ? userid : data?.userid
           }`,
           formDataToSend
         );
@@ -194,7 +203,7 @@ export default function createAdLayout({ children }) {
       if (res?.data?.success) {
         Cookies.remove("postid");
         Cookies.remove("post");
-        setLoading(false)
+        setLoading(false);
         setHasNavigated(true);
         router.push("/main/dashboard");
         dispatch(
@@ -234,18 +243,17 @@ export default function createAdLayout({ children }) {
           })
         );
       }
-      setLoading(false)
+      setLoading(false);
     } catch (err) {
       console.log(err);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
   if (!client) {
     return null;
   }
-
 
   if (loading) {
     return (
@@ -256,7 +264,7 @@ export default function createAdLayout({ children }) {
           </div>
         </div>
       </>
-    )
+    );
   }
 
   if (step !== 2 && step !== 1 && step !== 0) {
@@ -344,7 +352,6 @@ export default function createAdLayout({ children }) {
               {step === 2 && (
                 <Link
                   href={`${url}&step=2`}
-
                   onClick={stepBacker}
                   className="border-b cursor-pointer pn:max-sm:hidden border-black"
                 >
@@ -368,7 +375,11 @@ export default function createAdLayout({ children }) {
               {step === 1 &&
                 (validateStep2 ? (
                   <Link
-                    href={`${url}&step=3`}
+                    href={
+                      Number(three.TotalBudget) < 500
+                        ? `${url}&step=2`
+                        : `${url}&step=3`
+                    }
                     onClick={stepRunner}
                     className="p-2 px-7 rounded-full bg-blue-800 cursor-pointer  text-white"
                   >
@@ -392,10 +403,11 @@ export default function createAdLayout({ children }) {
           <div className="flex border-b justify-center pl-16 sm:pl-0 dark:bg-[#1e2129] h-[50px] bg-white items-center">
             <ol class="flex items-center justify-center px-3 sm:mt-0 w-full max-w-[800px] text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base">
               <li
-                class={`flex md:w-full ${step >= 1
-                  ? "text-green-900 dark:text-green-600"
-                  : "dark:text-blue-500 text-blue-600"
-                  } items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700`}
+                class={`flex md:w-full ${
+                  step >= 1
+                    ? "text-green-900 dark:text-green-600"
+                    : "dark:text-blue-500 text-blue-600"
+                } items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700`}
               >
                 <span class="flex items-center after:content-['/'] min-w-[117px] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
                   {step >= 1 ? (
@@ -417,10 +429,11 @@ export default function createAdLayout({ children }) {
                 </span>
               </li>
               <li
-                class={`flex md:w-full items-center   sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700 ${step >= 2
-                  ? "text-green-900 dark:text-green-600"
-                  : "dark:text-blue-500 text-blue-600"
-                  } `}
+                class={`flex md:w-full items-center   sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700 ${
+                  step >= 2
+                    ? "text-green-900 dark:text-green-600"
+                    : "dark:text-blue-500 text-blue-600"
+                } `}
               >
                 <span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
                   {step >= 2 ? (

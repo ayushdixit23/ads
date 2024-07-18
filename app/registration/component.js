@@ -20,10 +20,12 @@ import Cookies from "js-cookie";
 import { useAuthContext } from "../utils/AuthWrapper";
 import Image from "next/image";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import toast from "react-hot-toast";
+import { initOTPless } from "../utils/initOtpless";
 
 const Register = () => {
 	const [radio, setRadio] = useState(1);
-	const { setAuth } = useAuthContext()
+	const { setAuth, setData: setUserData } = useAuthContext()
 	const dispatch = useDispatch()
 	const params = useSearchParams()
 	const registerChange = params?.get("step")
@@ -44,7 +46,7 @@ const Register = () => {
 		postalCode: "",
 		LandMark: "",
 		PAN: "",
-		type: "Individual",
+		type: "",
 		GST: "",
 		Organistaion: "",
 		password: "",
@@ -63,15 +65,11 @@ const Register = () => {
 		}
 	}, [cookie])
 
-	const [isActive, setIsActive] = useState(true);
-	const [come, setCome] = useState(0);
 	const [checked, setChecked] = useState(false);
-	const [seconds, setSeconds] = useState(30);
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
 	const [showOTP, setShowOTP] = useState(false);
 	const [OTP, setOTP] = useState("");
-	console.log(OTP, "otp")
 
 	useEffect(() => {
 		if (data) {
@@ -91,36 +89,6 @@ const Register = () => {
 			})
 		}
 	}, [data])
-
-	useEffect(() => {
-		let interval;
-
-		if (seconds === 0) {
-			setSeconds(0);
-			setIsActive(true);
-			setCome(come + 1);
-		}
-		if (isActive) {
-			interval = setInterval(() => {
-				setSeconds((prevSeconds) => prevSeconds - 1);
-			}, 100);
-			if (seconds === 0) {
-				setSeconds(0);
-				setCome(1);
-			}
-		} else if (!isActive && seconds !== 0) {
-			clearInterval(interval);
-		}
-
-		return () => clearInterval(interval);
-	}, [isActive, seconds]);
-
-	const toggleTimer = () => {
-		onSignup();
-		setSeconds(30);
-		//setIsActive(!isActive);
-	};
-
 
 	const validateData = () => {
 		if (details.type === "Individual") {
@@ -222,16 +190,23 @@ const Register = () => {
 
 				setLoad(false)
 				setAuth(true)
+				setUserData(res.data.data)
 
-				if (res.data?.type === "Individual") {
-					router.push(`/createAd?adid=${generateRandomNumber()}&step=1`)
-				} else if (res.data?.type === "Organization") {
-					router.push(`/createAd?brand=${res.data?.fullname}&userid=${res.data?.userid}&advid=${res.data?.advertiserid}&image=${res.data?.image}&step=1`)
+				if (!res.data.accountexists) {
+					if (res.data?.type === "Individual") {
+						router.push(`/createAd?adid=${generateRandomNumber()}&step=1`)
+					} else if (res.data?.type === "Organization") {
+						router.push(`/createAd?brand=${res.data?.fullname}&userid=${res.data?.userid}&advid=${res.data?.advertiserid}&image=${res.data?.image}&step=1`)
+					} else {
+						router.push("/main/dashboard");
+					}
+					sessionStorage.setItem("firstTimeUser", true)
 				} else {
-					router.push("/main/dashboard");
+					toast.success("Account Already Exists!")
+					setTimeout(() => {
+						router.push("/main/dashboard")
+					}, 2000)
 				}
-
-				sessionStorage.setItem("firstTimeUser", true)
 
 				setTimeout(() => {
 					dispatch(setChange(1))
@@ -279,24 +254,24 @@ const Register = () => {
 		setDetails({ ...details, type: "Organization" });
 	};
 
-	function onCaptchaVerify() {
-		if (!window.recaptchaVerifier) {
-			window.recaptchaVerifier = new RecaptchaVerifier(
-				auth,
-				"recaptcha-container",
-				{
-					size: "invisible",
-					callback: (response) => {
-						onSignup();
-					},
-					"expired-callback": () => {
-						// Response expired. Ask the user to solve reCAPTCHA again.
-						// ...
-					},
-				}
-			);
-		}
-	}
+	// function onCaptchaVerify() {
+	// 	if (!window.recaptchaVerifier) {
+	// 		window.recaptchaVerifier = new RecaptchaVerifier(
+	// 			auth,
+	// 			"recaptcha-container",
+	// 			{
+	// 				size: "invisible",
+	// 				callback: (response) => {
+	// 					onSignup();
+	// 				},
+	// 				"expired-callback": () => {
+	// 					// Response expired. Ask the user to solve reCAPTCHA again.
+	// 					// ...
+	// 				},
+	// 			}
+	// 		);
+	// 	}
+	// }
 
 	function onSignup() {
 		setLoading(true);
@@ -324,26 +299,68 @@ const Register = () => {
 		document.getElementById("image").click();
 	};
 
-	// const myToast = () => {
-	//   setTimeout(() => {
-	//     setToast(false);
-	//   }, 6000);
-	// };
 
-	function onOTPVerify() {
+	const phoneAuth = (e) => {
+		e.preventDefault();
 		setLoading(true);
-		window.confirmationResult
-			.confirm(OTP)
-			.then(async (res) => {
-				setLoading(false);
-				console.log(OTP);
-				handleSave();
-			})
-			.catch((err) => {
-				console.log(err);
-				setLoading(false);
+
+		if (!details.phoneNumber.trim() || details.phoneNumber.length !== 10) {
+			toast.error("Please Enter A 10 digit Number!");
+			setLoading(false);
+		} else {
+		}
+		window?.OTPlessSignin.initiate({
+			channel: "PHONE",
+			phone: details.phoneNumber,
+			countryCode: "+91",
+		});
+		setShowOTP(true);
+		setLoading(false);
+	};
+
+	const verifyOTP = async (e) => {
+		e.preventDefault();
+		setLoading(true);
+
+		// Assuming OTPlessSignin.verify returns a promise
+		try {
+			const result = await window?.OTPlessSignin.verify({
+				channel: "PHONE",
+				phone: details.phoneNumber,
+				otp: OTP,
+				countryCode: "+91",
 			});
-	}
+
+			// console.log(result, result.status, "result");
+			if (result.success) {
+				await handleSave()
+				setLoading(false);
+
+			} else {
+				toast.error("OTP Verification Failed");
+				setLoading(false);
+			}
+		} catch (error) {
+			console.error("OTP Verification Error:", error);
+			toast.error("An error occurred during OTP verification");
+			setLoading(false);
+		}
+	};
+
+	const callback = (userinfo) => {
+		const mobileMap = otplessUser?.identities.find(
+			(item) => item.identityType === "MOBILE"
+		)?.identityValue;
+
+		const token = otplessUser?.token;
+
+		const mobile = mobileMap?.identityValue;
+
+		console.log(userinfo, "userinfo");
+
+		// Implement your custom logic here.
+	};
+	useEffect(() => initOTPless(callback), []);
 
 	if (load) {
 		return <>
@@ -457,13 +474,15 @@ const Register = () => {
 							dispatch={dispatch}
 							dataValid={dataValid}
 							setChange={setChange}
-							onSignup={onSignup}
+							// onSignup={onSignup}
+							onSignup={phoneAuth}
 						/>)
 						}
 						{radio === 2 && (<Organisation
 							details={details}
 							handleChangePhotoClick={handleChangePhotoClick}
 							setDetails={setDetails}
+							handleSave={handleSave}
 							dispatch={dispatch}
 							aff={aff}
 							router={router}
@@ -471,7 +490,8 @@ const Register = () => {
 							setChecked={setChecked}
 							checked={checked}
 							setChange={setChange}
-							onSignup={onSignup}
+							// onSignup={onSignup}
+							onSignup={phoneAuth}
 						/>)
 						}
 					</div>
@@ -507,7 +527,7 @@ const Register = () => {
 									/>
 								</div>
 
-								<div className="text-black font-semibold flex text-[15px] pt-8">
+								{/* <div className="text-black font-semibold flex text-[15px] pt-8">
 									<div className="text-center">
 										{come === 1 ? (
 											<div className="space-x-4  ">
@@ -531,7 +551,7 @@ const Register = () => {
 											</h1>
 										)}
 									</div>
-								</div>
+								</div> */}
 							</div>
 						</div>
 						<div className="flex pn:max-sm:flex-col sm:justify-between gap-3 my-3 sm:gap-5 sm:items-center">
@@ -545,10 +565,11 @@ const Register = () => {
 								Back
 							</button>
 							<button
-								onClick={() => {
+								onClick={(e) => {
 									router.push("/registration?step=3")
 									// onOTPVerify();
-									handleSave();
+									// handleSave();
+									verifyOTP(e)
 									// router.push("/login");
 								}}
 								className="w-full p-2 bg-[#2D9AFF] text-white font-semibold rounded-xl sm:my-2"

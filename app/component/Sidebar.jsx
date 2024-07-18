@@ -32,7 +32,7 @@ const Sidebar = () => {
         fullname: data?.firstname + " " + data?.lastname,
       });
     }
-  }, []);
+  }, [data]);
   const path = usePathname();
 
   return (
@@ -252,11 +252,15 @@ const Sidebar = () => {
           <div className="flex items-center px-4 -mx-4">
             <img
               className="object-cover mx-2 rounded-[13px] h-9 w-9"
-              src={user?.image}
+              // src={user?.image}
+              src={data?.image}
               alt="avatar"
             />
             <span className="font-medium text-gray-800  sm:max-md:hidden dark:text-gray-200">
-              {user.fullname}
+              {/* {user.fullname} */}
+              {data?.lastname && data?.lastname != "undefined"
+                ? data?.firstname + " " + data?.lastname
+                : data?.firstname}
             </span>
           </div>
 

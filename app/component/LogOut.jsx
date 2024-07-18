@@ -10,34 +10,32 @@ import { useAuthContext } from "../utils/AuthWrapper";
 
 const LogoutModal = ({ isOpen, onClose }) => {
   const [id, setId] = useState();
-  const { data, setAuth, setData } = useAuthContext()
+  const { data, setAuth, setData } = useAuthContext();
   const router = useRouter();
 
   const deleteCookies = () => {
-    Cookies.remove(`axetkn`)
-    Cookies.remove(`rvktkn`)
-    setAuth(false)
-    setTimeout(() => {
-      setData("")
-    }, 5000)
+    Cookies.remove(`axetkn`);
+    Cookies.remove(`rvktkn`);
 
+    setAuth(false);
+    setData("");
     // localStorage.removeItem(`axetkn`)
     // localStorage.removeItem(`rvktkn`)
 
-    router.push("/login")
-  }
+    router.push("/login");
+  };
 
   const f = async () => {
     try {
-      setId(data?.advid)
+      setId(data?.advid);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     if (data?.advid) {
-      f()
+      f();
     }
   }, [data?.advid]);
   return (
@@ -52,8 +50,9 @@ const LogoutModal = ({ isOpen, onClose }) => {
         )}
 
         <div
-          className={`fixed inset-0 flex items-center justify-center z-50 ${isOpen ? "block" : "hidden"
-            }`}
+          className={`fixed inset-0 flex items-center justify-center z-50 ${
+            isOpen ? "block" : "hidden"
+          }`}
         >
           <div className="w-[330px] shadow-lg rounded-2xl p-3 sm:p-4 bg-maincolor">
             <div className="py-2">

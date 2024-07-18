@@ -6,7 +6,6 @@ import { Toaster } from "@/components/ui/sonner"
 import { ThemeProvider } from '@/components/theme-provider'
 import { AuthContextProvider } from './utils/AuthWrapper'
 import Head from 'next/head'
-import OTPLessSigninComponent from './utils/OtplessSignin'
 
 export const metadata = {
   title: 'Grovyo Ads',
@@ -16,7 +15,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <Head>
+      {/* <Head>
         <script
           id="otpless-sdk"
           type="text/javascript"
@@ -24,7 +23,7 @@ export default function RootLayout({ children }) {
           data-appid="CZ0C3TQLX7LM7L3R4D7D"
         ></script>
 
-      </Head>
+      </Head> */}
 
       <body className='select-none'>
         <AuthContextProvider>
@@ -41,7 +40,7 @@ export default function RootLayout({ children }) {
           </Providers>
         </AuthContextProvider>
         <Toaster />
-        <OTPLessSigninComponent />
+
       </body>
     </html>
   )

@@ -310,11 +310,13 @@ const OSidebar = () => {
           <div className="flex gap-1 items-center px-4 -mx-2">
             <img
               className="object-cover mx-2 rounded-[14px] h-9 w-9"
-              src={user.image}
+              src={data.image}
               alt="avatar"
             />
             <span className="font-medium text-gray-800  sm:max-md:hidden dark:text-gray-200">
-              {user.fullname}
+              {data?.lastname && data?.lastname != "undefined"
+                ? data?.firstname + " " + data?.lastname
+                : data?.firstname}
             </span>
           </div>
           {/* <div className="flex gap-1 items-center px-4 -mx-2">

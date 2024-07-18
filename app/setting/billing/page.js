@@ -29,7 +29,9 @@ const Page = () => {
     setData({
       ...data,
       accid: ads?.advertiserid,
-      name: ads?.firstname + " " + ads?.lastname,
+      name: ads?.lastname && ads?.lastname != "undefined"
+        ? ads?.firstname + " " + ads?.lastname
+        : ads?.firstname,
       country: ads?.country,
       city: ads?.city,
       address: ads?.address,
@@ -42,7 +44,7 @@ const Page = () => {
     try {
       const res = await axios.post(`${API}/editadvertiser/${ads?.advid}`, {
         firstname: data?.firstname,
-        lastname: data?.lastname,
+        lastname: data?.lastname && data?.lastname != "undefined" ? data?.lastname : "",
         city: data?.city,
         country: data?.country,
         taxinfo: data?.taxinfo,

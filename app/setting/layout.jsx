@@ -88,7 +88,9 @@ export default function SettingLayout({ children }) {
                     </div>
                     <div>
                       <div className="text-lg sm:max-md:text-base font-semibold">
-                        {user?.name}
+                        {data?.lastname && data?.lastname != "undefined"
+                          ? data?.firstname + " " + data?.lastname
+                          : data?.firstname}
                       </div>
                       <div className="font-medium ">{user?.accountid}</div>
                     </div>

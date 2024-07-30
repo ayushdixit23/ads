@@ -240,6 +240,7 @@ const Login = () => {
 
         if (res.data.success) {
           setData(res.data?.data);
+          const a = await cookieSetter(res.data);
           if (a === true) {
             router.push("/main/dashboard");
             setTimeout(() => {

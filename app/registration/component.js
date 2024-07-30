@@ -46,7 +46,7 @@ const Register = () => {
 		postalCode: "",
 		LandMark: "",
 		PAN: "",
-		type: "",
+		type: "Individual",
 		GST: "",
 		Organistaion: "",
 		password: "",

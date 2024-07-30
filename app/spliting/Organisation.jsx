@@ -473,12 +473,12 @@ const Organisation = ({
           </button>
           {dataValid ? (
             <button
-              onClick={() => {
+              onClick={(e) => {
                 {
                   if (details.password === details.confirmPass) {
                     // dispatch(setChange(3))
                     router.push("/registration?step=3");
-                    onSignup();
+                    onSignup(e);
                     // handleSave();
                   } else {
                     toast.error("Password & Confirm Password Doesnt Match");

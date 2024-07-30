@@ -41,96 +41,14 @@ export default function MainLayout({ children }) {
 
   return (
     <>
-      {/* <div className={`sm:flex flex-col hidden fixed justify-end  ${path == "/main/dashboard" ? "z-20" : "z-0"} items-end w-screen h-screen p-4`}>
-        <div className="flex justify-center items-center text-white">
-          <div className="animate-bounce">
-            <Link
-              href={
-                advertiserid && userid
-                  ? `/createAd?brand=${fullname}&userid=${userid}&advid=${advertiserid}&image=${image}&step=1`
-                  : `/createAd?adid=${generateRandomNumber()}&step=1`
-              }
-              className="flex justify-center cursor-pointer items-center z-50 bg-[#1A73E8] text-white p-2 sm:p-4 px-3 rounded-full space-x-1"
-            >
-              <div>
-                <AiOutlinePlus className="font-semibold text-sm sm:text-xl" />
-              </div>
-
-            </Link>
-          </div>
-        </div>
-      </div> */}
-
-      {/* <div className={`bottom-0 sm:hidden fixed right-3 z-0 w-screen h-screen p-4`}>
-        <div className="absolute bottom-[60px] right-2 text-white">
-          <div className="animate-bounce">
-            <Link
-              href={
-                advertiserid && userid
-                  ? `/createAd?brand=${fullname}&userid=${userid}&advid=${advertiserid}&image=${image}&step=1`
-                  : `/createAd?adid=${generateRandomNumber()}&step=1`
-              }
-              className="flex justify-center cursor-pointer items-center z-50 bg-[#1A73E8] text-white p-4 rounded-full space-x-1"
-            >
-              <div>
-                <AiOutlinePlus className="font-semibold text-sm sm:text-xl" />
-              </div>
-
-            </Link>
-          </div>
-        </div>
-      </div> */}
+    
 
       <div className="flex w-screen h-screen">
         <div className="z-30">
           <MobileNav />
         </div>
 
-        {/* <div className="w-full flex flex-col bg-red-800 dark:bg-[#1E1E1E]">
-          <div className="sm:h-[10%] h-[8%]">
-            <div className="h-full flex border-b dark:bg-[#0D0D0D] items-center w-full text-2xl font-semibold px-2 sm:px-6">
-              <div className="flex justify-between  items-center w-full">
-                <div className="flex items-center py-2 gap-2 text-2xl">
-                  <Image
-                    src={Logo}
-                    className="sm:w-[50px] w-[40px] h-[40px] sm:h-[50px]"
-                    alt="adspace"
-                  />
-                  <span className="hidden pp:block font-medium">Adspace</span>
-                </div>
-                <div className="flex justify-center items-center gap-2">
-
-                  <div>
-                    <Link
-                      href={
-                        advertiserid && userid
-                          ? `/createAd?brand=${fullname}&userid=${userid}&advid=${advertiserid}&image=${image}&step=1`
-                          : `/createAd?adid=${generateRandomNumber()}&step=1`
-                      }
-                      className="flex justify-center cursor-pointer items-center bg-[#1A73E8] text-white p-2 sm:px-4 px-3 rounded-full space-x-1"
-                    >
-                      <div>
-                        <AiOutlinePlus className="font-semibold text-sm" />
-                      </div>
-                      <div>
-                        <p className="pr-2 text-[14px] text-sm pp:text-base">Create Ad</p>
-                      </div>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="flex h-[92%] bg-yellow-900 sm:h-[90%]">
-            {data?.type === "Individual" ? <Sidebar /> : <OSidebar />}
-            <div className={`h-full w-full overflow-y-scroll bg-[#f7f7f7] dark:bg-black  no-scrollbar
-            `
-            }>
-              {children}
-            </div>
-          </div>
-        </div> */}
-
+       
         <div className="w-full flex bg-[#f7f7f7] dark:bg-[#1E1E1E]">
           <div className={`${path === "/main/dashboard" ? "z-40" : "z-0"}`}>
             {data?.type === "Individual" ? <Sidebar /> : <OSidebar />}
@@ -139,32 +57,7 @@ export default function MainLayout({ children }) {
             className={`h-screen w-full flex flex-col overflow-y-scroll dark:bg-black  no-scrollbar
             `}
           >
-            {/* <div className="h-[10%] flex border-b dark:bg-[#0D0D0D] items-center w-full text-2xl font-semibold px-2 sm:px-6">
-              <div className="flex justify-between  items-center w-full">
-
-                <div className="flex justify-center items-center gap-2">
-
-                  <div>
-                    <Link
-                      href={
-                        advertiserid && userid
-                          ? `/createAd?brand=${fullname}&userid=${userid}&advid=${advertiserid}&image=${image}&step=1`
-                          : `/createAd?adid=${generateRandomNumber()}&step=1`
-                      }
-                      className="flex justify-center cursor-pointer items-center bg-[#1A73E8] text-white p-2 sm:px-4 px-3 rounded-full space-x-1"
-                    >
-                      <div>
-                        <AiOutlinePlus className="font-semibold text-sm" />
-                      </div>
-                      <div>
-                        <p className="pr-2 text-[14px] text-sm pp:text-base">Create Ad</p>
-                      </div>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div> */}
-
+          
             <div className="h-full">{children}</div>
           </div>
         </div>
